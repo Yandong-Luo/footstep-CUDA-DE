@@ -1,17 +1,26 @@
 # Set the minimum required CMake version
-cmake_minimum_required(VERSION 3.16) # CUDA support requires CMake 3.16 or later
-
+cmake_minimum_required(VERSION 3.18) # CUDA support requires CMake 3.18 or later
+# cmake_policy(SET CMP0146 NEW)
 # Set the project name and languages
 project(Parallel_DiffEvolutionSolver LANGUAGES CXX CUDA)
 
-# Find the CUDA Toolkit
-find_package(CUDA REQUIRED)
+set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda)
+
+# Find the CUDA Toolkit for 3.16 cmake
+# find_package(CUDA REQUIRED)
+# 3.18 cmake using the following
+find_package(CUDAToolkit REQUIRED)
+
 
 # Find the pybind11
 # find_package(pybind11 REQUIRED)
 
 # Find CUBLAS
 find_library(CUBLAS_LIBRARY cublas HINTS ${CUDA_TOOLKIT_ROOT_DIR}/lib64)
+
+# # Find cuBLASDx
+set(CMAKE_FIND_PACKAGE_SCOPE global)
+find_package(mathdx REQUIRED COMPONENTS cublasdx CONFIG PATHS "/usr/local/mathdx/24.08")
 
 # Find CURAND
 find_library(CURAND_LIBRARY curand HINTS ${CUDA_TOOLKIT_ROOT_DIR}/lib64)
@@ -45,6 +54,10 @@ set(CMAKE_BUILD_TYPE Debug)
 # set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -lineinfo")
 
 # Set CUDA compilation options (optional)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 # set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} -std=c++17")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 set(CMAKE_CUDA_FLAGS_DEBUG "-g")
@@ -92,6 +105,8 @@ set_target_properties(cuda_DE PROPERTIES
     CUDA_SEPARABLE_COMPILATION ON
     POSITION_INDEPENDENT_CODE ON
     CUDA_RESOLVE_DEVICE_SYMBOLS ON
+    CUDA_STANDARD 17
+    CUDA_STANDARD_REQUIRED ON
 )
 
 # Use the static version of the CUDA runtime library
@@ -123,6 +138,7 @@ target_link_libraries(cuda_solver PRIVATE
     nvtx3-cpp
     # nlohmann_json::nlohmann_json
     yaml-cpp::yaml-cpp
+    mathdx::cublasdx
 )
 
 # Enable device symbol resolution to ensure device code is linked correctly

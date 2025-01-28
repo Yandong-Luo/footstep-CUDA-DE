@@ -1,23 +1,25 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CUDA"
-  )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CUDA
-  "/home/chris/parallel_diff_evolution/src/cart_pole/cart_pole_utils.cu" "/home/chris/parallel_diff_evolution/build/CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o"
-  "/home/chris/parallel_diff_evolution/src/diff_evolution_solver/random_manager.cu" "/home/chris/parallel_diff_evolution/build/CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o"
-  "/home/chris/parallel_diff_evolution/src/diff_evolution_solver/solver.cu" "/home/chris/parallel_diff_evolution/build/CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o"
-  )
-set(CMAKE_CUDA_COMPILER_ID "NVIDIA")
-
-# The include file search paths:
-set(CMAKE_CUDA_TARGET_INCLUDE_PATH
-  "../include"
-  "../thirdparty/nvtx/c/include"
   )
 
-# Targets to which this target links.
-set(CMAKE_TARGET_LINKED_INFO_FILES
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/chris/footstep-CUDA-DE/src/cart_pole/cart_pole_utils.cu" "CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o" "gcc" "CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o.d"
+  "/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/random_manager.cu" "CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o" "gcc" "CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o.d"
+  "/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu" "CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o" "gcc" "CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o.d"
+  "/home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu" "CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o" "gcc" "CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o.d"
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.

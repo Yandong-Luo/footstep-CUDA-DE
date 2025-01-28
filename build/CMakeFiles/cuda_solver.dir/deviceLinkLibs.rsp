@@ -1,0 +1,1 @@
+  -L"/usr/local/cuda-11.4/targets/x86_64-linux/lib/stubs"   "/usr/local/lib/libyaml-cpp.a" -lcudadevrt -lcudart_static -lrt -lpthread -ldl 

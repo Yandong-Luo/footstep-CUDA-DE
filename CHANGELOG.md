@@ -190,3 +190,6 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Yandong Luo: Rewrite the warm start. Warm start based previous solution and expected control input from model to generative more heuristic guesses. Current version support 512 population.
 
+## [0.3.1] - 2025-1-27
+### Changed
+- Yandong Luo: "Add cublasdx in CMakeList and set up E, F, H1, H2, h for footstep planner"
