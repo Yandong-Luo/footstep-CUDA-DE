@@ -1,1 +1,1 @@
--I"/home/chris/footstep-CUDA-DE/include" -I"/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include"
+-I"/home/chris/footstep-CUDA-DE/include" -I"/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include" -I/usr/local/mathdx/24.08/include -I/usr/local/mathdx/24.08/include/cublasdx/include -I/usr/local/mathdx/24.08/external/cutlass/include

@@ -52,14 +52,16 @@ namespace cudaprocess{
         }
 
         new_cluster_data->fitness[idx] = CUDA_MAX_FLOAT;
-        new_cluster_data->cost[idx] = 0.;
+        new_cluster_data->objective_score[idx] = CUDA_MAX_FLOAT;
+        new_cluster_data->constraint_score[idx] = CUDA_MAX_FLOAT;
         new_cluster_data->lshade_param[idx * 3 + 0] = 0.5f;                        // scale_f
         new_cluster_data->lshade_param[idx * 3 + 1] = 0.5f;                        // scale_f1
         new_cluster_data->lshade_param[idx * 3 + 2] = 0.5f;                        // crossover
 
         // initial old_cluster_data
         old_cluster_data->fitness[idx] = CUDA_MAX_FLOAT;
-        old_cluster_data->cost[idx] = 0.;
+        old_cluster_data->objective_score[idx] = CUDA_MAX_FLOAT;
+        old_cluster_data->constraint_score[idx] = CUDA_MAX_FLOAT;
 
         // printf("Finish the initialization of thread id:%d\n", idx);
     }

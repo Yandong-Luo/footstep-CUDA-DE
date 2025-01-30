@@ -192,4 +192,8 @@ All notable changes to this project will be documented in this file.
 
 ## [0.3.1] - 2025-1-27
 ### Changed
-- Yandong Luo: "Add cublasdx in CMakeList and set up E, F, H1, H2, h for footstep planner"
+- Yandong Luo: Add cublasdx in CMakeList and set up E, F, H1, H2, h for footstep planner
+
+## [0.3.1] - 2025-1-29
+### Changed
+- Yandong Luo: Finish bigE and bigF matrix. Adjust lots of parameter in E, F. Looks like I can't use __constant__ for E, F anymore. Because cublasSgemm doesn't support __constant__.

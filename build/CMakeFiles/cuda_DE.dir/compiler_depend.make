@@ -427,8 +427,6 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: /home/chri
 
 CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu \
   /home/chris/footstep-CUDA-DE/include/cart_pole/cart_pole_utils.cuh \
-  /home/chris/footstep-CUDA-DE/include/cart_pole/evaluate.cuh \
-  /home/chris/footstep-CUDA-DE/include/cart_pole/model.cuh \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/converter.cuh \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/debug.cuh \
@@ -437,6 +435,8 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evolve.cuh \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/solver.cuh \
+  /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
+  /home/chris/footstep-CUDA-DE/include/footstep/model.cuh \
   /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
   /home/chris/footstep-CUDA-DE/include/utils/utils_fun.cuh \
   /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvToolsExt.h \
@@ -454,6 +454,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/assert.h \
   /usr/include/c++/10/algorithm \
   /usr/include/c++/10/array \
+  /usr/include/c++/10/atomic \
   /usr/include/c++/10/backward/auto_ptr.h \
   /usr/include/c++/10/backward/binders.h \
   /usr/include/c++/10/bits/algorithmfwd.h \
@@ -468,6 +469,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/bits/basic_string.tcc \
   /usr/include/c++/10/bits/char_traits.h \
   /usr/include/c++/10/bits/charconv.h \
+  /usr/include/c++/10/bits/codecvt.h \
   /usr/include/c++/10/bits/concept_check.h \
   /usr/include/c++/10/bits/cpp_type_traits.h \
   /usr/include/c++/10/bits/cxxabi_forced.h \
@@ -488,8 +490,11 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/bits/iterator_concepts.h \
   /usr/include/c++/10/bits/locale_classes.h \
   /usr/include/c++/10/bits/locale_classes.tcc \
+  /usr/include/c++/10/bits/locale_conv.h \
   /usr/include/c++/10/bits/locale_facets.h \
   /usr/include/c++/10/bits/locale_facets.tcc \
+  /usr/include/c++/10/bits/locale_facets_nonio.h \
+  /usr/include/c++/10/bits/locale_facets_nonio.tcc \
   /usr/include/c++/10/bits/localefwd.h \
   /usr/include/c++/10/bits/memoryfwd.h \
   /usr/include/c++/10/bits/move.h \
@@ -497,9 +502,11 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/bits/node_handle.h \
   /usr/include/c++/10/bits/ostream.tcc \
   /usr/include/c++/10/bits/ostream_insert.h \
+  /usr/include/c++/10/bits/parse_numbers.h \
   /usr/include/c++/10/bits/postypes.h \
   /usr/include/c++/10/bits/predefined_ops.h \
   /usr/include/c++/10/bits/ptr_traits.h \
+  /usr/include/c++/10/bits/quoted_string.h \
   /usr/include/c++/10/bits/range_access.h \
   /usr/include/c++/10/bits/range_cmp.h \
   /usr/include/c++/10/bits/ranges_uninitialized.h \
@@ -508,8 +515,10 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/bits/shared_ptr_atomic.h \
   /usr/include/c++/10/bits/shared_ptr_base.h \
   /usr/include/c++/10/bits/specfun.h \
+  /usr/include/c++/10/bits/sstream.tcc \
   /usr/include/c++/10/bits/std_abs.h \
   /usr/include/c++/10/bits/std_function.h \
+  /usr/include/c++/10/bits/std_mutex.h \
   /usr/include/c++/10/bits/stl_algo.h \
   /usr/include/c++/10/bits/stl_algobase.h \
   /usr/include/c++/10/bits/stl_bvector.h \
@@ -525,24 +534,33 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/bits/stl_tempbuf.h \
   /usr/include/c++/10/bits/stl_uninitialized.h \
   /usr/include/c++/10/bits/stl_vector.h \
+  /usr/include/c++/10/bits/stream_iterator.h \
   /usr/include/c++/10/bits/streambuf.tcc \
   /usr/include/c++/10/bits/streambuf_iterator.h \
   /usr/include/c++/10/bits/string_view.tcc \
   /usr/include/c++/10/bits/stringfwd.h \
   /usr/include/c++/10/bits/uniform_int_dist.h \
+  /usr/include/c++/10/bits/unique_lock.h \
   /usr/include/c++/10/bits/unique_ptr.h \
   /usr/include/c++/10/bits/unordered_map.h \
   /usr/include/c++/10/bits/uses_allocator.h \
   /usr/include/c++/10/bits/vector.tcc \
+  /usr/include/c++/10/cassert \
   /usr/include/c++/10/cctype \
   /usr/include/c++/10/cerrno \
+  /usr/include/c++/10/cfloat \
+  /usr/include/c++/10/chrono \
+  /usr/include/c++/10/cinttypes \
   /usr/include/c++/10/clocale \
   /usr/include/c++/10/cmath \
   /usr/include/c++/10/concepts \
+  /usr/include/c++/10/condition_variable \
   /usr/include/c++/10/cstddef \
   /usr/include/c++/10/cstdint \
   /usr/include/c++/10/cstdio \
   /usr/include/c++/10/cstdlib \
+  /usr/include/c++/10/cstring \
+  /usr/include/c++/10/ctime \
   /usr/include/c++/10/cwchar \
   /usr/include/c++/10/cwctype \
   /usr/include/c++/10/debug/assertions.h \
@@ -558,13 +576,17 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/ext/type_traits.h \
   /usr/include/c++/10/functional \
   /usr/include/c++/10/initializer_list \
+  /usr/include/c++/10/iomanip \
   /usr/include/c++/10/ios \
   /usr/include/c++/10/iosfwd \
   /usr/include/c++/10/iostream \
   /usr/include/c++/10/istream \
+  /usr/include/c++/10/iterator \
   /usr/include/c++/10/limits \
+  /usr/include/c++/10/locale \
   /usr/include/c++/10/math.h \
   /usr/include/c++/10/memory \
+  /usr/include/c++/10/memory_resource \
   /usr/include/c++/10/new \
   /usr/include/c++/10/optional \
   /usr/include/c++/10/ostream \
@@ -572,6 +594,9 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/pstl/glue_algorithm_defs.h \
   /usr/include/c++/10/pstl/glue_memory_defs.h \
   /usr/include/c++/10/pstl/pstl_config.h \
+  /usr/include/c++/10/ratio \
+  /usr/include/c++/10/shared_mutex \
+  /usr/include/c++/10/sstream \
   /usr/include/c++/10/stdexcept \
   /usr/include/c++/10/stdlib.h \
   /usr/include/c++/10/streambuf \
@@ -596,12 +621,15 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/unordered_map \
   /usr/include/c++/10/utility \
   /usr/include/c++/10/vector \
+  /usr/include/c++/10/version \
   /usr/include/ctype.h \
   /usr/include/dlfcn.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
   /usr/include/fcntl.h \
   /usr/include/features.h \
+  /usr/include/inttypes.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/falloc.h \
@@ -715,13 +743,16 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/messages_members.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/10/include/float.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/limits.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h \
@@ -743,6 +774,71 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_80_rt.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_80_rt.hpp \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuComplex.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/config.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_load.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_store.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_device.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/iterator/cache_modified_input_iterator.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_debug.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_deprecated.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_ptx.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_type.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_adjacent_difference.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_exchange.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_load.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_scan.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_store.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_raking_layout.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_operators.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_reduce.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_scan.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/warp/specializations/warp_scan_shfl.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/warp/specializations/warp_scan_smem.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/warp/warp_scan.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_scan_raking.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_scan_warp_scans.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/iterator/arg_index_input_iterator.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_partition.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_radix_sort.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_reduce.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_scan.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_select.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_discontinuity.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_radix_rank.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_reduce.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/radix_rank_sort_operations.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_reduce_raking.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_reduce_raking_commutative_only.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_reduce_warp_reductions.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/grid/grid_even_share.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/grid/grid_mapping.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/grid/grid_queue.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/iterator/constant_input_iterator.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/warp/specializations/warp_reduce_shfl.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/warp/specializations/warp_reduce_smem.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/warp/warp_reduce.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_radix_sort_downsweep.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_radix_sort_histogram.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_radix_sort_onesweep.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_radix_sort_upsweep.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_reduce.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_reduce_by_key.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_scan.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_select_if.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/single_pass_scan_operators.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_radix_sort.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_math.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_radix_sort.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_reduce.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_reduce_by_key.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_scan.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_select_if.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_arch.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_compiler.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_cpp_dialect.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_macro.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_namespace.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/version.cuh \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cublas_api.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cublas_v2.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda.h \
@@ -751,6 +847,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_device_runtime_api.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_fp16.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_fp16.hpp \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_occupancy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_runtime.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_runtime_api.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_surface_types.h \
@@ -799,12 +896,754 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/local/cuda-11.4/targets/x86_64-linux/include/texture_fetch_functions.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/texture_indirect_functions.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/texture_types.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/adjacent_difference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/advance.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/count.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/adjacent_difference.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/advance.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/alignment.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/allocator_traits.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/allocator_traits.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/copy_construct_range.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/copy_construct_range.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/destroy_range.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/destroy_range.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/fill_construct_range.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/fill_construct_range.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/no_throw_allocator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/tagged_allocator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/tagged_allocator.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/temporary_allocator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/temporary_allocator.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator_aware_execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/compiler.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/config.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/cpp_compatibility.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/cpp_dialect.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/debug.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/deprecated.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/device_system.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/exec_check_disable.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/forceinline.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/global_workarounds.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/host_device.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/host_system.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/memory_resource.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/simple_defines.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/contiguous_storage.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/contiguous_storage.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy_if.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/count.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cpp11_required.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cstdint.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/dependencies_aware_execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/device_ptr.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/distance.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/equal.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/execute_with_allocator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/execute_with_allocator_fwd.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/execute_with_dependencies.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/extrema.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/fill.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/find.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/for_each.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/function.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/actor.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/actor.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/argument.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/composite.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/arithmetic_operators.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/assignment_operator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/bitwise_operators.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/compound_assignment_operators.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/logical_operators.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/operator_adaptors.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/relational_operators.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/placeholder.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/generate.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/get_iterator_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/integer_math.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/integer_traits.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/internal_functional.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/memory_wrapper.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/merge.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/minmax.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/mismatch.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/mpl/math.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/numeric_traits.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/overlapped_copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/pair.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/partition.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/pointer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/pointer.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/preprocessor.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/range/head_flags.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/raw_pointer_cast.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/raw_reference_cast.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reduce.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference_forward_declaration.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/remove.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/replace.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reverse.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/scan.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/scatter.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/seq.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/sequence.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/set_operations.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/static_assert.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap_ranges.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/tabulate.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_array.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_array.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_buffer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/transform.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/transform_reduce.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/trivial_sequence.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/tuple.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/tuple_meta_transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/tuple_transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_deduction.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/function_traits.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/has_member_function.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/has_nested_type.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/has_trivial_assign.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/is_call_possible.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/is_metafunction_defined.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/iterator/is_output_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/minimum_type.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/pointer_traits.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/result_of_adaptable_function.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/uninitialized_fill.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/unique.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/use_default.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/vector_base.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/vector_base.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_allocator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_ptr.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_reference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_vector.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/distance.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/equal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/extrema.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/find.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/for_each.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/functional.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/generate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/host_vector.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/constant_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/counting_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/any_assign.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/any_system_tag.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/constant_iterator_base.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/counting_iterator.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/device_system_tag.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/distance_from_result.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/host_system_tag.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/is_iterator_category.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_adaptor_base.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_category_to_system.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_category_to_traversal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_category_with_system_and_traversal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_facade_category.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_traits.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_traversal_tags.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/minimum_category.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/minimum_system.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/normal_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/permutation_iterator_base.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/reverse_iterator.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/reverse_iterator_base.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/tagged_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/transform_iterator.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/tuple_of_iterator_references.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/universal_categories.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/zip_iterator.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/zip_iterator_base.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/iterator_adaptor.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/iterator_categories.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/iterator_facade.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/iterator_traits.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/permutation_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/reverse_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/transform_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/zip_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/memory.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mismatch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/allocator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/device_memory_resource.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/fancy_pointer_resource.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/host_memory_resource.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/memory_resource.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/new.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/polymorphic_adaptor.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/validator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/pair.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/partition.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/remove.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/reverse.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/scan.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/sequence.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/adjacent_difference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/assign_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/binary_search.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/extrema.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/find.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/for_each.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/generate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/get_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/iter_swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/par.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/partition.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/remove.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/swap_ranges.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/memory_resource.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/adjacent_difference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/assign_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/binary_search.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/core/agent_launcher.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/core/alignment.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/core/triple_chevron_launch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/core/util.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/count.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/dispatch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/extrema.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/find.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/for_each.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/gather.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/generate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/get_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/guarded_cuda_runtime_api.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/guarded_driver_types.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/inner_product.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/internal/copy_cross_system.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/internal/copy_device_to_device.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/iter_swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/make_unsigned_special.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/mismatch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/parallel_for.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/partition.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/remove.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reverse.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/swap_ranges.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/tabulate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/temporary_buffer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/terminate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_scan.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/uninitialized_copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/uninitialized_fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/unique_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/util.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/error.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/memory_resource.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/pointer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/adjacent_difference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/assign_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/count.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/equal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/extrema.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/find.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/for_each.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/generate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/get_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/iter_swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/mismatch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/partition.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/remove.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reverse.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/scan.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/scan_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/sequence.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/swap_ranges.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/tabulate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/temporary_buffer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/transform_reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/uninitialized_fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/unique_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/bad_alloc.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/errno.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/error_category.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/error_code.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/error_condition.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/adjacent_difference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/adjacent_difference.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/advance.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/advance.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy_if.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/count.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/count.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/equal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/equal.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/extrema.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/extrema.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/find.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/find.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/for_each.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/generate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/generate.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/memory.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/memory.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/merge.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/mismatch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/mismatch.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/partition.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/partition.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce_by_key.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/remove.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/remove.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan_by_key.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scatter.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system_exists.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sequence.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sequence.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/set_operations.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/swap_ranges.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/swap_ranges.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/tabulate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/tabulate.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/tag.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/temporary_buffer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/temporary_buffer.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform_reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform_reduce.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique_by_key.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/adjacent_difference.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/assign_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/binary_search.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_backward.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/count.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/equal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/extrema.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/find.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/for_each.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/general_copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/generate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/get_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/insertion_sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/iter_swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/merge.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/mismatch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/partition.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/remove.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reverse.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/sequence.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_merge_sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_merge_sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/swap_ranges.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/tabulate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/temporary_buffer.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/transform_reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/trivial_copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/uninitialized_fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/system_error.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/error_code.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/system_error.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system_error.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/tabulate.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/transform_reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/tuple.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/integer_sequence.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/is_contiguous_iterator.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/is_trivially_relocatable.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/logical_metafunctions.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/remove_cvref.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/void_t.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/uninitialized_fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/version.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/vector_functions.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/vector_functions.hpp \
-  /usr/local/cuda-11.4/targets/x86_64-linux/include/vector_types.h
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/vector_types.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/axpby.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/clear.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_gemm.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/copy.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/fill.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/functional.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/gemm.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefer.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefetch.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tensor_algorithms.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tuple_algorithms.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm50.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm75.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm80.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_desc.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_tma.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm61.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm70.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm75.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm80.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90_desc.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90_gmma.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/arch/util.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_atom.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm50.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm75.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm80.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm90.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_atom.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm61.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm70.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm75.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm80.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm90.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm90_gmma.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/config.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/alignment.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/array.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/array_aligned.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/array_subbyte.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/bit_field.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/cuda_types.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/tuple.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/container/type_list.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/int_tuple.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/layout_composed.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/complex.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/int.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/integer_sequence.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/integral_constant.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/integral_ratio.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/math.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/numeric_types.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/real.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/pointer.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/pointer_base.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/pointer_flagged.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/pointer_swizzle.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/stride.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/swizzle.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/swizzle_layout.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/tensor.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_predicate.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/underscore.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/util/debug.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/util/print.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cute/util/type_traits.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/array.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/array_subbyte.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/bfloat16.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/complex.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/coord.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/cutlass.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/detail/helper_macros.hpp \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/fast_math.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/float8.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/functional.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/half.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/integer_subbyte.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/numeric_size.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/numeric_types.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/platform/platform.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/real.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/tfloat32.h \
+  /usr/local/mathdx/24.08/external/cutlass/include/cutlass/uint128.h \
+  /usr/local/mathdx/24.08/include/commondx/complex_types.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_open.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/config.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/stl/type_traits.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/config.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/expressions.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_open.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/config.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/stl/tuple.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/stl/type_traits.hpp \
+  /usr/local/mathdx/24.08/include/commondx/device_info.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/expressions.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_open.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/stl/type_traits.hpp \
+  /usr/local/mathdx/24.08/include/commondx/traits/detail/get_operator_fd.hpp \
+  /usr/local/mathdx/24.08/include/commondx/traits/detail/is_operator_fd.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/block_dim.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/execution_operators.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/precision.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/size3d.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/sm.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/type.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_open.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/stl/type_traits.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/block_dim.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/execution_operators.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/precision.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/sm.hpp \
+  /usr/local/mathdx/24.08/include/commondx/operators/type.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/expressions.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_open.hpp \
+  /usr/local/mathdx/24.08/include/commondx/detail/stl/type_traits.hpp \
+  /usr/local/mathdx/24.08/include/commondx/traits/detail/description_traits.hpp \
+  /usr/local/mathdx/24.08/include/commondx/traits/detail/get.hpp \
+  /usr/local/mathdx/24.08/include/commondx/traits/detail/get_operator_fd.hpp \
+  /usr/local/mathdx/24.08/include/commondx/traits/detail/is_operator_fd.hpp \
+  /usr/local/mathdx/24.08/include/commondx/traits/dx_traits.hpp \
+  /usr/local/mathdx/24.08/include/commondx/type_list.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/cublasdx.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/cublasdx_version.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/cute.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/suggested_layouts.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/system_checks.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/configs.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/cute.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/cute_db.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/cute_extension.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/cute_tensor.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/cute_tensor_configs.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/cute_utils.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/ce5m2_ce5m2_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp16_cfp16_cfp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp16_cfp16_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp32_cfp32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp64_cfp64_cfp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/ctf32_ctf32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/e5m2_e5m2_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp16_fp16_fp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp16_fp16_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp32_fp32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp64_fp64_fp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/tf32_tf32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/ce5m2_ce5m2_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp16_cfp16_cfp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp16_cfp16_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp32_cfp32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp64_cfp64_cfp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/ctf32_ctf32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/e5m2_e5m2_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp16_fp16_fp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp16_fp16_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp32_fp32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp64_fp64_fp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/tf32_tf32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/ce5m2_ce5m2_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp16_cfp16_cfp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp16_cfp16_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp32_cfp32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp64_cfp64_cfp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/ctf32_ctf32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/e5m2_e5m2_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp16_fp16_fp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp16_fp16_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp32_fp32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp64_fp64_fp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/tf32_tf32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/ce5m2_ce5m2_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp16_cfp16_cfp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp16_cfp16_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp32_cfp32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp64_cfp64_cfp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/ctf32_ctf32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/e5m2_e5m2_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp16_fp16_fp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp16_fp16_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp32_fp32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp64_fp64_fp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/tf32_tf32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/ce5m2_ce5m2_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp16_cfp16_cfp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp16_cfp16_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp32_cfp32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp64_cfp64_cfp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/ctf32_ctf32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/e5m2_e5m2_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp16_fp16_fp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp16_fp16_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp32_fp32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp64_fp64_fp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/tf32_tf32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/ce5m2_ce5m2_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp16_cfp16_cfp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp16_cfp16_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp32_cfp32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp64_cfp64_cfp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/ctf32_ctf32_cfp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/e5m2_e5m2_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp16_fp16_fp16_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp16_fp16_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp32_fp32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp64_fp64_fp64_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/tf32_tf32_fp32_tn.hpp.inc \
+  /usr/local/mathdx/24.08/include/cublasdx/include/database/suggested_layouts.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/traits.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/traits/detail/description_traits.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_checks.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_description.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_execution.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/commondx_config.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/copy.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/system_checks.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/tensor.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/types.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/alignment.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/arrangement.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/function.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/ld.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/operator_type.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/precision.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/size.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/transpose_mode.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators/type.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/traits.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_description_fd.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/operators.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/types.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/traits/blas_traits.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/traits/detail/description_traits.hpp \
+  /usr/local/mathdx/24.08/include/cublasdx/include/types.hpp
 
 CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu \
+  /home/chris/footstep-CUDA-DE/include/cart_pole/cart_pole_utils.cuh \
+  /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
   /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
+  /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -1097,6 +1936,7 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
   /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_70_rt.hpp \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_80_rt.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_80_rt.hpp \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cuComplex.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/config.cuh \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_load.cuh \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_store.cuh \
@@ -1162,6 +2002,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_macro.cuh \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_namespace.cuh \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/version.cuh \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cublas_api.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cublas_v2.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.hpp \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_device_runtime_api.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_fp16.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_fp16.hpp \
@@ -1170,6 +2015,7 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_runtime_api.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_surface_types.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_texture_types.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/curand.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/device_atomic_functions.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/device_atomic_functions.hpp \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/device_launch_parameters.h \
@@ -1691,11 +2537,229 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
   /usr/local/cuda-11.4/targets/x86_64-linux/include/vector_types.h
 
 
+/home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/type.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/transpose_mode.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/size.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/ld.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/arrangement.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/copy.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_execution.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_description.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/traits/detail/description_traits.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/tf32_tf32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp32_fp32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/e5m2_e5m2_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp64_cfp64_cfp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp16_cfp16_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp16_cfp16_cfp16_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/ce5m2_ce5m2_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/tf32_tf32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp16_fp16_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/e5m2_e5m2_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/ctf32_ctf32_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp16_cfp16_cfp16_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/tf32_tf32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp64_fp64_fp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp16_fp16_fp16_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/ctf32_ctf32_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp64_cfp64_cfp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/ce5m2_ce5m2_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/tf32_tf32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp64_fp64_fp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp32_fp32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp64_cfp64_cfp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/tf32_tf32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/ctf32_ctf32_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/ce5m2_ce5m2_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/tf32_tf32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp64_fp64_fp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp16_fp16_fp16_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp16_cfp16_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp16_cfp16_cfp16_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/ce5m2_ce5m2_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/cute_utils.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/cute_tensor_configs.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/cute_db.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/suggested_layouts.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/cute.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/cublasdx_version.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/cublasdx.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/type_list.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/traits/dx_traits.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/traits/detail/get.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/operators/sm.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/operators/execution_operators.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/traits/detail/get_operator_fd.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/device_info.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/detail/stl/tuple.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/uint128.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/tfloat32.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/real.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/integer_subbyte.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/functional.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/fast_math.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/cutlass.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/coord.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/util/type_traits.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/util/print.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/underscore.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/swizzle.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/stride.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/pointer_swizzle.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/pointer_base.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/real.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/integral_ratio.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/integral_constant.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/int.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/complex.hpp:
+
+/usr/local/mathdx/24.08/include/commondx/operators/type.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/numeric_size.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/int_tuple.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/type_list.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/tuple.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/cuda_types.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/bit_field.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/array.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/alignment.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/config.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm90_gmma.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm90.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm70.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm61.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm80.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm50.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90_gmma.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm61.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_tma.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp32_fp32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm75.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp32_cfp32_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm50.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/fill.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/axpby.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/unique.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/uninitialized_fill.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/logical_metafunctions.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/bfloat16.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/tuple.h:
 
@@ -1704,6 +2768,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system_error.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/uninitialized_fill.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/cfp32_cfp32_cfp32_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/transform.h:
 
@@ -1725,9 +2791,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan_by_key.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/array_subbyte.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm80.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reverse.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/array_subbyte.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/transform_reduce.h:
 
@@ -1735,19 +2807,27 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/partition.h:
 
+/usr/local/mathdx/24.08/include/commondx/operators/block_dim.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/mismatch.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/get_value.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/for_each.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/precision.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/find.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/extrema.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/execution_policy.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/equal.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp64_cfp64_cfp64_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_if.h:
 
@@ -1759,9 +2839,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique_by_key.inl:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp64_fp64_fp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/pointer_flagged.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/cute_extension.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.inl:
 
@@ -1773,15 +2859,21 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/tag.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/traits.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/tabulate.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/tabulate.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/swap_ranges.inl:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sort.inl:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp32_cfp32_cfp32_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/set_operations.inl:
 
@@ -1789,17 +2881,19 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sequence.inl:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sequence.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scatter.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan_by_key.inl:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/system_checks.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan.inl:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp64_cfp64_cfp64_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan.h:
 
@@ -1810,6 +2904,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/remove.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/layout_composed.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce_by_key.inl:
 
@@ -1827,11 +2923,19 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/merge.inl:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/ctf32_ctf32_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/detail/helper_macros.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/memory.inl:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm75.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/memory.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/generate.inl:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/configs.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/for_each.h:
 
@@ -1848,8 +2952,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/count.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/count.h:
 
@@ -1887,6 +2989,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/tabulate.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp64_fp64_fp64_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/set_operations.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.inl:
@@ -1902,6 +3006,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reduce_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/partition.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/fp16_fp16_fp16_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/merge.h:
 
@@ -1949,11 +3055,13 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/swap_ranges.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/e5m2_e5m2_fp32_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/sort.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/set_operations.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan_by_key.h:
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp16_cfp16_cfp32_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan.h:
 
@@ -1962,6 +3070,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/transform_reduce.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce_by_key.h:
+
+/usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform_reduce.h:
 
@@ -1974,6 +3084,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/parallel_for.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/ctf32_ctf32_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefetch.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/merge.h:
 
@@ -2003,6 +3117,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/cute_tensor.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/dispatch.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h:
@@ -2012,6 +3128,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/core/util.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp16_fp16_fp16_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/core/triple_chevron_launch.h:
 
@@ -2027,55 +3145,53 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/adjacent_difference.h:
 
-/usr/include/linux/falloc.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h:
 
-/usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/device_types.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/execution_policy.h:
 
-/usr/include/dlfcn.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reverse.h:
 
-/usr/include/c++/10/bits/basic_string.tcc:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique.h:
 
-/usr/include/linux/errno.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/device_atomic_functions.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/swap_ranges.h:
 
-/usr/include/ctype.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/sort.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/set_operations.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/numeric_traits.h:
-
-/usr/include/c++/10/vector:
-
-/usr/include/c++/10/string_view:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
-
-/usr/include/c++/10/istream:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/internal_functional.h:
-
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/find.h:
+/usr/include/c++/10/iomanip:
 
 /usr/include/c++/10/functional:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/cfp32_cfp32_cfp32_tn.hpp.inc:
+
 /usr/include/c++/10/bits/stl_pair.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/relational_operators.h:
+/usr/include/c++/10/cstring:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy_if.h:
+/usr/include/x86_64-linux-gnu/bits/locale.h:
+
+/usr/include/c++/10/condition_variable:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/par.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/swizzle_layout.hpp:
 
 /usr/include/c++/10/cctype:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/malloc_and_free.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/set_operations.h:
 
 /usr/include/c++/10/bits/streambuf_iterator.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/counting_iterator.h:
+
+/usr/include/c++/10/bits/stream_iterator.h:
 
 /usr/include/x86_64-linux-gnu/bits/confname.h:
 
@@ -2087,7 +3203,13 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_80_rt.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp16_cfp16_cfp32_tn.hpp.inc:
+
+/usr/include/c++/10/bits/std_mutex.h:
+
 /usr/include/c++/10/bits/std_function.h:
+
+/usr/include/c++/10/tr1/gamma.tcc:
 
 /usr/include/c++/10/bits/shared_ptr_base.h:
 
@@ -2097,9 +3219,13 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/vector.tcc:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/commondx_config.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/vector_functions.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/library_types.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp:
 
 /usr/include/c++/10/cwchar:
 
@@ -2109,29 +3235,39 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/integer_traits.h:
 
-/usr/include/c++/10/bits/unique_ptr.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan_by_key.h:
 
-/usr/include/c++/10/bits/locale_facets.tcc:
+/usr/include/c++/10/bits/locale_facets_nonio.tcc:
 
-/usr/include/c++/10/system_error:
+/usr/include/c++/10/ext/numeric_traits.h:
 
 /usr/include/c++/10/bits/locale_facets.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/e5m2_e5m2_fp32_tn.hpp.inc:
+
 /usr/include/x86_64-linux-gnu/c++/10/bits/c++allocator.h:
 
+/usr/include/c++/10/bits/locale_conv.h:
+
 /usr/include/c++/10/bits/cxxabi_forced.h:
+
+/usr/local/mathdx/24.08/include/commondx/operators/precision.hpp:
+
+/usr/include/c++/10/locale:
+
+/usr/include/c++/10/bits/codecvt.h:
 
 /usr/include/c++/10/bits/basic_string.h:
 
 /usr/include/c++/10/initializer_list:
-
-/usr/include/c++/10/bits/basic_ios.tcc:
 
 /usr/include/c++/10/bits/basic_ios.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_cpp_dialect.cuh:
 
 /usr/include/c++/10/bits/allocated_ptr.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/pointer.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/alignment.h:
 
@@ -2157,6 +3293,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxImpl.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/ce5m2_ce5m2_cfp32_tn.hpp.inc:
+
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtx3.hpp:
 
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvToolsExt.h:
@@ -2164,6 +3302,20 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /home/chris/footstep-CUDA-DE/include/utils/utils_fun.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_category_to_system.h:
+
+/usr/include/c++/10/bits/basic_ios.tcc:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sequence.h:
+
+/home/chris/footstep-CUDA-DE/include/footstep/model.cuh:
+
+/usr/include/memory.h:
+
+/usr/include/c++/10/bits/stl_iterator.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_backward.h:
+
+/home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/insertion_sort.h:
 
@@ -2179,9 +3331,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/argument.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/util.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/swap_ranges.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_normal_static.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan.h:
+
+/usr/include/c++/10/tr1/bessel_function.tcc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/for_each.h:
 
@@ -2211,10 +3369,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/zip_iterator.h:
 
-/usr/include/memory.h:
-
-/usr/include/c++/10/bits/stl_iterator.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/equal.h:
@@ -2227,13 +3381,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/extrema.inl:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp16_cfp16_cfp16_tn.hpp.inc:
+
 /usr/include/c++/10/bits/unordered_map.h:
 
 /usr/include/c++/10/bits/ostream.tcc:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reverse.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique_by_key.h:
 
@@ -2241,9 +3393,9 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/stl_relops.h:
 
-/usr/include/c++/10/bits/stl_function.h:
+/usr/include/c++/10/ctime:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/swap_ranges.h:
+/usr/include/c++/10/bits/stl_function.h:
 
 /usr/include/c++/10/bits/enable_special_members.h:
 
@@ -2279,6 +3431,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/uniform_int_dist.h:
 
+/usr/include/c++/10/bits/quoted_string.h:
+
 /usr/include/c++/10/optional:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scatter.h:
@@ -2291,9 +3445,9 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/stdint.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/surface_indirect_functions.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm90.hpp:
 
 /usr/include/pthread.h:
 
@@ -2310,6 +3464,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/decoder.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/reverse_iterator_base.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/complex.h:
 
 /usr/include/c++/10/cerrno:
 
@@ -2331,11 +3487,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/postypes.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp32_cfp32_cfp32_tn.hpp.inc:
+
 /usr/include/c++/10/cstddef:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/c++/10/type_traits:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
@@ -2343,27 +3499,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm80.hpp:
+
 /usr/include/c++/10/exception:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/actor.inl:
-
-/usr/include/c++/10/bits/atomic_lockfree_defines.h:
-
 /usr/include/x86_64-linux-gnu/bits/fp-logb.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_runtime.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/cub/iterator/arg_index_input_iterator.cuh:
-
-/usr/include/c++/10/bits/range_access.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_discontinuity.cuh:
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
-
-/usr/include/c++/10/tr1/bessel_function.tcc:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan.h:
 
 /usr/include/c++/10/bits/stl_vector.h:
 
@@ -2397,13 +3541,29 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/sequence.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/traits/blas_traits.hpp:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/cub/iterator/arg_index_input_iterator.cuh:
+
+/usr/include/c++/10/bits/range_access.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_runtime.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/relational_operators.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy_if.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/warp/specializations/warp_reduce_smem.cuh:
 
 /usr/include/c++/10/bits/stl_iterator_base_types.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp32_fp32_fp32_tn.hpp.inc:
+
 /usr/include/strings.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/host_memory_resource.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/math.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/scatter.h:
 
@@ -2415,7 +3575,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/features.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/gemm.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_raking_layout.cuh:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp16_fp16_fp32_tn.hpp.inc:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
@@ -2431,17 +3595,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_ptr.h:
 
-/usr/include/c++/10/ext/numeric_traits.h:
-
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
 /usr/include/c++/10/bits/exception.h:
 
 /usr/include/stdio.h:
-
-/usr/include/fcntl.h:
-
-/usr/include/math.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/host_defines.h:
 
@@ -2451,7 +3609,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h:
 
+/usr/include/inttypes.h:
+
 /usr/include/time.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tensor_algorithms.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl:
 
@@ -2461,17 +3623,29 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/endian.h:
 
+/usr/include/c++/10/bits/basic_string.tcc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tuple_algorithms.hpp:
+
+/usr/include/c++/10/bits/locale_facets.tcc:
+
+/usr/include/c++/10/bits/unique_ptr.h:
+
+/usr/include/dlfcn.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90_desc.hpp:
+
 /usr/include/c++/10/tr1/poly_laguerre.tcc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/mismatch.inl:
 
-/usr/include/c++/10/tr1/gamma.tcc:
-
 /usr/include/c++/10/ext/aligned_buffer.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/sm_32_intrinsics.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm75.hpp:
 
 /usr/include/c++/10/bits/shared_ptr.h:
 
@@ -2483,6 +3657,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config.h:
 
+/usr/local/mathdx/24.08/include/commondx/traits/detail/is_operator_fd.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_radix_sort.cuh:
 
 /usr/include/c++/10/bits/functexcept.h:
@@ -2491,9 +3667,13 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/predefined_ops.h:
 
+/usr/include/c++/10/bits/sstream.tcc:
+
 /usr/include/stdc-predef.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/assignment_operator.h:
+
+/usr/local/mathdx/24.08/include/commondx/operators/size3d.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/has_nested_type.h:
 
@@ -2531,25 +3711,33 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_load.cuh:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/device_atomic_functions.h:
+
+/usr/include/linux/errno.h:
+
 /usr/include/c++/10/ext/concurrence.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/agent/agent_scan.cuh:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/e5m2_e5m2_fp32_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_precalc.h:
 
-/home/chris/footstep-CUDA-DE/include/cart_pole/model.cuh:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/sm_20_intrinsics.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp32_cfp32_cfp32_tn.hpp.inc:
 
 /usr/include/c++/10/bits/stl_construct.h:
 
 /usr/include/c++/10/bits/ptr_traits.h:
 
-/usr/include/errno.h:
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp16_fp16_fp32_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/trivial_copy.h:
 
 /usr/include/c++/10/tr1/riemann_zeta.tcc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_predicate.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
@@ -2571,6 +3759,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/surface_types.h:
 
+/usr/local/mathdx/24.08/include/commondx/detail/expressions.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/logical_operators.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/grid/grid_mapping.cuh:
@@ -2585,13 +3775,9 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/atomic_base.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp16_fp16_fp16_tn.hpp.inc:
+
 /usr/include/c++/10/bits/move.h:
-
-/usr/include/c++/10/stdexcept:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/has_member_function.h:
 
 /usr/include/c++/10/tr1/poly_hermite.tcc:
 
@@ -2601,17 +3787,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
-/usr/include/c++/10/bits/shared_ptr_atomic.h:
-
-/usr/include/c++/10/ostream:
-
-/usr/include/c++/10/iostream:
-
-/usr/include/c++/10/tr1/modified_bessel_func.tcc:
-
 /usr/include/string.h:
 
 /usr/include/c++/10/ratio:
+
+/usr/include/c++/10/bits/locale_facets_nonio.h:
+
+/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDefs.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/sm_32_atomic_functions.h:
 
 /usr/include/c++/10/bits/streambuf.tcc:
 
@@ -2627,13 +3811,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique_by_key.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/sort.h:
+
+/usr/include/c++/10/bits/allocator.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/texture_types.h:
 
 /usr/include/c++/10/algorithm:
-
-/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDecls.h:
-
-/usr/include/c++/10/bits/charconv.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/channel_descriptor.h:
 
@@ -2643,11 +3829,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_radix_rank.cuh:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
 /usr/include/c++/10/math.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/device_types.h:
+
+/usr/include/math.h:
+
+/usr/include/fcntl.h:
 
 /usr/include/c++/10/bits/std_abs.h:
 
@@ -2661,6 +3851,18 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda.h:
 
+/usr/include/errno.h:
+
+/usr/include/c++/10/atomic:
+
+/usr/include/c++/10/bits/stl_heap.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/general_copy.h:
@@ -2668,6 +3870,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/c++/10/bits/refwrap.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/crt/common_functions.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefer.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cpp11_required.h:
 
@@ -2677,7 +3881,7 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/node_handle.h:
 
-/usr/include/c++/10/pstl/glue_algorithm_defs.h:
+/usr/local/mathdx/24.08/external/cutlass/include/cute/container/array_aligned.hpp:
 
 /usr/include/c++/10/cmath:
 
@@ -2697,11 +3901,21 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/ext/type_traits.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp16_cfp16_cfp16_tn.hpp.inc:
+
 /usr/include/c++/10/bits/char_traits.h:
 
 /usr/include/c++/10/new:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/numeric_types.h:
+
 /usr/include/c++/10/ext/alloc_traits.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/make_unsigned_special.h:
+
+/usr/include/c++/10/cassert:
+
+/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
 /usr/include/c++/10/shared_mutex:
 
@@ -2726,8 +3940,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/set_operations.h:
 
 /usr/include/c++/10/utility:
 
@@ -2755,7 +3967,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_reduce.cuh:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/adjacent_difference.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_70_rt.hpp:
+
+/usr/include/c++/10/cfloat:
+
 /usr/include/x86_64-linux-gnu/bits/timex.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/remove.inl:
 
@@ -2766,6 +3986,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
+
+/usr/local/mathdx/24.08/include/commondx/traits/detail/description_traits.hpp:
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/c++locale.h:
 
@@ -2779,6 +4001,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/fp32_fp32_fp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/e5m2_e5m2_fp32_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/grid/grid_even_share.cuh:
 
 /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/converter.cuh:
@@ -2789,15 +4015,17 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/concept_check.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/crt/host_config.h:
+/usr/include/c++/10/type_traits:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/transform_iterator.h:
+/usr/include/x86_64-linux-gnu/c++/10/bits/messages_members.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/any_assign.h:
 
 /usr/include/c++/10/tr1/legendre_function.tcc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/tuple_of_iterator_references.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_checks.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
@@ -2827,6 +4055,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/xopen_lim.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/alignment.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_traits.inl:
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h:
@@ -2836,6 +4066,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand.h:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
+
+/usr/local/mathdx/24.08/include/commondx/detail/config.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/guarded_cuda_runtime_api.h:
 
@@ -2863,6 +4095,14 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_device.cuh:
 
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+/usr/include/c++/10/tr1/modified_bessel_func.tcc:
+
+/usr/include/c++/10/iostream:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/find.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/integer_sequence.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/for_each.h:
@@ -2875,6 +4115,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/distance.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/merge.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/pair.h:
+
 /usr/include/c++/10/bits/stl_algo.h:
 
 /usr/include/c++/10/iosfwd:
@@ -2883,7 +4127,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/composite.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/ce5m2_ce5m2_cfp32_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/sm_60_atomic_functions.hpp:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm70/fp16_fp16_fp32_tn.hpp.inc:
 
 /usr/lib/gcc/x86_64-linux-gnu/10/include/syslimits.h:
 
@@ -2901,21 +4149,95 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/range_cmp.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/blas_description_fd.hpp:
+
+/usr/include/c++/10/stdexcept:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/has_member_function.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp16_fp16_fp32_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_discrete2.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/device_atomic_functions.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/driver_types.h:
 
-/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDefs.h:
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_desc.hpp:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/sm_32_atomic_functions.h:
+/usr/include/c++/10/istream:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/internal_functional.h:
+
+/usr/include/c++/10/iterator:
+
+/usr/include/c++/10/memory_resource:
+
+/usr/include/c++/10/bits/shared_ptr_atomic.h:
+
+/usr/include/c++/10/ostream:
+
+/usr/include/c++/10/pstl/glue_algorithm_defs.h:
+
+/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDecls.h:
+
+/usr/include/c++/10/bits/charconv.h:
+
+/usr/include/c++/10/sstream:
+
+/usr/include/c++/10/string_view:
+
+/usr/include/c++/10/system_error:
+
+/usr/include/c++/10/vector:
+
+/usr/include/c++/10/bits/atomic_lockfree_defines.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/actor.inl:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/float8.h:
+
+/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/sm_20_atomic_functions.hpp:
+
+/usr/include/c++/10/version:
+
+/usr/include/c++/10/bits/hashtable.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/raw_pointer_cast.h:
+
+/usr/include/ctype.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/numeric_traits.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/count.inl:
+
+/usr/include/libintl.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy.hpp:
+
+/usr/include/linux/falloc.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h:
 
 /usr/include/unistd.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/function.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/find.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_reduce.cuh:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h:
+
+/usr/include/wchar.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp32_fp32_fp32_tn.hpp.inc:
 
 /usr/include/wctype.h:
 
@@ -2933,9 +4255,9 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/environments.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.inl:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/get_value.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/host_device.h:
 
@@ -2953,10 +4275,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
 
-/usr/include/x86_64-linux-gnu/bits/locale.h:
-
-/usr/include/c++/10/cstring:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/advance.h:
 
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
@@ -2969,7 +4287,13 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/remove.inl:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/ctf32_ctf32_cfp32_tn.hpp.inc:
+
 /usr/include/x86_64-linux-gnu/bits/stat.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp16_cfp16_cfp16_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm70.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
@@ -2995,85 +4319,31 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h:
 
+/usr/include/x86_64-linux-gnu/c++/10/bits/time_members.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/global_workarounds.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/detail/tensor.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/universal_categories.h:
+
 /usr/include/x86_64-linux-gnu/sys/time.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/adjacent_difference.inl:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/cuComplex.h:
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp16_cfp16_cfp32_tn.hpp.inc:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/cublas_v2.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/partition.inl:
-
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/10/include/float.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/sm_61_intrinsics.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_fp16.hpp:
 
-/usr/lib/gcc/x86_64-linux-gnu/10/include/float.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/cuComplex.h:
 
-/home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_backward.h:
-
-/home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh:
-
-/usr/include/c++/10/atomic:
-
-/usr/include/c++/10/bits/stl_heap.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.inl:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference.h:
-
-/usr/include/c++/10/bits/std_mutex.h:
-
-/usr/include/c++/10/bits/stream_iterator.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/pair.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/merge.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/malloc_and_free.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/make_unsigned_special.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
-
-/usr/include/c++/10/cassert:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/adjacent_difference.inl:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/crt/sm_70_rt.hpp:
-
-/usr/include/c++/10/cfloat:
-
-/usr/include/c++/10/condition_variable:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/par.h:
-
-/usr/include/c++/10/ctime:
-
-/usr/include/c++/10/iterator:
-
-/usr/include/c++/10/memory_resource:
-
-/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/sm_20_atomic_functions.hpp:
-
-/usr/include/c++/10/version:
-
-/usr/include/c++/10/bits/hashtable.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/raw_pointer_cast.h:
+/usr/include/c++/10/cinttypes:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/config.cuh:
 
@@ -3087,9 +4357,13 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_ptx.cuh:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/functional.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_adjacent_difference.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/execute_with_allocator_fwd.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/platform/platform.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_exchange.cuh:
 
@@ -3111,11 +4385,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_scan_warp_scans.cuh:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_radix_sort.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/device_scan.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/util/debug.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_reduce.cuh:
 
@@ -3123,9 +4401,13 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_reduce_raking.cuh:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/fp16_fp16_fp32_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/execution_policy.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_atom.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/specializations/block_reduce_raking_commutative_only.cuh:
 
@@ -3171,8 +4453,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_reduce.cuh:
 
-/home/chris/footstep-CUDA-DE/include/cart_pole/evaluate.cuh:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_reduce_by_key.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/device/dispatch/dispatch_select_if.cuh:
@@ -3193,13 +4473,27 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_macro.cuh:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/clear.hpp:
+
 /usr/include/c++/10/ext/string_conversions.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/device_ptr.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_namespace.cuh:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp64_fp64_fp64_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/version.cuh:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/cublas_v2.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/partition.inl:
+
+/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
 
@@ -3255,15 +4549,17 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator_aware_execution_policy.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/numeric_types.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/compiler.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/integer_math.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/array.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/config.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/cpp_compatibility.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/execution_policy.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/debug.h:
 
@@ -3273,11 +4569,7 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/transform_iterator.inl:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/global_workarounds.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/universal_categories.h:
+/usr/local/mathdx/24.08/include/cublasdx/include/operators.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce.h:
 
@@ -3286,6 +4578,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/host_system.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/memory_resource.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/integer_sequence.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.h:
 
@@ -3327,7 +4621,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/for_each.inl:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm80.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional.inl:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm75.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system_exists.h:
 
@@ -3344,6 +4642,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/c++/10/pstl/glue_memory_defs.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/memory_wrapper.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/operators/operator_type.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/half.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/merge.inl:
 
@@ -3393,15 +4695,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap_ranges.inl:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm90/fp16_fp16_fp16_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_globals.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/tabulate.inl:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/sort.h:
-
-/usr/include/c++/10/bits/allocator.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_array.h:
 
@@ -3420,6 +4718,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_mrg32k3a.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/tuple_meta_transform.h:
+
+/usr/local/mathdx/24.08/include/commondx/complex_types.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_deduction.h:
 
@@ -3467,6 +4767,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/for_each.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/copy.hpp:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/remove.h:
 
 /usr/include/stdlib.h:
@@ -3474,6 +4776,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/iterator/constant_input_iterator.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/generate.h:
+
+/usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_open.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/any_system_tag.h:
 
@@ -3499,6 +4803,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_adaptor_base.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/cfp16_cfp16_cfp32_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_category_to_traversal.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_traversal_tags.h:
@@ -3507,11 +4813,15 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/normal_iterator.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp64_cfp64_cfp64_tn.hpp.inc:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/zip_iterator.inl:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/zip_iterator_base.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/types.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/uninitialized_copy.h:
 
@@ -3520,6 +4830,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/iterator_adaptor.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/iterator_categories.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_gemm.hpp:
 
 /usr/include/c++/10/cstdlib:
 
@@ -3534,6 +4846,12 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/advance.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/reverse_iterator.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/crt/host_config.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/transform_iterator.h:
+
+/usr/local/mathdx/24.08/include/commondx/detail/stl/type_traits.hpp:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique.h:
 
@@ -3569,6 +4887,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/execution_policy.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_atom.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/find.h:
@@ -3584,11 +4904,3 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_type.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce_by_key.h:
-
-/usr/include/wchar.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/sort.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h:

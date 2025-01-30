@@ -96,9 +96,13 @@ cuda_solver_EXTERNAL_OBJECTS =
 CMakeFiles/cuda_solver.dir/cmake_device_link.o: CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o
 CMakeFiles/cuda_solver.dir/cmake_device_link.o: CMakeFiles/cuda_solver.dir/build.make
 CMakeFiles/cuda_solver.dir/cmake_device_link.o: libcuda_DE.a
-CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/cuda/lib64/libcublas.so
-CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/cuda/lib64/libcurand.so
+CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcudart.so
+CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcublas.so
+CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcurand.so
 CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/lib/libyaml-cpp.a
+CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/lib/x86_64-linux-gnu/librt.so
+CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcublasLt.so
+CMakeFiles/cuda_solver.dir/cmake_device_link.o: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libculibos.a
 CMakeFiles/cuda_solver.dir/cmake_device_link.o: CMakeFiles/cuda_solver.dir/deviceLinkLibs.rsp
 CMakeFiles/cuda_solver.dir/cmake_device_link.o: CMakeFiles/cuda_solver.dir/deviceObjects1.rsp
 CMakeFiles/cuda_solver.dir/cmake_device_link.o: CMakeFiles/cuda_solver.dir/dlink.txt
@@ -119,9 +123,13 @@ cuda_solver_EXTERNAL_OBJECTS =
 /home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o
 /home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: CMakeFiles/cuda_solver.dir/build.make
 /home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: libcuda_DE.a
-/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/cuda/lib64/libcublas.so
-/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/cuda/lib64/libcurand.so
+/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcudart.so
+/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcublas.so
+/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcurand.so
 /home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/lib/libyaml-cpp.a
+/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/lib/x86_64-linux-gnu/librt.so
+/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libcublasLt.so
+/home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: /usr/local/cuda-11.4/targets/x86_64-linux/lib/libculibos.a
 /home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: CMakeFiles/cuda_solver.dir/cmake_device_link.o
 /home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so: CMakeFiles/cuda_solver.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/chris/footstep-CUDA-DE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared module /home/chris/footstep-CUDA-DE/lib/DE_cuda_solver.so"

@@ -150,7 +150,8 @@ struct CudaParamIndividual{
     int con_var_dims, int_var_dims, dims;
     float cur_scale_f{0.5F}, cur_scale_f1{0.5F}, cur_Cr{0.5F};
     float fitness;
-    float cost;
+    float objective_score;
+    float constraint_score;
 };
 
 /*
@@ -162,7 +163,8 @@ struct ALIGN(64) CudaParamClusterData{
     float lshade_param[T * 3];  // current scale_f, current scale_f1, current crossover probability
     int con_var_dims, int_var_dims, dims;
     float fitness[T];
-    float cost[T];
+    float objective_score[T];
+    float constraint_score[T];
     int len{0};
 };
 

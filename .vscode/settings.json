@@ -46,6 +46,9 @@
         "valarray": "cpp",
         "unordered_set": "cpp",
         "bitset": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp"
     }
 }

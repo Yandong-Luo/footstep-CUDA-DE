@@ -883,4 +883,14 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o : /home/chris/footstep-C
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/system/cpp/memory_resource.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/mr/new.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/mr/fancy_pointer_resource.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/system/cpp/pointer.h
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/system/cpp/pointer.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cublas_v2.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cublas_api.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuComplex.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_bf16.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_bf16.hpp \
+    /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda.h \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
+    /home/chris/footstep-CUDA-DE/include/cart_pole/cart_pole_utils.cuh \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand.h

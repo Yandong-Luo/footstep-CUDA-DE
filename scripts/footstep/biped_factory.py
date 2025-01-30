@@ -6,8 +6,19 @@ import time
 
 # import MLD_hybrid_STL_Gurobi as MLD
 # import MLD_hybrid_STL_Drake as MLD
-import Biped_Drake as MLD
-import Biped_MPC as MPC
+# import Biped_Drake as MLD
+# import Biped_MPC as MPC
+
+import os
+import sys
+
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# 添加lib目录
+lib_path = os.path.join(project_root, 'lib')
+if lib_path not in sys.path:
+    sys.path.append(lib_path)
+
+import DE_cuda_solver
 
 # x_lim = [{'xl':   0, 'xu':   3.5, 'yl':   0, 'yu':  10, 'color': 'red'   }, #0
 #          {'xl':   3.5, 'xu':   6.5, 'yl':   0, 'yu':   3.5, 'color': 'orange'}, #1
@@ -104,8 +115,8 @@ i_con += 2*3
 #     h[(i_con+ii*2+0):(i_con+ii*2+2)] = np.array([[(-math.pi + ii*math.pi/2)+0.15  + Mt],
 #                                                  [-(-math.pi + ii*math.pi/2) + Mt]])
 # i_con += 2*5
-print("nc size: ", nc)
-print("h: ", h)
+# print("nc size: ", nc)
+# print("h: ", h)
 
 def plot_result(sol_x, sol_u, color, linestyle):
     ax = plt.gca()
@@ -159,8 +170,15 @@ def plot_result(sol_x, sol_u, color, linestyle):
 
     # plt.show()
 
-print("=============Start Planning=============")
-MLD_solver = MLD.GBD(nx, nu, nz, nc, N, "factory", h, M, False)
+# print("=============Start Planning=============")
+
+solver = DE_cuda_solver.Create()
+# print("Solver object created successfully")
+
+solver.init_solver(0)
+# print("Solver initialized successfully")
+
+# MLD_solver = MLD.GBD(nx, nu, nz, nc, N, "factory", h, M, False)
 # sol = MLD_solver.solve_full_problem(x0_MLD)
 # sol_x = np.zeros([N+1, nx])
 # for ii in range(N+1):
@@ -178,7 +196,7 @@ MLD_solver = MLD.GBD(nx, nu, nz, nc, N, "factory", h, M, False)
 # plot_result(sol_x, sol_u, 'black', '--')
 # plt.grid()
 # plt.savefig(f'figures/MLD_planning', dpi=400, bbox_inches="tight")
-print("=============Finish Planning=============")
+# print("=============Finish Planning=============")
 
 # print ("Skipping MPC")
 # quit()
