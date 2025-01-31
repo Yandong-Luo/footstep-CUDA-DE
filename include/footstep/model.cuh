@@ -4,16 +4,12 @@
 #include "diff_evolution_solver/data_type.h"
 #include "footstep/footstep_utils.cuh"
 #include <cublasdx.hpp>
-// #include <cublasdx/cublasdx.hpp>
-// #include <cublasdx/include/cublasdx.hpp>
-
-
 
 using namespace cublasdx;
 
 namespace footstep{
     // For matrix E times x
-    using Ex_GEMM = decltype(Size< row_E, col_init_state, col_E>()
+    using Ex_GEMM = decltype(Size< row_bigE, col_init_state, col_bigE>()
                         + Precision<float>()
                         + Type<type::real>()
                         + Function<function::MM>()
@@ -21,7 +17,7 @@ namespace footstep{
                         + Block());
 
     // For matrix F times u
-    using Fu_GEMM = decltype(Size< row_F, 1, col_F>()
+    using Fu_GEMM = decltype(Size< row_bigF, 1, col_bigF>()
                         + Precision<float>()
                         + Type<type::real>()
                         + Function<function::MM>()
@@ -34,24 +30,26 @@ namespace footstep{
     __global__ void UpdateStateAndEvaluate(cudaprocess::CudaParamClusterData<T> *cluster_data){
         if(blockIdx.x > 0)  return;
 
-        // float last_state[5] = init_state;
-        float last_state[5] = {0.0f};        
-        for(int j = 0; j < state_dims; ++j) {
-            last_state[j] = init_state[j];
-        }
-        for(int i = 0; i < N; ++i){
-            float state[5] = {0.0f};
+        float all_state[N * state_dims] = {0.0f};
+        // float Fu_result[N * state_dims] = {0.0f};
 
-            // Ex_GEMM().execute(1.0f, E, last_state, 1.0f, state);
+        auto gt_bigE = cublasdx::make_tensor(bigE, Ex_GEMM::get_layout_gmem_a());   // global tensor (gt)
+        auto gt_init_state = cublasdx::make_tensor(init_state, Ex_GEMM::get_layout_gmem_b());
+        auto gt_all_state = cublasdx::make_tensor(all_state, Ex_GEMM::get_layout_gmem_c());
 
-            // float current_u[3] = {
-            //     cluster_data->all_param[threadIdx.x * CUDA_PARAM_MAX_SIZE + i*control_dims + 0],
-            //     cluster_data->all_param[threadIdx.x * CUDA_PARAM_MAX_SIZE + i*control_dims + 1],
-            //     cluster_data->all_param[threadIdx.x * CUDA_PARAM_MAX_SIZE + i*control_dims + 2]
-            // };
-            // __syncthreads();
-            // Fu_GEMM().execute(1.0f, F, current_u, 1.0f, state);
-        }
+        Ex_GEMM().execute(1.0f, gt_bigE, gt_init_state, 0.0f, gt_all_state);
+        __syncthreads();
+
+        auto gt_bigF = cublasdx::make_tensor(bigF, Fu_GEMM::get_layout_gmem_a());   // global tensor (gt)
+
+        float *cur_individual_param = cluster_data->all_param + threadIdx.x * CUDA_PARAM_MAX_SIZE;
+        auto gt_u = cublasdx::make_tensor(cur_individual_param, Fu_GEMM::get_layout_gmem_b());
+
+        // auto gt_Fu_result = cublasdx::make_tensor(Fu_result, Fu_GEMM::get_layout_gmem_c());
+
+        Fu_GEMM().execute(1.0f, gt_bigF, gt_u, 1.0f, gt_all_state);
+
+        __syncthreads();
     }
 }
 

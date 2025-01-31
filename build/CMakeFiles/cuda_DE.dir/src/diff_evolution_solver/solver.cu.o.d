@@ -350,28 +350,6 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o : /home/chris/foots
     /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
     /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand.h \
-    /home/chris/footstep-CUDA-DE/include/cart_pole/cart_pole_utils.cuh \
-    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/converter.cuh \
-    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_kernel.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_discrete.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_precalc.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_mrg32k3a.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_mtgp32_kernel.h \
-    /usr/include/memory.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_mtgp32.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_philox4x32_x.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_globals.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_uniform.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_normal.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_normal_static.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_lognormal.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_poisson.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_discrete2.h \
-    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/decoder.cuh \
-    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/debug.cuh \
-    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evolve.cuh \
-    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evaluate.cuh \
     /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/host_vector.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/detail/config.h \
@@ -943,6 +921,27 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o : /home/chris/foots
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/mr/new.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/mr/fancy_pointer_resource.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/system/cpp/pointer.h \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/converter.cuh \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_kernel.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_discrete.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_precalc.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_mrg32k3a.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_mtgp32_kernel.h \
+    /usr/include/memory.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_mtgp32.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_philox4x32_x.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_globals.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_uniform.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_normal.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_normal_static.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_lognormal.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_poisson.h \
+    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_discrete2.h \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/decoder.cuh \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/debug.cuh \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evolve.cuh \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evaluate.cuh \
     /home/chris/footstep-CUDA-DE/include/footstep/model.cuh \
     /usr/local/mathdx/24.08/include/cublasdx.hpp \
     /usr/local/mathdx/24.08/include/cublasdx/include/cublasdx.hpp \

@@ -413,17 +413,6 @@ void CudaDiffEvolveSolver::Evolution(int epoch, CudaEvolveType search_type){
     // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
 }
 
-__global__ void ConstructStateWeight(float *state_weight_matrix){
-    if (threadIdx.x >= cart_pole::row_state_weight) return;
-    int idx = threadIdx.x % cart_pole::row_Q;
-    state_weight_matrix[threadIdx.x * cart_pole::col_state_weight + threadIdx.x] = cart_pole::Q[idx * cart_pole::col_Q + idx];
-}
-
-__global__ void ConstructControlWeight(float *control_weight_matrix){
-    if (threadIdx.x >= cart_pole::row_control_weight) return;
-    control_weight_matrix[threadIdx.x * cart_pole::col_control_weight + threadIdx.x] = cart_pole::control_weight;
-}
-
 void CudaDiffEvolveSolver::InitSolver(int gpu_device){
     if(DEBUG_ENABLE_NVTX)   init_range = nvtxRangeStart("Init Different Evolution Solver");
 

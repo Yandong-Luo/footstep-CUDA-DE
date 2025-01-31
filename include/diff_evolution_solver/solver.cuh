@@ -115,7 +115,7 @@ namespace cudaprocess{
 
             float *control_matrix, *h_control_matrix;
 
-            CartStateList *cluster_state, *h_cluster_state;
+            // CartStateList *cluster_state, *h_cluster_state;
 
             // tmp_state_score record the weight(Q) x state^T
             float *temp_state_score, *h_temp_state_score;

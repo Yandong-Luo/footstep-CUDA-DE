@@ -2,7 +2,7 @@
 #define CUDA_DIFF_EVOLUTION_DATA_TYPE_H
 #include <unordered_map>
 #include "utils/utils.cuh"
-#include "cart_pole/cart_pole_utils.cuh"
+#include "footstep/footstep_utils.cuh"
 
 namespace cudaprocess{
 
@@ -62,15 +62,15 @@ struct CudaVector {
 //     float dtheta;   // dot theta
 // };
 
-struct ALIGN(64) CartStateList{
-    // float position[cart_pole::N * CUDA_SOLVER_POP_SIZE];
-    // float speed[cart_pole::N * CUDA_SOLVER_POP_SIZE];
-    // float theta[cart_pole::N * CUDA_SOLVER_POP_SIZE];
-    // float dtheta[cart_pole::N * CUDA_SOLVER_POP_SIZE];   // dot theta
-    // float force[cart_pole::N * CUDA_SOLVER_POP_SIZE * 2];
-    float4 state[cart_pole::N * CUDA_SOLVER_POP_SIZE];
-    float2 force[cart_pole::N * CUDA_SOLVER_POP_SIZE];
-};
+// struct ALIGN(64) CartStateList{
+//     // float position[cart_pole::N * CUDA_SOLVER_POP_SIZE];
+//     // float speed[cart_pole::N * CUDA_SOLVER_POP_SIZE];
+//     // float theta[cart_pole::N * CUDA_SOLVER_POP_SIZE];
+//     // float dtheta[cart_pole::N * CUDA_SOLVER_POP_SIZE];   // dot theta
+//     // float force[cart_pole::N * CUDA_SOLVER_POP_SIZE * 2];
+//     float4 state[cart_pole::N * CUDA_SOLVER_POP_SIZE];
+//     float2 force[cart_pole::N * CUDA_SOLVER_POP_SIZE];
+// };
 
 struct Problem{
     int num_continous = 2;
@@ -147,6 +147,7 @@ struct ALIGN(16) CudaLShadePair {
 
 struct CudaParamIndividual{
     float param[CUDA_PARAM_MAX_SIZE];
+    // float state[footstep::N * footstep::state_dims];
     int con_var_dims, int_var_dims, dims;
     float cur_scale_f{0.5F}, cur_scale_f1{0.5F}, cur_Cr{0.5F};
     float fitness;
@@ -161,6 +162,7 @@ template <int T>
 struct ALIGN(64) CudaParamClusterData{
     float all_param[CUDA_PARAM_MAX_SIZE * T];
     float lshade_param[T * 3];  // current scale_f, current scale_f1, current crossover probability
+    // float all_state[footstep::N * footstep::state_dims * T];
     int con_var_dims, int_var_dims, dims;
     float fitness[T];
     float objective_score[T];
