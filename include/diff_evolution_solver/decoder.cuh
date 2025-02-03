@@ -37,8 +37,8 @@ namespace cudaprocess{
                 if (generate_int == evolve_data->upper_bound[i] + 1 )   generate_int = evolve_data->upper_bound[i];
                 new_cluster_data->all_param[idx * CUDA_PARAM_MAX_SIZE + i] = generate_int;
             }
-            
-            // printf("index:%d lower bound:%f, upper bound:%f, value:%f\n",i, evolve_data->lower_bound[i], evolve_data->upper_bound[i], new_cluster_data->all_param[idx * CUDA_PARAM_MAX_SIZE + i]);
+            // printf("wdawd:%d, problem_param.con_var_dims:%d\n", evolve_data->problem_param.dims, evolve_data->problem_param.con_var_dims);
+            // if (i == 0) printf("index:%d lower bound:%f, upper bound:%f, value:%f\n",i, evolve_data->lower_bound[i], evolve_data->upper_bound[i], new_cluster_data->all_param[idx * CUDA_PARAM_MAX_SIZE + i]);
         }
         // printf("\n");
         if(idx == 0){

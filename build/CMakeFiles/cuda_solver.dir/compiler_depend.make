@@ -365,6 +365,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/include/x86_64-linux-gnu/bits/errno.h \
   /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
   /usr/include/x86_64-linux-gnu/bits/fcntl.h \
+  /usr/include/x86_64-linux-gnu/bits/fcntl2.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -382,6 +383,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/mathinline.h \
   /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
@@ -389,14 +391,21 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stat.h \
   /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
   /usr/include/x86_64-linux-gnu/bits/statx.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
+  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
+  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
@@ -435,10 +444,12 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
   /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/unistd.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
@@ -942,8 +953,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/error_category.inl:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/uninitialized_fill.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/fill.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/transform.h:
@@ -1009,6 +1018,26 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/generate.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/find.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/fill.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/assign_value.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h:
 
 /usr/include/locale.h:
 
@@ -1100,6 +1129,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInit.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/execution_policy.h:
+
+/usr/include/c++/10/debug/assertions.h:
+
 /usr/include/c++/10/bits/stl_pair.h:
 
 /usr/include/linux/stddef.h:
@@ -1119,8 +1152,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/ext/alloc_traits.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/frameobject.h:
-
-/usr/include/c++/10/exception:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
@@ -1152,7 +1183,9 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/bits/unordered_set.h:
 
-/usr/include/c++/10/chrono:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/uninitialized_fill.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/malloc_and_free.h:
 
@@ -1227,10 +1260,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/limits:
 
 /usr/include/c++/10/bits/ranges_uninitialized.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/general_copy.h:
-
-/usr/include/c++/10/bits/refwrap.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cpp11_required.h:
 
@@ -1376,8 +1405,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pystrtod.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h:
-
 /home/chris/anaconda3/envs/lab_env/include/python3.9/descrobject.h:
 
 /usr/include/c++/10/version:
@@ -1403,8 +1430,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/memory:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl:
 
 /usr/include/c++/10/shared_mutex:
 
@@ -1536,10 +1561,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/osmodule.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h:
-
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/funcobject.h:
@@ -1644,8 +1665,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/unicodeobject.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h:
-
 /usr/include/c++/10/bits/stl_uninitialized.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/bytearrayobject.h:
@@ -1663,8 +1682,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/pair.inl:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/object.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/assign_value.h:
 
 /usr/include/x86_64-linux-gnu/asm/types.h:
 
@@ -1840,8 +1857,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/bits/uniform_int_dist.h:
 
-/home/chris/anaconda3/envs/lab_env/include/python3.9/longobject.h:
-
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/attr.h:
 
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/buffer_info.h:
@@ -1942,8 +1957,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/stdint.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h:
-
 /usr/include/stdio.h:
 
 /usr/include/strings.h:
@@ -2004,6 +2017,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_mtgp32.h:
 
+/usr/include/c++/10/chrono:
+
+/usr/include/x86_64-linux-gnu/bits/mathinline.h:
+
 /usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/advance.h:
@@ -2014,19 +2031,37 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/sched.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/general_copy.h:
+
+/usr/include/c++/10/bits/refwrap.h:
+
+/usr/include/x86_64-linux-gnu/bits/select2.h:
+
 /usr/include/x86_64-linux-gnu/bits/statx.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/forceinline.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
+/home/chris/anaconda3/envs/lab_env/include/python3.9/longobject.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/pointer_traits.h:
 
+/usr/include/c++/10/exception:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/simple_defines.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:
+
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system_exists.h:
 
@@ -2078,6 +2113,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/malloc_and_free.h:
 
+/usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
@@ -2098,9 +2135,13 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/waitflags.h:
+/usr/include/x86_64-linux-gnu/bits/unistd.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/allocator_traits.inl:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
@@ -2129,10 +2170,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/bits/localefwd.h:
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/allocator_traits.inl:
-
-/usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/integer_sequence.h:
 
@@ -2324,6 +2361,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/placeholder.h:
 
+/usr/include/x86_64-linux-gnu/bits/fcntl2.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/generate.inl:
 
 /usr/include/c++/10/pstl/glue_memory_defs.h:
@@ -2438,6 +2477,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_category_to_traversal.h:
 
+/usr/include/x86_64-linux-gnu/bits/wchar2.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/util_compiler.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/iterator_category_with_system_and_traversal.h:
@@ -2517,11 +2558,3 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/wchar.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy.h:
-
-/usr/include/c++/10/debug/assertions.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/execution_policy.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/fill.h:

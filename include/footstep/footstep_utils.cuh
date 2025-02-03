@@ -48,6 +48,10 @@ extern __constant__ float4 region7;
 
 const int row_init_state = 5, col_init_state = 1;
 extern __constant__ float init_state[5];
+extern float *d_init_state;
+
+extern float *N_state;
+extern float *h_N_state;
 
 // E Matrix (5x5), Row priority
 const int row_E = state_dims, col_E = state_dims;
@@ -107,12 +111,13 @@ const int row_bigF = N * state_dims, col_bigF = N * control_dims;
 extern float *bigF;
 extern float *h_bigF;
 
-// void ConstructBigF();
+// ##############################
+// ########## DEBUG #############
+// ##############################
 
-const int row_score = CUDA_SOLVER_POP_SIZE, col_score = 1;
+extern __managed__ float cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims];
 
-extern __constant__ float4 current_state;
-extern __constant__ float2 current_wall_pos;
+extern float h_cluster_param[N * CUDA_SOLVER_POP_SIZE * control_dims];
 }
 
 #endif

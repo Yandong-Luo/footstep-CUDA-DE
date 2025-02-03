@@ -5,51 +5,84 @@
 #include "footstep/footstep_utils.cuh"
 #include <cublasdx.hpp>
 
-using namespace cublasdx;
+// using namespace cublasdx;
 
 namespace footstep{
     // For matrix E times x
-    using Ex_GEMM = decltype(Size< row_bigE, col_init_state, col_bigE>()
-                        + Precision<float>()
-                        + Type<type::real>()
-                        + Function<function::MM>()
-                        + Arrangement<cublasdx::row_major, cublasdx::row_major>()
-                        + Block());
+    using Ex_GEMM = decltype(cublasdx::Size< row_bigE, 1, col_bigE>()
+                        + cublasdx::Precision<float>()
+                        + cublasdx::Type<cublasdx::type::real>()
+                        + cublasdx::Function<cublasdx::function::MM>()
+                        + cublasdx::Arrangement<cublasdx::row_major, cublasdx::row_major>()
+                        + cublasdx::SM<860>()
+                        + cublasdx::Block());
 
     // For matrix F times u
-    using Fu_GEMM = decltype(Size< row_bigF, 1, col_bigF>()
-                        + Precision<float>()
-                        + Type<type::real>()
-                        + Function<function::MM>()
-                        + Arrangement<cublasdx::row_major, cublasdx::row_major>()
-                        + Block());
+    using Fu_GEMM = decltype(cublasdx::Size< row_bigF, 1, col_bigF>()
+                        + cublasdx::Precision<float>()
+                        + cublasdx::Type<cublasdx::type::real>()
+                        + cublasdx::Function<cublasdx::function::MM>()
+                        + cublasdx::Arrangement<cublasdx::row_major, cublasdx::row_major>()
+                        + cublasdx::SM<860>()
+                        + cublasdx::Block());
 
+    template<class GEMM>
+    __device__ void gemm_kernel(const float  alpha,
+                                const float* a,
+                                const float* b,
+                                const float  beta,
+                                float* c,
+                                char* smem) {
+        // extern __shared__ __align__(16) char smem[];
+
+        // Make global memory tensor
+        auto a_global_tensor = cublasdx::make_tensor(a, GEMM::get_layout_gmem_a());
+        auto b_global_tensor = cublasdx::make_tensor(b, GEMM::get_layout_gmem_b());
+        auto c_global_tensor = cublasdx::make_tensor(c, GEMM::get_layout_gmem_c());
+
+        // Make shared memory tensor
+        auto [smem_a, smem_b, smem_c] = GEMM::slice_shared_memory(smem);
+        auto a_shared_tensor = cublasdx::make_tensor(smem_a, GEMM::get_layout_smem_a());
+        auto b_shared_tensor = cublasdx::make_tensor(smem_b, GEMM::get_layout_smem_b());
+        auto c_shared_tensor = cublasdx::make_tensor(smem_c, GEMM::get_layout_smem_c());
+
+        // Load data from global memory tensor to shared memory tensor
+        using alignment = cublasdx::alignment_of<GEMM>;
+        cublasdx::copy<GEMM, alignment::a>(a_global_tensor, a_shared_tensor);
+        cublasdx::copy<GEMM, alignment::b>(b_global_tensor, b_shared_tensor);
+        cublasdx::copy<GEMM, alignment::c>(c_global_tensor, c_shared_tensor);
+        cublasdx::copy_wait();
+
+        // Execute GEMM
+        GEMM().execute(alpha, a_shared_tensor, b_shared_tensor, beta, c_shared_tensor);
+        __syncthreads();
+
+        // Store data from shared memory tensor to global memory tensor
+        cublasdx::copy<GEMM, alignment::c>(c_shared_tensor, c_global_tensor);
+    }
 
     // Generative N step state and evaluate
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void UpdateStateAndEvaluate(cudaprocess::CudaParamClusterData<T> *cluster_data){
-        if(blockIdx.x > 0)  return;
+    __global__ void UpdateStateAndEvaluate(cudaprocess::CudaParamClusterData<T> *cluster_data, const float *bigE, const float *bigF, float *cluster_state){
+        if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
 
-        float all_state[N * state_dims] = {0.0f};
-        // float Fu_result[N * state_dims] = {0.0f};
+        // current individual control input (N step)
+        float *cur_individual_param = cluster_data->all_param + blockIdx.x * CUDA_PARAM_MAX_SIZE;
 
-        auto gt_bigE = cublasdx::make_tensor(bigE, Ex_GEMM::get_layout_gmem_a());   // global tensor (gt)
-        auto gt_init_state = cublasdx::make_tensor(init_state, Ex_GEMM::get_layout_gmem_b());
-        auto gt_all_state = cublasdx::make_tensor(all_state, Ex_GEMM::get_layout_gmem_c());
+        float *N_states = cluster_state + blockIdx.x * N * state_dims;
+        
+        extern __shared__ __align__(16) char smem[];
 
-        Ex_GEMM().execute(1.0f, gt_bigE, gt_init_state, 0.0f, gt_all_state);
-        __syncthreads();
-
-        auto gt_bigF = cublasdx::make_tensor(bigF, Fu_GEMM::get_layout_gmem_a());   // global tensor (gt)
-
-        float *cur_individual_param = cluster_data->all_param + threadIdx.x * CUDA_PARAM_MAX_SIZE;
-        auto gt_u = cublasdx::make_tensor(cur_individual_param, Fu_GEMM::get_layout_gmem_b());
-
-        // auto gt_Fu_result = cublasdx::make_tensor(Fu_result, Fu_GEMM::get_layout_gmem_c());
-
-        Fu_GEMM().execute(1.0f, gt_bigF, gt_u, 1.0f, gt_all_state);
+        // matrix bigE times init_states, and record the result at N_states
+        gemm_kernel<Ex_GEMM>(1.0f, bigE, init_state, 0.0f, N_states, smem);
 
         __syncthreads();
+
+        // matrix bigE times init_states, and plus the result at F
+        gemm_kernel<Fu_GEMM>(1.0f, bigF, cur_individual_param, 1.0f, N_states, smem);
+
+        // __syncthreads();
+        
     }
 }
 

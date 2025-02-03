@@ -201,3 +201,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.3] - 2025-1-31
 ### Changed
 - Yandong Luo: Finish all state = bigE times init_state + bigF times all_u (Unverified)
+
+## [0.3.4] - 2025-2-3
+### Changed
+- Yandong Luo: Complete the parallel update of different individual states. The main method is to update the states of multiple individuals in parallel, and for each individual state update, cublasdx is also used to complete the parallel matrix multiplication at the kernel function level.

@@ -8,7 +8,7 @@ namespace cudaprocess{
 
 #define ALIGN(n) __align__(n)
 
-#define CUDA_PARAM_MAX_SIZE 16
+#define CUDA_PARAM_MAX_SIZE 90
 // #define CUDA_SOLVER_POP_SIZE 128
 #define CUDA_MAX_FLOAT 1e30
 #define CUDA_MAX_TASKS 1

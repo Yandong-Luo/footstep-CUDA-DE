@@ -73,13 +73,19 @@ void CudaDiffEvolveSolver::MallocSetup(){
     CHECK_CUDA(cudaMalloc(&footstep::bigE, footstep::row_bigE * footstep::col_bigE * sizeof(float)));
     CHECK_CUDA(cudaMalloc(&footstep::bigF, footstep::row_bigF * footstep::col_bigF * sizeof(float)));
 
+    // CHECK_CUDA(cudaMalloc(&footstep::d_init_state, footstep::state_dims * sizeof(float)));
+
+    // CHECK_CUDA(cudaMalloc(&footstep::N_state, footstep::state_dims * footstep::N * sizeof(float)));
+
     if (DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
-        printf("Debug flags enabled, allocating host memory\n");
+        // printf("Debug flags enabled, allocating host memory\n");
         printf("bigE size:%d\n", footstep::row_bigE * footstep::col_bigE);
         printf("bigF size:%d\n", footstep::row_bigF * footstep::col_bigF);
         
         CHECK_CUDA(cudaHostAlloc(&footstep::h_bigE, footstep::row_bigE * footstep::col_bigE * sizeof(float), cudaHostAllocDefault));  
-        CHECK_CUDA(cudaHostAlloc(&footstep::h_bigF, footstep::row_bigF * footstep::col_bigF * sizeof(float), cudaHostAllocDefault));        
+        CHECK_CUDA(cudaHostAlloc(&footstep::h_bigF, footstep::row_bigF * footstep::col_bigF * sizeof(float), cudaHostAllocDefault));    
+
+        // CHECK_CUDA(cudaHostAlloc(&footstep::h_N_state, footstep::state_dims * footstep::N * sizeof(float), cudaHostAllocDefault));        
     }
     cuda_utils_ = std::make_shared<CudaUtil>();
 
@@ -133,6 +139,8 @@ void CudaDiffEvolveSolver::SetBoundary(){
             host_evolve_data_->lower_bound[i] = footstep::utheta_lb;
             host_evolve_data_->upper_bound[i] = footstep::utheta_ub;
         }
+
+        printf("current %d low bound:%f\n", i, host_evolve_data_->lower_bound[i]);
     }
 }
 
@@ -288,7 +296,9 @@ __global__ void LoadWarmStartResultForSolver(CudaEvolveData *evolve, CudaParamCl
 }
 
 void CudaDiffEvolveSolver::WarmStart(){
-//     InitParameter<<<1, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, CUDA_SOLVER_POP_SIZE, new_cluster_data_, old_cluster_data_, random_center_->uniform_data_);
+    InitParameter<<<1, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, CUDA_SOLVER_POP_SIZE, new_cluster_data_, old_cluster_data_, random_center_->uniform_data_);
+    printf("warm start\n");
+    Evaluation(CUDA_SOLVER_POP_SIZE, 0);
 
 //     SaveNewParamAsOldParam<<<CUDA_SOLVER_POP_SIZE, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, old_cluster_data_, 0, CUDA_SOLVER_POP_SIZE, 0);
 //     // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
@@ -354,10 +364,56 @@ void CudaDiffEvolveSolver::WarmStart(){
 //     DynamicEvaluation2(evolve, cluster_data, evolve->lambda);
 // }
 
+auto max_dim3 = [](const dim3& a, const dim3& b) {
+    return (a.x * a.y * a.z) > (b.x * b.y * b.z) ? a : b;
+};
+
 void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
     // cart_pole::Compute_NonlinearDynamics<CUDA_SOLVER_POP_SIZE><<<1, size, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, score);
 
-    // footstep::UpdateStateAndEvaluate<CUDA_SOLVER_POP_SIZE><<<1, size, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_);
+    const size_t gemm_shared_mem_size = std::max(footstep::Ex_GEMM().shared_memory_size, footstep::Fu_GEMM().shared_memory_size);
+
+    dim3 dim = max_dim3(footstep::Ex_GEMM().block_dim, footstep::Fu_GEMM().block_dim);
+    printf("cublasDx need share memory size:%zu max block dim:%u\n",gemm_shared_mem_size, dim.x*dim.y*dim.z); 
+    
+    
+
+    // // 验证是否超过设备限制
+    cudaGetDevice(0);
+    cudaDeviceProp prop;
+    CHECK_CUDA(cudaGetDeviceProperties(&prop, 0));
+    std::cout << "Device shared memory per block: " << prop.sharedMemPerBlock << " bytes" << std::endl;
+    
+    if (gemm_shared_mem_size > prop.sharedMemPerBlock) {
+        std::cout << "Required shared memory (" << gemm_shared_mem_size 
+                  << " bytes) exceeds device limit (" << prop.sharedMemPerBlock 
+                  << " bytes)" << std::endl;
+        // return -1;
+
+        // Increase max dynamic shared memory for the kernel if needed
+        CHECK_CUDA(cudaFuncSetAttribute(
+            footstep::UpdateStateAndEvaluate<CUDA_SOLVER_POP_SIZE>, 
+            cudaFuncAttributeMaxDynamicSharedMemorySize,
+            gemm_shared_mem_size
+        ));
+        
+    }
+    
+
+    // cudaGetDevice(0);  // 获取当前设备
+    // cudaDeviceProp prop;
+    // cudaGetDeviceProperties(&prop, 0);  // 获取设备属性
+
+    // std::cout << "==================== CUDA Device Info ====================" << std::endl;
+    // std::cout << "Device Name                        : " << prop.name << std::endl;
+    // std::cout << "Max Shared Memory per Block        : " << prop.sharedMemPerBlock << " bytes" << std::endl;
+    // std::cout << "Max Shared Memory per Multiprocessor: " << prop.sharedMemPerMultiprocessor << " bytes" << std::endl;
+    // std::cout << "Max Threads per Block              : " << prop.maxThreadsPerBlock << std::endl;
+    // std::cout << "Warp Size                           : " << prop.warpSize << std::endl;
+    // std::cout << "=========================================================" << std::endl;
+
+
+    footstep::UpdateStateAndEvaluate<CUDA_SOLVER_POP_SIZE><<<size, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(new_cluster_data_, footstep::bigE, footstep::bigF, footstep::cluster_N_state);
 
     // cart_pole::Compute_linearDynamics<CUDA_SOLVER_POP_SIZE><<<size, 1, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, cluster_state, state_matrix, control_matrix, score);
 
@@ -370,9 +426,9 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
     // cublasSaxpy(cublas_handle_, size, &alpha, state_score, 1, score, 1);
     // cublasSaxpy(cublas_handle_, size, &alpha, control_score, 1, score, 1);
 
-    // if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
+    if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
     //     // state and control
-    //     CHECK_CUDA(cudaMemcpy(h_state_matrix, state_matrix, cart_pole::row_state_matrix * cart_pole::col_state_matrix * sizeof(float), cudaMemcpyDeviceToHost));
+        CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, new_cluster_data_->all_param, footstep::N * CUDA_SOLVER_POP_SIZE * footstep::control_dims * sizeof(float), cudaMemcpyDeviceToHost));
     //     CHECK_CUDA(cudaMemcpy(h_control_matrix, control_matrix, cart_pole::row_control_matrix * cart_pole::col_control_matrix * sizeof(float), cudaMemcpyDeviceToHost));
 
     //     // // state evaluation process
@@ -387,7 +443,7 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
     //     // CHECK_CUDA(cudaMemcpy(h_control_score, control_score, size * sizeof(float), cudaMemcpyDeviceToHost));
     //     CHECK_CUDA(cudaMemcpy(h_score, score, size * sizeof(float), cudaMemcpyDeviceToHost));
 
-    //     CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+        CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
         
     //     // int row_state_matrix = cart_pole::row_state_matrix, col_state_matrix = cart_pole::col_state_matrix;
     //     // int row_control_matrix = cart_pole::row_control_matrix, col_control_matrix = cart_pole::col_control_matrix;
@@ -396,7 +452,10 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
     //     // PrintMatrixByRow(h_state_score, size, 1, "state score");
     //     // PrintMatrixByRow(h_control_matrix, cart_pole::row_control_matrix, cart_pole::col_control_matrix, "control matrix");
     //     PrintMatrixByRow(h_score, size, 1, "score");
-    // }
+        // cudaDeviceSynchronize();
+        PrintMatrixByRow(footstep::h_cluster_param, CUDA_SOLVER_POP_SIZE , footstep::N * footstep::control_dims, "h_cluster_param");
+        PrintMatrixByRow(footstep::cluster_N_state, CUDA_SOLVER_POP_SIZE , footstep::N * footstep::state_dims, "cluster_N_state");
+    }
     
     UpdateFitnessBasedMatrix<CUDA_SOLVER_POP_SIZE><<<1, size, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, score);
 }
@@ -435,6 +494,8 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
     footstep::ConstructEandF(cuda_utils_->streams_[0]);
     footstep::ConstructBigEAndF(footstep::bigE, footstep::bigF, cublas_handle_, cuda_utils_->streams_[0]);
 
+    // CHECK_CUDA(cudaMemcpy(footstep::d_init_state, footstep::init_state, footstep::state_dims * sizeof(float), cudaMemcpyHostToDevice));
+
     if (DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
         printf("Debug flags enabled, copying memory\n");
         CHECK_CUDA(cudaMemcpyAsync(footstep::h_bigE, footstep::bigE, footstep::row_bigE * footstep::col_bigE * sizeof(float), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
@@ -456,8 +517,6 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
 
     if(DEBUG_ENABLE_NVTX)   setting_boundary_range = nvtxRangeStart("Init_Solver Setting Boundary");
 
-    SetBoundary();
-
     host_evolve_data_->problem_param.con_var_dims = con_var_dims_;
     host_evolve_data_->problem_param.dims = dims_;
     host_evolve_data_->problem_param.int_var_dims = int_var_dims_;
@@ -465,6 +524,8 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
     host_evolve_data_->problem_param.max_round = 30;
 
     host_evolve_data_->problem_param.accuracy_rng = 0.5;
+
+    SetBoundary();
     
     if (DEBUG_PRINT_FLAG || DEBUG_PRINT_INIT_SOLVER_FLAG) printf("START MEMORY ASYNC\n");
 
@@ -473,6 +534,10 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
     if (DEBUG_PRINT_FLAG || DEBUG_PRINT_INIT_SOLVER_FLAG) printf("MEMORY ASYNC SUBMIT\n");
 
     InitCudaEvolveData<<<1, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, old_cluster_data_, CUDA_SOLVER_POP_SIZE);
+
+    // WarmStart();
+
+    // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
 
     printf("FINISH INIT SOLVER\n");
 }
@@ -516,40 +581,40 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(bool enable_warmstart){
 
     WarmStart();
 
-    for (int i = 0; i < host_evolve_data_->problem_param.max_round && !*h_terminate_flag; ++i) {
-        // printf("generation i:%d\n", i);
-        Evolution(i, CudaEvolveType::GLOBAL);
-    }
-
-    if (DEBUG_PRINT_FLAG || DEBUG_PRINT_SOLVER_FLAG){
-        CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-        CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-        CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-        PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
-        printf("new cluster data=============================================\n");
-        PrintClusterData<CUDA_SOLVER_POP_SIZE>(host_new_cluster_data_);
-
-        // CHECK_CUDA(cudaMemcpyAsync(host_evolve_data_, evolve_data_, sizeof(CudaEvolveData), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-        // printf("CUDA_MAX_FLOAT %f\n", CUDA_MAX_FLOAT);
-    }
-    // Get the first individual from old param (after sorting, the first one is the best one)
-    GetSolFromOldParam<CUDA_SOLVER_POP_SIZE*3><<<1, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, result);
-    // 将 old_cluster_data_<CUDA_SOLVER_POP_SIZE*3> 中索引为0的数据提取出来,填充到evolve data单个CudaParamIndividual结构中,记为warm start。索引为0的解是warm start过程中最优的
-    UpdateEvolveWarmStartBasedClusterData<<<1, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, old_cluster_data_);
-    CHECK_CUDA(cudaMemcpyAsync(host_result, result, sizeof(CudaParamIndividual), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-    cudaDeviceSynchronize();
-
-    last_sol_fitness = host_result->fitness;
-
-    // for(int i = con_var_dims_; i < dims_; ++i){
-    //     host_result->param[i] = floor(host_result->param[i]);
+    // for (int i = 0; i < host_evolve_data_->problem_param.max_round && !*h_terminate_flag; ++i) {
+    //     // printf("generation i:%d\n", i);
+    //     Evolution(i, CudaEvolveType::GLOBAL);
     // }
 
-    // if (DEBUG_PRINT_FLAG || DEBUG_PRINT_SOLVER_FLAG)   printFinalResult(host_result->fitness, host_result->param, dims_);
-    // printFinalResult(host_result->fitness, host_result->param, dims_);
+    // if (DEBUG_PRINT_FLAG || DEBUG_PRINT_SOLVER_FLAG){
+    //     CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    //     CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    //     CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+    //     PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
+    //     printf("new cluster data=============================================\n");
+    //     PrintClusterData<CUDA_SOLVER_POP_SIZE>(host_new_cluster_data_);
 
-    if(DEBUG_ENABLE_NVTX)   nvtxRangeEnd(solver_range);
+    //     // CHECK_CUDA(cudaMemcpyAsync(host_evolve_data_, evolve_data_, sizeof(CudaEvolveData), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    //     // printf("CUDA_MAX_FLOAT %f\n", CUDA_MAX_FLOAT);
+    // }
+    // // Get the first individual from old param (after sorting, the first one is the best one)
+    // GetSolFromOldParam<CUDA_SOLVER_POP_SIZE*3><<<1, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, result);
+    // // 将 old_cluster_data_<CUDA_SOLVER_POP_SIZE*3> 中索引为0的数据提取出来,填充到evolve data单个CudaParamIndividual结构中,记为warm start。索引为0的解是warm start过程中最优的
+    // UpdateEvolveWarmStartBasedClusterData<<<1, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, old_cluster_data_);
+    // CHECK_CUDA(cudaMemcpyAsync(host_result, result, sizeof(CudaParamIndividual), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+    // cudaDeviceSynchronize();
+
+    // last_sol_fitness = host_result->fitness;
+
+    // // for(int i = con_var_dims_; i < dims_; ++i){
+    // //     host_result->param[i] = floor(host_result->param[i]);
+    // // }
+
+    // // if (DEBUG_PRINT_FLAG || DEBUG_PRINT_SOLVER_FLAG)   printFinalResult(host_result->fitness, host_result->param, dims_);
+    // // printFinalResult(host_result->fitness, host_result->param, dims_);
+
+    // if(DEBUG_ENABLE_NVTX)   nvtxRangeEnd(solver_range);
 
     return *host_result;
 }

@@ -12,6 +12,8 @@ import time
 import os
 import sys
 
+# os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+
 project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # 添加lib目录
 lib_path = os.path.join(project_root, 'lib')
@@ -177,6 +179,8 @@ solver = DE_cuda_solver.Create()
 
 solver.init_solver(0)
 # print("Solver initialized successfully")
+
+solver.Solve(True)
 
 # MLD_solver = MLD.GBD(nx, nu, nz, nc, N, "factory", h, M, False)
 # sol = MLD_solver.solve_full_problem(x0_MLD)
