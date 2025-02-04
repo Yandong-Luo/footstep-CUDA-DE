@@ -21,7 +21,7 @@ const float g = 9.81f;
 constexpr float PI = 3.14159265358979323846f;
 const float omega = std::sqrt(g / legLength);
 
-const float penalty = 1000.0f;
+// const float penalty = 1000.0f;
 
 // u boundary
 const float ux_lb = -0.25;
@@ -31,13 +31,23 @@ const float uy_ub = 0.25;
 const float utheta_lb = -PI / 12.0f;
 const float utheta_ub = PI / 12.0f;
 
+// state boundary
+const float speed_x_lb = -0.5;
+const float speed_x_ub = 0.5;
+const float speed_y_lb = -0.5;
+const float speed_y_ub = 0.5;
+const float theta_lb = -5.0f * PI / 4.0f;
+const float theta_ub = 5.0f * PI / 4.0f;
+
 // const int num_constraints = 50;     // n_c in paper
-const int num_constraints = 12;     // n_c in paper
+// const int num_constraints = 12;     // n_c in paper
 const int state_dims = 5;           // n_x in paper: x, y, dot x, dot y, theta, 
 const int control_dims = 3;         // n_u in paper: u_x, u_y, u_theta
 const int num_regions = 7;          // n_delta in paper: 7 differents regions
 
 // x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
+extern __constant__ float4 all_region[num_regions];
+
 extern __constant__ float4 region1;
 extern __constant__ float4 region2;
 extern __constant__ float4 region3;
@@ -46,12 +56,31 @@ extern __constant__ float4 region5;
 extern __constant__ float4 region6;
 extern __constant__ float4 region7;
 
+const float Mx = 10.0f;
+const float My = 10.0f;
+const float Mu = 5.0f;
+const float Mt = 7.0f;
+
+const bool left_stand_first = false;
+
+const int first_step_num = left_stand_first? 0 : 1;
+
 const int row_init_state = 5, col_init_state = 1;
 extern __constant__ float init_state[5];
-extern float *d_init_state;
 
-extern float *N_state;
-extern float *h_N_state;
+// circle center
+const int circle_num = 2;
+__constant__ float2 circles[circle_num] = {{0.0f, 1.0f}, {0.0f, -2.8f}};
+__constant__ float2 circles2[circle_num] = {{0.0f, -1.0f}, {0.0f, 2.8f}};
+__constant__ float radii[circle_num] = {0.95f, 0.95f};
+
+// target
+__constant__ float2 target_circle = {0.0f, -0.13f};
+__constant__ float2 target_circle2 = {0.0f, 0.13f};
+
+// __constant__ float2 center1 = {0, 1};
+// __constant__ float2 center2 = {0, -0.44};
+
 
 // E Matrix (5x5), Row priority
 const int row_E = state_dims, col_E = state_dims;
@@ -111,11 +140,20 @@ const int row_bigF = N * state_dims, col_bigF = N * control_dims;
 extern float *bigF;
 extern float *h_bigF;
 
+// ################################
+// ########## Penalty #############
+// ################################
+const float pos_penalty = 5000.0f;
+const float state_penalty = 1000.0f;
+const float control_penalty = 2000.0f;
+
 // ##############################
 // ########## DEBUG #############
 // ##############################
 
-extern __managed__ float cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims];
+extern float *d_cluster_N_state;
+
+extern float h_cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims];
 
 extern float h_cluster_param[N * CUDA_SOLVER_POP_SIZE * control_dims];
 }

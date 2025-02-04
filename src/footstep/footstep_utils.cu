@@ -133,11 +133,10 @@ namespace footstep{
     //     0.0f, 0.0f, 1.0f, 0.0f,
     //     0.0f, 0.0f, 0.0f, 1.0f
     // };
-    __managed__ float cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims] = {0.0};
-    float h_cluster_param[N * CUDA_SOLVER_POP_SIZE * control_dims] = {0.0};
-    float *d_init_state = nullptr;
-    float *N_state = nullptr;
-    float *h_N_state = nullptr;
+    // __managed__ float cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims] = {0.0f};
+    float h_cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims] = {0.0f};
+    float h_cluster_param[N * CUDA_SOLVER_POP_SIZE * control_dims] = {0.0f};
+    float *d_cluster_N_state = nullptr;
     float *d_E = nullptr;  // Device pointer
     float *d_F = nullptr;  // Device pointer
     float *bigE = nullptr;

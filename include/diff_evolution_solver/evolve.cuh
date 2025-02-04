@@ -448,7 +448,7 @@ namespace cudaprocess{
     }
 
     /**
-     * Sort the current parameter and delete part of old param (pop_size:64 0 - 127) or (pop_size:128 0 - 256)
+     * Sort the current parameter and delete part of old param (pop_size:64 0 - 256) or (pop_size: 256 - 512)
      */
     template<int T = CUDA_SOLVER_POP_SIZE>// T is the pop size
     __device__ __forceinline__ void SortOldParamBasedBitonic(float *all_param, float *all_fitness){
