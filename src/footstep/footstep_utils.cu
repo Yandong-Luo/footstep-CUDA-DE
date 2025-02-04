@@ -11,6 +11,25 @@ namespace footstep{
     __constant__ float4 region6 = {1.4, 1.6, 2.8, 3};
     __constant__ float4 region7 = {2.8, 3, 1.4, 1.6};
 
+    __constant__ float4 all_region[7] = {
+        {0, 1, 0, 3},
+        {1, 2, 0, 1},
+        {2, 3, 0, 3},
+        {1, 2, 2, 3},
+        {0, 0.2, 1.4, 1.6},
+        {1.4, 1.6, 2.8, 3},
+        {2.8, 3, 1.4, 1.6}
+    };
+
+    // circle center
+    __constant__ float2 circles[circle_num] = {{0.0f, 1.0f}, {0.0f, -2.8f}};
+    __constant__ float2 circles2[circle_num] = {{0.0f, -1.0f}, {0.0f, 2.8f}};
+    __constant__ float radii[circle_num] = {0.95f, 0.95f};
+
+    // target
+    __constant__ float2 target_circle = {0.0f, -0.13f};
+    __constant__ float2 target_circle2 = {0.0f, 0.13f};
+
     // __device__ float E[25] = {
     //     1.0f, 0.0f, 0.513166f,        0.0f,               0.0f,
     //     0.0f, 1.0f,                0.0f,     0.513166f,   0.0f,

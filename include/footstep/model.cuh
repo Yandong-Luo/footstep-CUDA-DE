@@ -96,9 +96,21 @@ namespace footstep{
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
         if(threadIdx.x >= N)    return;
 
-        __shared__ ALIGN(64) float N_score_sum[32]={0.0f};
+        __shared__ ALIGN(64) float N_score_sum[32];
 
-        // float score = 0.0f;
+        __shared__ ALIGN(64) float N_obj_score_sum[32];
+
+        N_score_sum[threadIdx.x] = 0.0f;
+        N_obj_score_sum[threadIdx.x] = 0.0f;
+
+        // // current_step_score
+        // float cs_score = 0.0f;
+
+        // current_step_constraint_score
+        float cs_constraint_score = 0.0f;
+
+        // current_step_objective_score
+        float cs_obj_score = 0.0f;
 
         float *current_state = cluster_state + blockIdx.x * N * state_dims + threadIdx.x * state_dims;
 
@@ -117,7 +129,7 @@ namespace footstep{
             }
         }
 
-        if(current_region == -1)    constraint_score += pos_penalty;
+        if(current_region == -1)    cs_constraint_score += pos_penalty;
 
         // ##########################
         // speed and theta constraint
@@ -129,9 +141,9 @@ namespace footstep{
         // state[2]: dot x
         // state[3]: dot y
         // state[4]: theta
-        constraint_score += fabsf(current_state[2]) > speed_x_ub ? state_penalty : 0.0f;
-        constraint_score += fabsf(current_state[3]) > speed_y_ub ? state_penalty : 0.0f;
-        constraint_score += fabsf(current_state[4]) > theta_ub ? state_penalty : 0.0f;
+        cs_constraint_score += fabsf(current_state[2]) > speed_x_ub ? state_penalty : 0.0f;
+        cs_constraint_score += fabsf(current_state[3]) > speed_y_ub ? state_penalty : 0.0f;
+        cs_constraint_score += fabsf(current_state[4]) > theta_ub ? state_penalty : 0.0f;
 
         // ##########################
         // control constraint
@@ -139,15 +151,15 @@ namespace footstep{
         // cur_individual_param[0]: ux
         // cur_individual_param[1]: uy
         // cur_individual_param[2]: u_theta
-        constraint_score += fabsf(cur_individual_param[0]) > ux_ub ? control_penalty : 0.0f;
-        constraint_score += fabsf(cur_individual_param[1]) > uy_ub ? control_penalty : 0.0f;
-        constraint_score += fabsf(cur_individual_param[2]) > utheta_ub ? control_penalty : 0.0f;
+        cs_constraint_score += fabsf(cur_individual_param[0]) > ux_ub ? control_penalty : 0.0f;
+        cs_constraint_score += fabsf(cur_individual_param[1]) > uy_ub ? control_penalty : 0.0f;
+        cs_constraint_score += fabsf(cur_individual_param[2]) > utheta_ub ? control_penalty : 0.0f;
 
         // ##########################
         // foothold constraint
         // ##########################
         // foothold bound
-        float2 *cur_circle = circles;
+        const float2 *cur_circle = circles;
         if (threadIdx.x & 1 != first_step_num){
             cur_circle = circles2;
         }
@@ -164,11 +176,11 @@ namespace footstep{
         // equation 3 and 4 in https://ieeexplore.ieee.org/document/7041373
         for(int i = 0; i < circle_num; ++i){
             if (fabsf(current_state[0] - (last_state[0] + __cosf(last_state[4]) * cur_circle[i].x - __sinf(last_state[4]) * cur_circle[i].y)) > radii[i]){
-                constraint_score += state_penalty;
+                cs_constraint_score += state_penalty;
                 break;
             }
             else if (fabsf(current_state[1] - (last_state[1] + __sinf(last_state[4]) * cur_circle[i].x - __cosf(last_state[4]) * cur_circle[i].y)) > radii[i]){
-                constraint_score += state_penalty;
+                cs_constraint_score += state_penalty;
                 break;
             }
         }
@@ -176,18 +188,44 @@ namespace footstep{
         // ##########################
         // objective function
         // ##########################
-        float2 *cur_target_circle = target_circle;
+        float2 cur_target_circle = target_circle;
         if (threadIdx.x & 1 != first_step_num){
             cur_target_circle = target_circle2;
         }
 
-        float dist_to_target_x = fabsf(current_state[0] - (__cosf(current_state[4]) * cur_target_circle[i].x - __sinf(current_state[4]) * cur_target_circle[i].y));
-        float dist_to_target_y = fabsf(current_state[1] - (__sinf(current_state[4]) * cur_target_circle[i].x - __cosf(current_state[4]) * cur_target_circle[i].y));
+        float dist_to_target_x = fabsf(current_state[0] - (__cosf(current_state[4]) * cur_target_circle.x - __sinf(current_state[4]) * cur_target_circle.y));
+        float dist_to_target_y = fabsf(current_state[1] - (__sinf(current_state[4]) * cur_target_circle.x - __cosf(current_state[4]) * cur_target_circle.y));
 
-        objective_score = 5.0f * (dist_to_target_x * dist_to_target_x + dist_to_target_y * dist_to_target_y);
+        cs_obj_score = 5.0f * (dist_to_target_x * dist_to_target_x + dist_to_target_y * dist_to_target_y);
 
-        // missing sum up for share memory
-        score = objective_score + constraint_score;
+        N_score_sum[threadIdx.x] = cs_obj_score + cs_constraint_score;
+
+        N_obj_score_sum[threadIdx.x] = cs_obj_score;
+
+        __syncthreads();
+
+        // sum up N step
+        if (threadIdx.x < 32) {
+            float N_step_score = N_score_sum[threadIdx.x];
+            N_step_score += __shfl_down_sync(0xffffffff, N_step_score, 16);
+            N_step_score += __shfl_down_sync(0xffffffff, N_step_score, 8);
+            N_step_score += __shfl_down_sync(0xffffffff, N_step_score, 4);
+            N_step_score += __shfl_down_sync(0xffffffff, N_step_score, 2);
+            N_step_score += __shfl_down_sync(0xffffffff, N_step_score, 1);
+
+            float obj_score = N_obj_score_sum[threadIdx.x];
+            obj_score += __shfl_down_sync(0xffffffff, obj_score, 16);
+            obj_score += __shfl_down_sync(0xffffffff, obj_score, 8);
+            obj_score += __shfl_down_sync(0xffffffff, obj_score, 4);
+            obj_score += __shfl_down_sync(0xffffffff, obj_score, 2);
+            obj_score += __shfl_down_sync(0xffffffff, obj_score, 1);
+            
+            if (threadIdx.x == 0) {
+                score[blockIdx.x] = N_step_score;
+                objective_score = obj_score;
+                constraint_score = N_step_score - obj_score;
+            }
+        }
     }
 }
 

@@ -209,3 +209,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.5] - 2025-2-3
 ### Changed
 - Yandong Luo: Almost finish all the evaluation part of footstep planner. Still missing the sum up and verification.
+
+## [0.3.6] - 2025-2-4
+### Changed
+- Yandong Luo: Finish all the evaluation part of footstep planner. And fixed some error when compile (Unverified).

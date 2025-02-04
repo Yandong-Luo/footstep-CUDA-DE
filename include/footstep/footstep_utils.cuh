@@ -40,7 +40,7 @@ const float theta_lb = -5.0f * PI / 4.0f;
 const float theta_ub = 5.0f * PI / 4.0f;
 
 // const int num_constraints = 50;     // n_c in paper
-// const int num_constraints = 12;     // n_c in paper
+const int num_constraints = 12;     // n_c in paper
 const int state_dims = 5;           // n_x in paper: x, y, dot x, dot y, theta, 
 const int control_dims = 3;         // n_u in paper: u_x, u_y, u_theta
 const int num_regions = 7;          // n_delta in paper: 7 differents regions
@@ -70,13 +70,13 @@ extern __constant__ float init_state[5];
 
 // circle center
 const int circle_num = 2;
-__constant__ float2 circles[circle_num] = {{0.0f, 1.0f}, {0.0f, -2.8f}};
-__constant__ float2 circles2[circle_num] = {{0.0f, -1.0f}, {0.0f, 2.8f}};
-__constant__ float radii[circle_num] = {0.95f, 0.95f};
+extern __constant__ float2 circles[circle_num];
+extern __constant__ float2 circles2[circle_num];
+extern __constant__ float radii[circle_num];
 
 // target
-__constant__ float2 target_circle = {0.0f, -0.13f};
-__constant__ float2 target_circle2 = {0.0f, 0.13f};
+extern __constant__ float2 target_circle;
+extern __constant__ float2 target_circle2;
 
 // __constant__ float2 center1 = {0, 1};
 // __constant__ float2 center2 = {0, -0.44};
@@ -94,29 +94,29 @@ extern float h_F[15];
 
 void InitMatrixEAndF();
 
-// Matrix F (5x7), Row priority
-const int row_G = state_dims, col_G = num_regions;
-extern __constant__ float G[35];
+// // Matrix G (5x7), Row priority
+// const int row_G = state_dims, col_G = num_regions;
+// extern __constant__ float G[35];
 
 
-// Q M (5x5), Row priority
-const int row_Q = state_dims, col_Q = state_dims;
-extern __constant__ float Q[25];
+// // Q M (5x5), Row priority
+// const int row_Q = state_dims, col_Q = state_dims;
+// extern __constant__ float Q[25];
 
-// R Matrix (3x3), Row priority
-const int row_R = control_dims, col_R = control_dims;
-extern __constant__ float R[9];
+// // R Matrix (3x3), Row priority
+// const int row_R = control_dims, col_R = control_dims;
+// extern __constant__ float R[9];
 
-// H1 Matrix (12x5), Row priority
-const int row_H1 = num_constraints, col_H1 = state_dims;
-extern __constant__ float H1[60];
+// // H1 Matrix (12x5), Row priority
+// const int row_H1 = num_constraints, col_H1 = state_dims;
+// extern __constant__ float H1[60];
 
-// H2 Matrix (12x3), Row priority
-const int row_H2 = num_constraints, col_H2 = control_dims;
-extern __constant__ float H2[36];
+// // H2 Matrix (12x3), Row priority
+// const int row_H2 = num_constraints, col_H2 = control_dims;
+// extern __constant__ float H2[36];
 
-const int row_h = num_constraints, col_h = 1;
-extern __constant__ float h[12];
+// const int row_h = num_constraints, col_h = 1;
+// extern __constant__ float h[12];
 
 // const int row_state = N
 
