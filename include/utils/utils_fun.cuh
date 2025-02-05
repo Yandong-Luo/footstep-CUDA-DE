@@ -5,94 +5,210 @@
 
 namespace cudaprocess{
 
+// template <int T = CUDA_SOLVER_POP_SIZE, int PARA_SIZE>
+// __global__ void ParaFindMax2(CudaParamClusterData<PARA_SIZE> *a) {
+//   __shared__ int idx_list[4];
+//   __shared__ float value_list[4];
+//   // if (threadIdx.x > 64) return;
+//   float value = a->fitness[threadIdx.x];
+//   int idx = threadIdx.x;
+
+//   float tmp_f;
+//   int tmp_idx;
+//   tmp_f = __shfl_down_sync(0xffffffff, value, 16);
+//   tmp_idx = __shfl_down_sync(0xffffffff, idx, 16);
+//   if (tmp_f < value) {
+//     value = tmp_f;
+//     idx = tmp_idx;
+//   }
+//   tmp_f = __shfl_down_sync(0xffffffff, value, 8);
+//   tmp_idx = __shfl_down_sync(0xffffffff, idx, 8);
+//   if (tmp_f < value) {
+//     value = tmp_f;
+//     idx = tmp_idx;
+//   }
+//   tmp_f = __shfl_down_sync(0xffffffff, value, 4);
+//   tmp_idx = __shfl_down_sync(0xffffffff, idx, 4);
+//   if (tmp_f < value) {
+//     value = tmp_f;
+//     idx = tmp_idx;
+//   }
+//   tmp_f = __shfl_down_sync(0xffffffff, value, 2);
+//   tmp_idx = __shfl_down_sync(0xffffffff, idx, 2);
+//   if (tmp_f < value) {
+//     value = tmp_f;
+//     idx = tmp_idx;
+//   }
+//   tmp_f = __shfl_down_sync(0xffffffff, value, 1);
+//   tmp_idx = __shfl_down_sync(0xffffffff, idx, 1);
+//   if (tmp_f < value) {
+//     value = tmp_f;
+//     idx = tmp_idx;
+//   }
+
+//   if ((threadIdx.x & 31) == 0) {
+//     idx_list[threadIdx.x >> 5] = idx;
+//     value_list[threadIdx.x >> 5] = value;
+//   }
+//   __syncthreads();
+
+//   if (T == 128) {
+//     if (threadIdx.x < 4) {
+//       value = value_list[threadIdx.x];
+//       idx = idx_list[threadIdx.x];
+//       tmp_f = __shfl_down_sync(0x0000000f, value, 2);
+//       tmp_idx = __shfl_down_sync(0x0000000f, idx, 2);
+//       if (tmp_f < value) {
+//         value = tmp_f;
+//         idx = tmp_idx;
+//       }
+//       tmp_f = __shfl_down_sync(0x0000000f, value, 1);
+//       tmp_idx = __shfl_down_sync(0x0000000f, idx, 1);
+//       if (tmp_f < value) {
+//         value = tmp_f;
+//         idx = tmp_idx;
+//       }
+//     }
+//   } else if (T == 64) {
+//     if (threadIdx.x < 2) {
+//       value = value_list[threadIdx.x];
+//       idx = idx_list[threadIdx.x];
+//       tmp_f = __shfl_down_sync(0x00000003, value, 1);
+//       tmp_idx = __shfl_down_sync(0x00000003, idx, 1);
+//       if (tmp_f < value) {
+//         value = tmp_f;
+//         idx = tmp_idx;
+//       }
+//     }
+//   }
+
+//   idx = __shfl_sync(0x0000ffff, idx, 0);
+//   if (threadIdx.x < 16) {
+//     float para = a->all_param[idx * CUDA_PARAM_MAX_SIZE + threadIdx.x];
+//     a->all_param[idx * CUDA_PARAM_MAX_SIZE + threadIdx.x] = a->all_param[threadIdx.x];
+//     a->all_param[threadIdx.x] = para;
+//     if (threadIdx.x == 0) {
+//       float f = a->fitness[idx];
+//       a->fitness[idx] = a->fitness[0];
+//       a->fitness[0] = f;
+//     }
+//   }
+// }
+
 template <int T = CUDA_SOLVER_POP_SIZE, int PARA_SIZE>
 __global__ void ParaFindMax2(CudaParamClusterData<PARA_SIZE> *a) {
-  __shared__ int idx_list[4];
-  __shared__ float value_list[4];
-  // if (threadIdx.x > 64) return;
-  float value = a->fitness[threadIdx.x];
-  int idx = threadIdx.x;
+    __shared__ int idx_list[16];  // Increased size to accommodate T=512
+    __shared__ float value_list[16];
 
-  float tmp_f;
-  int tmp_idx;
-  tmp_f = __shfl_down_sync(0xffffffff, value, 16);
-  tmp_idx = __shfl_down_sync(0xffffffff, idx, 16);
-  if (tmp_f < value) {
-    value = tmp_f;
-    idx = tmp_idx;
-  }
-  tmp_f = __shfl_down_sync(0xffffffff, value, 8);
-  tmp_idx = __shfl_down_sync(0xffffffff, idx, 8);
-  if (tmp_f < value) {
-    value = tmp_f;
-    idx = tmp_idx;
-  }
-  tmp_f = __shfl_down_sync(0xffffffff, value, 4);
-  tmp_idx = __shfl_down_sync(0xffffffff, idx, 4);
-  if (tmp_f < value) {
-    value = tmp_f;
-    idx = tmp_idx;
-  }
-  tmp_f = __shfl_down_sync(0xffffffff, value, 2);
-  tmp_idx = __shfl_down_sync(0xffffffff, idx, 2);
-  if (tmp_f < value) {
-    value = tmp_f;
-    idx = tmp_idx;
-  }
-  tmp_f = __shfl_down_sync(0xffffffff, value, 1);
-  tmp_idx = __shfl_down_sync(0xffffffff, idx, 1);
-  if (tmp_f < value) {
-    value = tmp_f;
-    idx = tmp_idx;
-  }
+    float value = a->fitness[threadIdx.x];
+    int idx = threadIdx.x;
+    float tmp_f;
+    int tmp_idx;
 
-  if ((threadIdx.x & 31) == 0) {
-    idx_list[threadIdx.x >> 5] = idx;
-    value_list[threadIdx.x >> 5] = value;
-  }
-  __syncthreads();
+    // First level reduction (within warp)
+    tmp_f = __shfl_down_sync(0xffffffff, value, 16);
+    tmp_idx = __shfl_down_sync(0xffffffff, idx, 16);
+    if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+    
+    tmp_f = __shfl_down_sync(0xffffffff, value, 8);
+    tmp_idx = __shfl_down_sync(0xffffffff, idx, 8);
+    if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+    
+    tmp_f = __shfl_down_sync(0xffffffff, value, 4);
+    tmp_idx = __shfl_down_sync(0xffffffff, idx, 4);
+    if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+    
+    tmp_f = __shfl_down_sync(0xffffffff, value, 2);
+    tmp_idx = __shfl_down_sync(0xffffffff, idx, 2);
+    if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+    
+    tmp_f = __shfl_down_sync(0xffffffff, value, 1);
+    tmp_idx = __shfl_down_sync(0xffffffff, idx, 1);
+    if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
 
-  if (T == 128) {
-    if (threadIdx.x < 4) {
-      value = value_list[threadIdx.x];
-      idx = idx_list[threadIdx.x];
-      tmp_f = __shfl_down_sync(0x0000000f, value, 2);
-      tmp_idx = __shfl_down_sync(0x0000000f, idx, 2);
-      if (tmp_f < value) {
-        value = tmp_f;
-        idx = tmp_idx;
-      }
-      tmp_f = __shfl_down_sync(0x0000000f, value, 1);
-      tmp_idx = __shfl_down_sync(0x0000000f, idx, 1);
-      if (tmp_f < value) {
-        value = tmp_f;
-        idx = tmp_idx;
-      }
+    // Store results from each warp
+    if ((threadIdx.x & 31) == 0) {
+        idx_list[threadIdx.x >> 5] = idx;
+        value_list[threadIdx.x >> 5] = value;
     }
-  } else if (T == 64) {
-    if (threadIdx.x < 2) {
-      value = value_list[threadIdx.x];
-      idx = idx_list[threadIdx.x];
-      tmp_f = __shfl_down_sync(0x00000003, value, 1);
-      tmp_idx = __shfl_down_sync(0x00000003, idx, 1);
-      if (tmp_f < value) {
-        value = tmp_f;
-        idx = tmp_idx;
-      }
-    }
-  }
+    __syncthreads();
 
-  idx = __shfl_sync(0x0000ffff, idx, 0);
-  if (threadIdx.x < 16) {
-    float para = a->all_param[idx * CUDA_PARAM_MAX_SIZE + threadIdx.x];
-    a->all_param[idx * CUDA_PARAM_MAX_SIZE + threadIdx.x] = a->all_param[threadIdx.x];
-    a->all_param[threadIdx.x] = para;
-    if (threadIdx.x == 0) {
-      float f = a->fitness[idx];
-      a->fitness[idx] = a->fitness[0];
-      a->fitness[0] = f;
+    if (T == 512) {
+        if (threadIdx.x < 16) {
+            value = value_list[threadIdx.x];
+            idx = idx_list[threadIdx.x];
+            
+            tmp_f = __shfl_down_sync(0x0000ffff, value, 8);
+            tmp_idx = __shfl_down_sync(0x0000ffff, idx, 8);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+            
+            tmp_f = __shfl_down_sync(0x0000ffff, value, 4);
+            tmp_idx = __shfl_down_sync(0x0000ffff, idx, 4);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+            
+            tmp_f = __shfl_down_sync(0x0000ffff, value, 2);
+            tmp_idx = __shfl_down_sync(0x0000ffff, idx, 2);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+            
+            tmp_f = __shfl_down_sync(0x0000ffff, value, 1);
+            tmp_idx = __shfl_down_sync(0x0000ffff, idx, 1);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+        }
     }
-  }
+    else if (T == 256) {
+        if (threadIdx.x < 8) {
+            value = value_list[threadIdx.x];
+            idx = idx_list[threadIdx.x];
+            
+            tmp_f = __shfl_down_sync(0x000000ff, value, 4);
+            tmp_idx = __shfl_down_sync(0x000000ff, idx, 4);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+            
+            tmp_f = __shfl_down_sync(0x000000ff, value, 2);
+            tmp_idx = __shfl_down_sync(0x000000ff, idx, 2);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+            
+            tmp_f = __shfl_down_sync(0x000000ff, value, 1);
+            tmp_idx = __shfl_down_sync(0x000000ff, idx, 1);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+        }
+    }
+    else if (T == 128) {
+        if (threadIdx.x < 4) {
+            value = value_list[threadIdx.x];
+            idx = idx_list[threadIdx.x];
+            
+            tmp_f = __shfl_down_sync(0x0000000f, value, 2);
+            tmp_idx = __shfl_down_sync(0x0000000f, idx, 2);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+            
+            tmp_f = __shfl_down_sync(0x0000000f, value, 1);
+            tmp_idx = __shfl_down_sync(0x0000000f, idx, 1);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+        }
+    }
+    else if (T == 64) {
+        if (threadIdx.x < 2) {
+            value = value_list[threadIdx.x];
+            idx = idx_list[threadIdx.x];
+            
+            tmp_f = __shfl_down_sync(0x00000003, value, 1);
+            tmp_idx = __shfl_down_sync(0x00000003, idx, 1);
+            if (tmp_f < value) { value = tmp_f; idx = tmp_idx; }
+        }
+    }
+
+    idx = __shfl_sync(0x0000ffff, idx, 0);
+    if (threadIdx.x < 16) {
+        float para = a->all_param[idx * CUDA_PARAM_MAX_SIZE + threadIdx.x];
+        a->all_param[idx * CUDA_PARAM_MAX_SIZE + threadIdx.x] = a->all_param[threadIdx.x];
+        a->all_param[threadIdx.x] = para;
+        if (threadIdx.x == 0) {
+            float f = a->fitness[idx];
+            a->fitness[idx] = a->fitness[0];
+            a->fitness[0] = f;
+        }
+    }
 }
 
 /**

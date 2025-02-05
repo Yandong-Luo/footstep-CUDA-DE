@@ -21,8 +21,8 @@ namespace cudaprocess{
             curandGenerator_t gen;
             float* uniform_data_;
             float* normal_data_;
-            const int uniform_size_ = 512000;
-            const int normal_size_ = CUDA_SOLVER_POP_SIZE * 3 * CUDA_MAX_ROUND_NUM;
+            const uint uniform_size_ = 128 * 256 * 128;      // or 512000
+            const uint normal_size_ = CUDA_SOLVER_POP_SIZE * 3 * CUDA_MAX_ROUND_NUM;
             cudaStream_t stream;
     };
 }

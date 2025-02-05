@@ -213,3 +213,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.6] - 2025-2-4
 ### Changed
 - Yandong Luo: Finish all the evaluation part of footstep planner. And fixed some error when compile (Unverified).
+
+## [0.3.7] - 2025-2-4
+### Changed
+- Yandong Luo: All the required pipelines are completed to run, but currently it seems that evaluateModel has significant errors. Replace the warp thread sharing of parameters in evolve with shared memory. This is because the dimension height of the variable is now 90, which exceeds 32.

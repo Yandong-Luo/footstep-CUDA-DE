@@ -163,6 +163,12 @@ namespace footstep{
     float *h_bigE = nullptr;
     float *h_bigF = nullptr;
 
+    float *d_sol_state = nullptr;
+    float *h_sol_state = nullptr;
+
+    float *d_sol_score = nullptr;
+    float *h_sol_score = nullptr;
+
     void ConstructEandF(cudaStream_t stream){
 
         CHECK_CUDA(cudaMemcpy(d_F, h_F, row_F * col_F * sizeof(float), cudaMemcpyHostToDevice));

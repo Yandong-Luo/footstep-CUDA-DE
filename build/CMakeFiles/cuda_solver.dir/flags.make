@@ -6,5 +6,5 @@ CXX_DEFINES = -DYAML_CPP_STATIC_DEFINE -Dcuda_solver_EXPORTS
 
 CXX_INCLUDES = -I/home/chris/footstep-CUDA-DE/include -I/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include -isystem /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include -isystem /home/chris/anaconda3/envs/lab_env/include/python3.9 -isystem /usr/local/mathdx/24.08/include -isystem /usr/local/mathdx/24.08/include/cublasdx/include -isystem /usr/local/mathdx/24.08/external/cutlass/include -isystem /usr/local/cuda-11.4/targets/x86_64-linux/include
 
-CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17 -fPIC -fvisibility=hidden -flto -fno-fat-lto-objects
+CXX_FLAGS = -g -std=gnu++17 -fPIC -fvisibility=hidden
 

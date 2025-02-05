@@ -30,7 +30,7 @@ namespace cudaprocess{
             void SetBoundary();
             void Evaluation(int size, int epoch);
             void Evolution(int epoch, CudaEvolveType search_type);
-            CudaParamIndividual Solver(bool enable_warmstart);
+            CudaParamIndividual Solver();
 
             void UpdateCartPoleSystem(float state[4], float wall_pos[2]);
         private:

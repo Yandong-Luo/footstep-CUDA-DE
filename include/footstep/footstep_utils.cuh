@@ -7,43 +7,43 @@
 #include "utils/utils.cuh"
 
 #ifndef CUDA_SOLVER_POP_SIZE
-#define CUDA_SOLVER_POP_SIZE 512
+#define CUDA_SOLVER_POP_SIZE 128
 #endif
 
 namespace footstep{
 
 // CONSTANT
-const int N = 30;                           // prediction step
-const float T = 0.4f;           // Delta t
+constexpr int N = 30;                           // prediction step
+constexpr float T = 0.4f;           // Delta t
 
-const float legLength = 1.0f;
-const float g = 9.81f;
+constexpr float legLength = 1.0f;
+constexpr float g = 9.81f;
 constexpr float PI = 3.14159265358979323846f;
 const float omega = std::sqrt(g / legLength);
 
 // const float penalty = 1000.0f;
 
 // u boundary
-const float ux_lb = -0.25;
-const float ux_ub = 0.25;
-const float uy_lb = -0.25;
-const float uy_ub = 0.25;
+constexpr float ux_lb = -0.25;
+constexpr float ux_ub = 0.25;
+constexpr float uy_lb = -0.25;
+constexpr float uy_ub = 0.25;
 const float utheta_lb = -PI / 12.0f;
 const float utheta_ub = PI / 12.0f;
 
 // state boundary
-const float speed_x_lb = -0.5;
-const float speed_x_ub = 0.5;
-const float speed_y_lb = -0.5;
-const float speed_y_ub = 0.5;
+constexpr float speed_x_lb = -0.5;
+constexpr float speed_x_ub = 0.5;
+constexpr float speed_y_lb = -0.5;
+constexpr float speed_y_ub = 0.5;
 const float theta_lb = -5.0f * PI / 4.0f;
 const float theta_ub = 5.0f * PI / 4.0f;
 
 // const int num_constraints = 50;     // n_c in paper
-const int num_constraints = 12;     // n_c in paper
-const int state_dims = 5;           // n_x in paper: x, y, dot x, dot y, theta, 
-const int control_dims = 3;         // n_u in paper: u_x, u_y, u_theta
-const int num_regions = 7;          // n_delta in paper: 7 differents regions
+constexpr int num_constraints = 12;     // n_c in paper
+constexpr int state_dims = 5;           // n_x in paper: x, y, dot x, dot y, theta, 
+constexpr int control_dims = 3;         // n_u in paper: u_x, u_y, u_theta
+constexpr int num_regions = 7;          // n_delta in paper: 7 differents regions
 
 // x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
 extern __constant__ float4 all_region[num_regions];
@@ -56,10 +56,10 @@ extern __constant__ float4 region5;
 extern __constant__ float4 region6;
 extern __constant__ float4 region7;
 
-const float Mx = 10.0f;
-const float My = 10.0f;
-const float Mu = 5.0f;
-const float Mt = 7.0f;
+constexpr float Mx = 10.0f;
+constexpr float My = 10.0f;
+constexpr float Mu = 5.0f;
+constexpr float Mt = 7.0f;
 
 const bool left_stand_first = false;
 
@@ -139,6 +139,12 @@ const int row_bigF = N * state_dims, col_bigF = N * control_dims;
 
 extern float *bigF;
 extern float *h_bigF;
+
+extern float *d_sol_state;
+extern float *h_sol_state;
+
+extern float *d_sol_score;
+extern float *h_sol_score;
 
 // ################################
 // ########## Penalty #############

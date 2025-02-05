@@ -8,7 +8,7 @@ namespace cudaprocess{
 
 #define ALIGN(n) __align__(n)
 
-#define CUDA_PARAM_MAX_SIZE 90
+#define CUDA_PARAM_MAX_SIZE 512
 // #define CUDA_SOLVER_POP_SIZE 128
 #define CUDA_MAX_FLOAT 1e30
 #define CUDA_MAX_TASKS 1
@@ -145,14 +145,17 @@ struct ALIGN(16) CudaLShadePair {
     float scale_f, scale_f1, Cr, weight;
 };
 
+// static constexpr int N_states_dims = footstep::N * footstep::state_dims;
+
 struct CudaParamIndividual{
     float param[CUDA_PARAM_MAX_SIZE];
     // float state[footstep::N * footstep::state_dims];
     int con_var_dims, int_var_dims, dims;
     float cur_scale_f{0.5F}, cur_scale_f1{0.5F}, cur_Cr{0.5F};
     float fitness;
-    // float objective_score;
-    // float state_constraint_score;
+    float objective_score;
+    float constraint_score;
+    float *N_states;
     // float 
 };
 

@@ -140,7 +140,7 @@ def plot_result(sol_x, sol_u, color, linestyle):
     # Add heading angles as lines coming out of CoM points
     ang = sol_x[:,4]
     ax.plot([sol_x[:, 0], sol_x[:, 0]+0.15*np.cos(ang)], [sol_x[:, 1] , sol_x[:, 1]+0.15*np.sin(ang)], color=color, alpha=0.5, linewidth=0.3) # directions
-    ax.plot(sol_x[:-1, 0] + sol_u[:, 0], sol_x[:-1, 1] + sol_u[:, 1], linestyle='--', color='blue', alpha=0.8, linewidth=0.5) # dashed line connecting footstep
+    ax.plot(sol_x[:-1, 0] + sol_u[:-1, 0], sol_x[:-1, 1] + sol_u[:-1, 1], linestyle='--', color='blue', alpha=0.8, linewidth=0.5) # dashed line connecting footstep
     
     # Add footstep dots
     for i in range(sol_u.shape[0]): 
@@ -180,7 +180,7 @@ solver = DE_cuda_solver.Create()
 solver.init_solver(0)
 # print("Solver initialized successfully")
 
-solver.Solve(True)
+solution = solver.Solve()
 
 # MLD_solver = MLD.GBD(nx, nu, nz, nc, N, "factory", h, M, False)
 # sol = MLD_solver.solve_full_problem(x0_MLD)
@@ -196,11 +196,27 @@ solver.Solve(True)
 
 # # sol_u = np.array([sol['control_x'], sol['control_y']])
 
-# # plot results
-# plot_result(sol_x, sol_u, 'black', '--')
-# plt.grid()
-# plt.savefig(f'figures/MLD_planning', dpi=400, bbox_inches="tight")
-# print("=============Finish Planning=============")
+fitness = solution["fitness"]
+objective_score = solution["objective_score"]
+constraint_score = solution["constraint_score"]
+sol_x = solution["state"]
+sol_u = solution["param"]
+
+print("fitness:",fitness)
+print("objective_score:",objective_score)
+print("constraint_score:",constraint_score)
+
+# sol_x = sol_x.reshape
+print(len(sol_x))
+print(len(sol_u))
+sol_x = np.reshape(sol_x, (30, 5))
+sol_u = np.reshape(sol_u, (30, 3))
+
+# plot results
+plot_result(sol_x, sol_u, 'black', '--')
+plt.grid()
+plt.savefig(f'figures/MLD_planning', dpi=400, bbox_inches="tight")
+print("=============Finish Planning=============")
 
 # print ("Skipping MPC")
 # quit()

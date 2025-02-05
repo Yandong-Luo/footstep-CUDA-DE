@@ -60,6 +60,15 @@ namespace cudaprocess{
     template <CudaEvolveType SearchType = CudaEvolveType::GLOBAL>
     __global__ void CudaEvolveProcess(int epoch, CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, CudaParamClusterData<CUDA_SOLVER_POP_SIZE> *new_param, float *uniform_data,
                                       float *normal_data, CudaEvolveData *evolve_data, int pop_size, float eliteRatio){
+        
+        __shared__ float shared_scale_f;
+        __shared__ float shared_scale_f1;
+        __shared__ float shared_crossover;
+        __shared__ int shared_elite_strategy;
+        __shared__ int shared_guide_idx;
+        __shared__ int shared_mutation_start;
+        __shared__ int shared_parent_idx[3];
+
         int dims = evolve_data->problem_param.dims, con_dims = evolve_data->problem_param.con_var_dims;
         // int int_dims = evolve_data->problem_param.int_var_dims;
 
@@ -76,7 +85,8 @@ namespace cudaprocess{
 
         // Avoid using the same random number in the same place as other functions
         int normal_rnd_evolve_pos = epoch * CUDA_SOLVER_POP_SIZE * 3 + sol_idx * 3;
-        int uniform_rnd_evolve_pos = epoch * CUDA_SOLVER_POP_SIZE * 38 + sol_idx * 38;
+        // int uniform_rnd_evolve_pos = epoch * CUDA_SOLVER_POP_SIZE * 18 + sol_idx * 18;
+        int uniform_rnd_evolve_pos = epoch * CUDA_SOLVER_POP_SIZE * (2 * CUDA_PARAM_MAX_SIZE + 5) + sol_idx * (2 * CUDA_PARAM_MAX_SIZE + 5);
 
         int selected_parent_idx;
         int parent_param_idx[3], sorted_parent_param_idx[3];
@@ -94,7 +104,7 @@ namespace cudaprocess{
         if(threadIdx.x == 0){
             // sorting part
             // Ensure that the parent individuals selected in the differential evolution algorithm are different and non-repetitive
-
+            // printf("====wft: %d, %d, %d, total len: %d\n", parent_param_idx[0], parent_param_idx[1], parent_param_idx[2], old_param->len);
             for (int i = 0; i < 3; ++i) {
                 sorted_parent_param_idx[i] = parent_param_idx[i];
                 for (int j = 0; j < i; ++j) {
@@ -111,6 +121,7 @@ namespace cudaprocess{
                 }
                 if (sorted_parent_param_idx[i] >= blockIdx.x)   sorted_parent_param_idx[i]++;
             }
+            // printf("wft####: %d, %d, %d, %d, %d, %d, total len: %d\n", parent_param_idx[0], parent_param_idx[1], parent_param_idx[2], sorted_parent_param_idx[0], sorted_parent_param_idx[1], sorted_parent_param_idx[2], old_param->len);
 
             scale_f = min(1.f, max(normal_data[normal_rnd_evolve_pos] * 0.01f + evolve_data->hist_lshade_param.scale_f, 0.1));
             scale_f1 = min(1.f, max(normal_data[normal_rnd_evolve_pos + 1] * 0.01f + evolve_data->hist_lshade_param.scale_f, 0.1));
@@ -124,28 +135,54 @@ namespace cudaprocess{
             guideEliteIdx = max(0, min((num_top - 1), (int)floor(uniform_data[uniform_rnd_evolve_pos + 4] * num_top)));
 
             if (sol_idx * 1.f < pop_size * eliteRatio)  UsingEliteStrategy = 1;
+
+            shared_scale_f = scale_f;
+            shared_scale_f1 = scale_f1;
+            shared_crossover = crossover;
+            shared_elite_strategy = UsingEliteStrategy;
+            shared_guide_idx = guideEliteIdx;
+            shared_mutation_start = mutationStartDim;
+            shared_parent_idx[0] = sorted_parent_param_idx[0];
+            shared_parent_idx[1] = sorted_parent_param_idx[1];
+            shared_parent_idx[2] = sorted_parent_param_idx[2];
         }
         // make sure all parameter have been calculated
-        __syncwarp();
+        // __syncwarp();
 
-        // 使用 warp shuffle 广播这些值给其他线程
-        scale_f = __shfl_sync(0x0000ffff, scale_f, 0);
-        scale_f1 = __shfl_sync(0x0000ffff, scale_f1, 0);
-        crossover = __shfl_sync(0x0000ffff, crossover, 0);
-        UsingEliteStrategy = __shfl_sync(0x0000ffff, UsingEliteStrategy, 0);
-        guideEliteIdx = __shfl_sync(0x0000ffff, guideEliteIdx, 0);
+        __syncthreads();
 
-        int parent1_idx = sorted_parent_param_idx[0], parent2_idx = sorted_parent_param_idx[1];
-        int mutant_idx = sorted_parent_param_idx[2];
+        // // 使用 warp shuffle 广播这些值给其他线程
+        // scale_f = __shfl_sync(0x0000ffff, scale_f, 0);
+        // scale_f1 = __shfl_sync(0x0000ffff, scale_f1, 0);
+        // crossover = __shfl_sync(0x0000ffff, crossover, 0);
+        // UsingEliteStrategy = __shfl_sync(0x0000ffff, UsingEliteStrategy, 0);
+        // guideEliteIdx = __shfl_sync(0x0000ffff, guideEliteIdx, 0);
 
-        parent1_idx = __shfl_sync(0x0000ffff, parent1_idx, 0);
-        parent2_idx = __shfl_sync(0x0000ffff, parent2_idx, 0);
-        mutant_idx = __shfl_sync(0x0000ffff, mutant_idx, 0);
+        // int parent1_idx = sorted_parent_param_idx[0], parent2_idx = sorted_parent_param_idx[1];
+        // int mutant_idx = sorted_parent_param_idx[2];
 
-        // Other threads need to obtain the broadcasted data
-        sorted_parent_param_idx[0] = parent1_idx;
-        sorted_parent_param_idx[1] = parent2_idx;
-        sorted_parent_param_idx[2] = mutant_idx;
+        // // printf("previous wft: %d, %d, %d, total len: %d\n", parent1_idx, parent2_idx, mutant_idx, old_param->len);
+
+        // parent1_idx = __shfl_sync(0x0000ffff, parent1_idx, 0);
+        // parent2_idx = __shfl_sync(0x0000ffff, parent2_idx, 0);
+        // mutant_idx = __shfl_sync(0x0000ffff, mutant_idx, 0);
+
+        // // Other threads need to obtain the broadcasted data
+        // sorted_parent_param_idx[0] = parent1_idx;
+        // sorted_parent_param_idx[1] = parent2_idx;
+        // sorted_parent_param_idx[2] = mutant_idx;
+
+        scale_f = shared_scale_f;
+        scale_f1 = shared_scale_f1;
+        crossover = shared_crossover;
+        UsingEliteStrategy = shared_elite_strategy;
+        guideEliteIdx = shared_guide_idx;
+        mutationStartDim = shared_mutation_start;
+        
+        // 更新父代索引
+        sorted_parent_param_idx[0] = shared_parent_idx[0];
+        sorted_parent_param_idx[1] = shared_parent_idx[1];
+        sorted_parent_param_idx[2] = shared_parent_idx[2];
         
         // int totalsize = old_param->len;
         // check the random_idx valid or not

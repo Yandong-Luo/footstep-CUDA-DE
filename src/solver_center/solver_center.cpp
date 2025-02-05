@@ -35,20 +35,30 @@ PYBIND11_MODULE(DE_cuda_solver, m) {
         // }, "Update cart pole state with new state vector")
         
         // // 主求解函数
-        .def("Solve", [](cudaprocess::CudaDiffEvolveSolver& self, bool enable_warmstart) {
-            auto result = self.Solver(enable_warmstart);
+        .def("Solve", [](cudaprocess::CudaDiffEvolveSolver& self) {
+            auto result = self.Solver();
             
             // 创建返回字典
             py::dict solution;
             solution["fitness"] = result.fitness;
+            solution["objective_score"] = result.objective_score;
+            solution["constraint_score"] = result.constraint_score;
             
-            // 转换参数到numpy数组
-            auto param_array = py::array_t<float>(10);
+            // control input (u)转换参数到numpy数组
+            auto param_array = py::array_t<float>(90);
             auto buf = param_array.request();
             float* ptr = static_cast<float*>(buf.ptr);
-            std::memcpy(ptr, result.param, 10 * sizeof(float));
+            std::memcpy(ptr, result.param, 90 * sizeof(float));
             
             solution["param"] = param_array;
+
+            // state转换参数到numpy数组
+            auto state_array = py::array_t<float>(150);
+            auto state_buf = state_array.request();
+            float* state_ptr = static_cast<float*>(state_buf.ptr);
+            std::memcpy(state_ptr, result.N_states, 150 * sizeof(float));
+            
+            solution["state"] = state_array;
             return solution;
         }, "Run the differential evolution solver and return the solution");
 }

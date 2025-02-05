@@ -61,9 +61,9 @@ namespace footstep{
         cublasdx::copy<GEMM, alignment::c>(c_shared_tensor, c_global_tensor);
     }
 
-    // Generative N step state and evaluate
+    // Generative N step state
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void UpdateStateAndEvaluate(cudaprocess::CudaParamClusterData<T> *cluster_data, const float *bigE, const float *bigF, float *cluster_state){
+    __global__ void UpdateState(cudaprocess::CudaParamClusterData<T> *cluster_data, const float *bigE, const float *bigF, float *cluster_state){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
         // ########### 
         // Update State
@@ -84,17 +84,12 @@ namespace footstep{
         gemm_kernel<Fu_GEMM>(1.0f, bigF, cur_individual_param, 1.0f, N_states, smem);
 
         __syncthreads();
-
-        // #################
-        // Check Constraint
-        // #################
-        // float 
     }
 
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void CalculateConstraint(cudaprocess::CudaParamClusterData<T> *cluster_data, float *cluster_state, float *score, float objective_score, float constraint_score){
+    __global__ void EvaluateModel(cudaprocess::CudaParamClusterData<T> *cluster_data, float *cluster_state, float *score, float *sol_score = nullptr){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
-        if(threadIdx.x >= N)    return;
+        if(threadIdx.x >= 32)    return;
 
         __shared__ ALIGN(64) float N_score_sum[32];
 
@@ -222,8 +217,11 @@ namespace footstep{
             
             if (threadIdx.x == 0) {
                 score[blockIdx.x] = N_step_score;
-                objective_score = obj_score;
-                constraint_score = N_step_score - obj_score;
+                if(sol_score != nullptr){
+                    sol_score[0] = N_step_score;
+                    sol_score[1] = obj_score;
+                    sol_score[2] = N_step_score - obj_score;
+                }
             }
         }
     }
