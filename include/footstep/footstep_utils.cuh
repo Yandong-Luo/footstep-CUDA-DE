@@ -10,10 +10,14 @@
 #define CUDA_SOLVER_POP_SIZE 128
 #endif
 
+#ifndef CUDA_PARAM_MAX_SIZE
+#define CUDA_PARAM_MAX_SIZE 96
+#endif
+
 namespace footstep{
 
 // CONSTANT
-constexpr int N = 30;                           // prediction step
+constexpr int N = 25;                           // prediction step
 constexpr float T = 0.4f;           // Delta t
 
 constexpr float legLength = 1.0f;
@@ -161,7 +165,7 @@ extern float *d_cluster_N_state;
 
 extern float h_cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims];
 
-extern float h_cluster_param[N * CUDA_SOLVER_POP_SIZE * control_dims];
+extern float h_cluster_param[CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE];
 }
 
 #endif

@@ -51,7 +51,7 @@ namespace cudaprocess{
             // new_cluster_data->all_param[2]);
         }
 
-        new_cluster_data->fitness[idx] = 0.0f;
+        new_cluster_data->fitness[idx] = CUDA_MAX_FLOAT;
         // new_cluster_data->objective_score[idx] = CUDA_MAX_FLOAT;
         // new_cluster_data->constraint_score[idx] = CUDA_MAX_FLOAT;
         new_cluster_data->lshade_param[idx * 3 + 0] = 0.5f;                        // scale_f
@@ -59,7 +59,7 @@ namespace cudaprocess{
         new_cluster_data->lshade_param[idx * 3 + 2] = 0.5f;                        // crossover
 
         // initial old_cluster_data
-        old_cluster_data->fitness[idx] = 0.0f;
+        old_cluster_data->fitness[idx] = CUDA_MAX_FLOAT;
         // old_cluster_data->objective_score[idx] = CUDA_MAX_FLOAT;
         // old_cluster_data->constraint_score[idx] = CUDA_MAX_FLOAT;
 

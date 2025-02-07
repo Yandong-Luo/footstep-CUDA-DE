@@ -32,7 +32,6 @@ namespace cudaprocess{
                 // For the first copy_num solutions, use the parameters of the best solution (sol_id=0)
                 param = old_param->all_param[param_id];
                 if (param_id == 0)  best_fitness = old_param->fitness[0];   // copy the best fitness
-                
             }
             else{
                 // for the remaining solution, use the original parameters
@@ -60,7 +59,7 @@ namespace cudaprocess{
     template <CudaEvolveType SearchType = CudaEvolveType::GLOBAL>
     __global__ void CudaEvolveProcess(int epoch, CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, CudaParamClusterData<CUDA_SOLVER_POP_SIZE> *new_param, float *uniform_data,
                                       float *normal_data, CudaEvolveData *evolve_data, int pop_size, float eliteRatio){
-        
+        const int warp_num = blockDim.x >> 5;
         __shared__ float shared_scale_f;
         __shared__ float shared_scale_f1;
         __shared__ float shared_crossover;
@@ -68,11 +67,14 @@ namespace cudaprocess{
         __shared__ int shared_guide_idx;
         __shared__ int shared_mutation_start;
         __shared__ int shared_parent_idx[3];
+        __shared__ int s_first_mutation[8];
 
         int dims = evolve_data->problem_param.dims, con_dims = evolve_data->problem_param.con_var_dims;
         // int int_dims = evolve_data->problem_param.int_var_dims;
 
         int sol_idx = blockIdx.x;
+        int warp_id = threadIdx.x >> 5;     // 线程所在的warp id  threadIdx.x >> 5 == threadIdx.x / 32
+        int lane_id = threadIdx.x & 31;   // 线程在warp内的id     threadIdx.x & 0x1F == threadIdx.x & 31 == threadIdx.x % 32
         // int param_idx = threadIdx.x;
         int UsingEliteStrategy = 0;
         int guideEliteIdx = 0;
@@ -215,7 +217,7 @@ namespace cudaprocess{
             float mutant_prob = uniform_data[uniform_rnd_evolve_pos + 5 + threadIdx.x];
 
             // initial the firstMutationDimIdx by last one
-            int firstMutationDimIdx = pop_size;
+            int firstMutationDimIdx = CUDA_PARAM_MAX_SIZE;
 
             // crossover select
             if(mutant_prob > (UsingEliteStrategy ? crossover : 0.9f) && threadIdx.x < dims){
@@ -223,16 +225,62 @@ namespace cudaprocess{
             }
 
             // parallel reduce
-            int tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 8);
+            int tmp_idx = __shfl_down_sync(0xffffffff, firstMutationDimIdx, 16);
             firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
-            tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 4);
+            tmp_idx = __shfl_down_sync(0xffffffff, firstMutationDimIdx, 8);
             firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
-            tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 2);
+            tmp_idx = __shfl_down_sync(0xffffffff, firstMutationDimIdx, 4);
             firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
-            tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 1);
+            tmp_idx = __shfl_down_sync(0xffffffff, firstMutationDimIdx, 2);
+            firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
+            tmp_idx = __shfl_down_sync(0xffffffff, firstMutationDimIdx, 1);
             firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
             // let all thread know the firstMutationDimIdx
-            firstMutationDimIdx = __shfl_sync(0x0000ffff, firstMutationDimIdx, 0);
+            // int warp_min = __shfl_sync(0xffffffff, firstMutationDimIdx, 0);
+
+            // 每个warp的第一个线程将结果写入shared memory
+            if (lane_id == 0) {
+                s_first_mutation[warp_id] = firstMutationDimIdx;
+            }
+
+            __syncthreads();
+            // 只在第一个warp中进行warp间规约
+            if (threadIdx.x == 0) {
+                int min_val = s_first_mutation[0];
+                for (int i = 1; i < warp_num; ++i) {
+                    min_val = min(min_val, s_first_mutation[i]);
+                }
+                s_first_mutation[0] = min_val;
+
+                // printf("num_warp:%d\n",warp_num);
+            }
+            
+            __syncthreads();
+
+            firstMutationDimIdx = s_first_mutation[0];
+
+            // // parallel reduce
+            // int tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 8);
+            // firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
+            // tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 4);
+            // firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
+            // tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 2);
+            // firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
+            // tmp_idx = __shfl_down_sync(0x0000ffff, firstMutationDimIdx, 1);
+            // firstMutationDimIdx = min(tmp_idx, firstMutationDimIdx);
+            // // let all thread know the firstMutationDimIdx
+            // int warp_min = __shfl_sync(0x0000ffff, firstMutationDimIdx, 0);
+
+            // // 只在第一个线程中收集所有warp的最小值
+            // if (threadIdx.x == 0) {
+            //     const int num_warps = CUDA_PARAM_MAX_SIZE / 32;  // 计算总的warp数
+            //     for(int i = 1; i < num_warps; ++i) {
+            //         int other_min = __shfl_sync(0xffffffff, warp_min, 0, i * 32);
+            //         warp_min = min(warp_min, other_min);
+            //     }
+            // }
+
+            // firstMutationDimIdx = __shfl_sync(0xffffffff, warp_min, 0);
 
             if (threadIdx.x < dims){
                 bool isInMutationWindow = true;
@@ -249,7 +297,7 @@ namespace cudaprocess{
                         result_param = origin_param + f * (best_origin_param + mutant_param[0] - origin_param - mutant_param[1]);
                     }
                     else{
-                        result_param = origin_param + 0.8f * (mutant_param[0] - mutant_param[3]);
+                        result_param = origin_param + 0.8f * (mutant_param[0] - mutant_param[2]);
                     }
                 }
             }
@@ -260,15 +308,15 @@ namespace cudaprocess{
             float upper_bound = evolve_data->upper_bound[threadIdx.x];
 
             if(result_param < lower_bound || result_param > upper_bound){
-                result_param = uniform_data[uniform_rnd_evolve_pos + 24 + threadIdx.x] * (upper_bound - lower_bound) + lower_bound;
+                result_param = uniform_data[uniform_rnd_evolve_pos + (CUDA_PARAM_MAX_SIZE + 5) + threadIdx.x] * (upper_bound - lower_bound) + lower_bound;
             }
         }
+        // printf("sol_idx:%d, thread:%d, result_param:%f\n", sol_idx, threadIdx.x, result_param);
         new_param->all_param[sol_idx * CUDA_PARAM_MAX_SIZE + threadIdx.x] = result_param;
 
         if (threadIdx.x == 0) {
             reinterpret_cast<float3 *>(new_param->lshade_param)[sol_idx] = float3{scale_f, scale_f1, crossover};
         }
-
     }
 
     __device__ __forceinline__ void BitonicWarpCompare(float &param, float &fitness, int lane_mask){
@@ -902,11 +950,12 @@ namespace cudaprocess{
     }
 
     template <int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void UpdateParameter(int epoch, CudaEvolveData *evolve, CudaParamClusterData<CUDA_SOLVER_POP_SIZE> *new_param, CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, int* terminate_flag, float *last_f){
-        if ((*terminate_flag & 1) > 0) return;
+    __global__ void UpdateParameter(int epoch, CudaEvolveData *evolve, CudaParamClusterData<CUDA_SOLVER_POP_SIZE> *new_param, CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, int* terminate_flag=nullptr, float *last_f=nullptr){
+        // if ((*terminate_flag & 1) > 0) return;
         // for old_param (current sol, delete sol, replaced sol), we select the fitness of current sol for all old param
         // so threadIdx.x & (T-1) equal to threadIdx.x % (T-1) which can help us to mapping all old_param to current sol
         float old_fitness = old_param->fitness[threadIdx.x & (T-1)], new_fitness = new_param->fitness[threadIdx.x & (T-1)];
+        // printf("old_fitness:%f, new_fitness:%f\n",old_fitness, new_fitness);
         // printf("updating parameter????????????????\n");
         int sol_id = threadIdx.x;
         int param_id = blockIdx.x;
@@ -946,7 +995,8 @@ namespace cudaprocess{
             // calculate 8 float data for a warp.
             float ALIGN(64) adaptiveParamSums[8];
             // each warp will runing parallel reduction for sum. for 64 pop_size cluster, we need 2 warp. And then, all result are storaged in a share memory array.
-            __shared__ ALIGN(64) float share_sum[4 * 8];
+            const int num_warps = T / 32;  // 计算总的warp数
+            __shared__ ALIGN(64) float share_sum[num_warps * 8];
 
             float3 lshade_param;
             float scale_f, scale_f1, cr, w;
@@ -995,10 +1045,33 @@ namespace cudaprocess{
                     // parallel reduction for different warp result in share memory
                     for(int i = 0; i < 7; ++i){
                         // !!!!!!!!!!!!!!! If the T or pop_size is not 64. This part should be modified. !!!!!!!!!!!!!!!!!!
-                        if (T == 128) {
+                        // if (T == 128) {
+                        //     adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                        // }
+                        // adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+
+                        if (T == 512) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000ffff, adaptiveParamSums[i], 8);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x000000ff, adaptiveParamSums[i], 4);
                             adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
                         }
-                        adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        // For T=256: need 8->4->2->1 reduction pattern
+                        else if (T == 256) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x000000ff, adaptiveParamSums[i], 4);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                            // adaptiveParamSums[i] += __shfl_down_sync(0x00000001, adaptiveParamSums[i], 1);
+                        }
+                        // For T=128: need 4->2->1 reduction pattern
+                        else if (T == 128) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        }
+                        // For T=64: need 2->1 reduction pattern
+                        else if (T == 64) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        }
                     }
 
                     // update the evolve data
@@ -1033,7 +1106,7 @@ namespace cudaprocess{
 
         // This method consider the average fitness of top 8 individual. when the avg lower than accuracy_rng then stop evaluation
         // EvolveTerminate(evolve, last_f, old_param->fitness, terminate_flag);
-        *last_f = old_param->fitness[threadIdx.x];
+        // *last_f = old_param->fitness[threadIdx.x];
     }
 }
 

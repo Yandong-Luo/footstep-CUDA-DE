@@ -217,3 +217,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.7] - 2025-2-4
 ### Changed
 - Yandong Luo: All the required pipelines are completed to run, but currently it seems that evaluateModel has significant errors. Replace the warp thread sharing of parameters in evolve with shared memory. This is because the dimension height of the variable is now 90, which exceeds 32.
+
+## [0.3.8] - 2025-2-7
+### Changed
+- Yandong Luo: All limitations on increasing population and increasing parameter dimensions have been fixed and validated. But now when N=30, the state update in footstep causes the precision of float to be exceeded. This problem has not been solved yet.
