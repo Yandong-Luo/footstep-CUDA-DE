@@ -15,12 +15,37 @@ def construct_E_matrix(E, N):
         big_E[i * state_dim:(i + 1) * state_dim, :] = E_power  # 存入大矩阵
 
         # 打印当前次方矩阵
-        print(f"\nE^{i+1}:")
-        print(E_power)
+        # print(f"\nE^{i+1}:")
+        # print(E_power)
 
     return big_E
 
-# 定义矩阵 E
+def construct_big_F(E, F, N):
+    """
+    计算 bigF 矩阵：
+    bigF = [
+        [F, 0, 0, ..., 0],
+        [E F, F, 0, ..., 0],
+        [E^2 F, E F, F, ..., 0],
+        ...
+        [E^(N-1) F, E^(N-2) F, ..., F]
+    ]
+    :param E: (5x5) 状态转移矩阵
+    :param F: (5x3) 控制矩阵
+    :param N: 预测步长
+    :return: big_F 矩阵 (5N x 3N)
+    """
+    state_dim, control_dim = F.shape
+    big_F = np.zeros((state_dim * N, control_dim * N))  # 初始化 bigF 矩阵
+
+    for i in range(N):
+        for j in range(i + 1):
+            E_power = np.linalg.matrix_power(E, i - j) if i != j else np.eye(state_dim)
+            big_F[i * state_dim:(i + 1) * state_dim, j * control_dim:(j + 1) * control_dim] = E_power @ F
+
+    return big_F
+
+# 定义矩阵 E 和 F
 E = np.array([
     [1, 0, 0.513166, 0, 0],
     [0, 1, 0, 0.513166, 0],
@@ -29,5 +54,36 @@ E = np.array([
     [0, 0, 0, 0, 1]
 ])
 
-N = 10  # 计算前 10 个步长
+F = np.array([
+    [-0.892976, -0, 0],
+    [-0, -0.892976, 0],
+    [-5.03416, -0, 0],
+    [-0, -5.03416, 0],
+    [0, 0, 1]
+])
+
+N = 10  # 计算前 10 步
+big_F_python = construct_big_F(E, F, N)
+
+# N = 10  # 计算前 10 个步长
 big_E = construct_E_matrix(E, N)
+
+x0_MLD = np.array([ 0.29357406,  0.29125562, -0.01193462, -0.01774755,  1.58432257])
+
+u = np.array([
+    [-0.05876903, -0.11210947,  0.10821661],
+    [ 0.03893148,  0.05902505,  0.13331123],
+    [ 0.05507302,  0.17836939,  0.03928813],
+    [-0.05754665,  0.03220638, -0.0808465 ],
+    [ 0.11146203,  0.07931738, -0.19619025],
+    [ 0.01171406,  0.16665864,  0.14603116],
+    [-0.07849471,  0.08309314,  0.00424856],
+    [-0.07917739,  0.21530892,  0.12213598],
+    [-0.00427725,  0.16955128, -0.08483312],
+    [ 0.03235876, -0.16870178, -0.19042563]
+])
+u = u.reshape(-1)
+print(big_E)
+print(big_F_python)
+print("result")
+print(big_E @ x0_MLD + big_F_python @ u)

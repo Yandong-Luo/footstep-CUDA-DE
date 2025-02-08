@@ -87,7 +87,6 @@ namespace cudaprocess{
 
         // Avoid using the same random number in the same place as other functions
         int normal_rnd_evolve_pos = epoch * CUDA_SOLVER_POP_SIZE * 3 + sol_idx * 3;
-        // int uniform_rnd_evolve_pos = epoch * CUDA_SOLVER_POP_SIZE * 18 + sol_idx * 18;
         int uniform_rnd_evolve_pos = epoch * CUDA_SOLVER_POP_SIZE * (2 * CUDA_PARAM_MAX_SIZE + 5) + sol_idx * (2 * CUDA_PARAM_MAX_SIZE + 5);
 
         int selected_parent_idx;

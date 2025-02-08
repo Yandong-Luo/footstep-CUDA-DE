@@ -27,8 +27,8 @@ namespace footstep{
     __constant__ float radii[circle_num] = {0.95f, 0.95f};
 
     // target
-    __constant__ float2 target_circle = {0.0f, -0.13f};
-    __constant__ float2 target_circle2 = {0.0f, 0.13f};
+    __constant__ float2 fk = {0.0f, -0.13f};
+    __constant__ float2 fk2 = {0.0f, 0.13f};
 
     // __device__ float E[25] = {
     //     1.0f, 0.0f, 0.513166f,        0.0f,               0.0f,
@@ -108,29 +108,6 @@ namespace footstep{
        0.0f, 0.0f, -1.0f
    };
 
-    // __device__ float H3[350] = {
-    //     -lam_max,      0.0f,
-    //         0.0f, -lam_max,
-    //     d_max,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,    d_max,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f,
-    //         0.0f,      0.0f
-    // };
-
     __constant__ float h[12] = {
         0.5,                // x speed upper boundary
         0.5,                // x speed lower boundary
@@ -145,6 +122,8 @@ namespace footstep{
         PI / 12.0f,         // u_theta upper boundary
         PI / 12.0f          // u_theta lower boundary
     };
+
+    __constant__ float2 target_pos = {0.5f, 2.5f};
 
     // __constant__ float Inx[16] = {
     //     1.0f, 0.0f, 0.0f, 0.0f,

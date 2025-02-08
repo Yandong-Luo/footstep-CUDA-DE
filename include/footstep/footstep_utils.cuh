@@ -17,7 +17,7 @@
 namespace footstep{
 
 // CONSTANT
-constexpr int N = 25;                           // prediction step
+constexpr int N = 30;                           // prediction step
 constexpr float T = 0.4f;           // Delta t
 
 constexpr float legLength = 1.0f;
@@ -78,9 +78,14 @@ extern __constant__ float2 circles[circle_num];
 extern __constant__ float2 circles2[circle_num];
 extern __constant__ float radii[circle_num];
 
+
+extern __constant__ float2 fk;
+extern __constant__ float2 fk2;
+
 // target
-extern __constant__ float2 target_circle;
-extern __constant__ float2 target_circle2;
+extern __constant__ float2 target_pos;
+
+
 
 // __constant__ float2 center1 = {0, 1};
 // __constant__ float2 center2 = {0, -0.44};
@@ -97,6 +102,10 @@ extern float *d_F;
 extern float h_F[15];
 
 void InitMatrixEAndF();
+
+// // Matrix R (3x3), Row priority
+// const float row_R = control_dims, col_R = control_dims;
+// extern __constant__ float R[9];
 
 // // Matrix G (5x7), Row priority
 // const int row_G = state_dims, col_G = num_regions;
@@ -153,9 +162,12 @@ extern float *h_sol_score;
 // ################################
 // ########## Penalty #############
 // ################################
-const float pos_penalty = 5000.0f;
-const float state_penalty = 1000.0f;
-const float control_penalty = 2000.0f;
+const float pos_penalty = 50000.0f;
+const float state_penalty = 100.0f;
+const float control_penalty = 200.0f;
+
+// the weight of the distance between N position and target position
+const float target_weight = 1000.0f;
 
 // ##############################
 // ########## DEBUG #############

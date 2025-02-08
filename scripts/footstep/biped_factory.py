@@ -172,7 +172,7 @@ def plot_result(sol_x, sol_u, color, linestyle):
 
     # plt.show()
 
-# print("=============Start Planning=============")
+print("=============Start Planning=============")
 
 solver = DE_cuda_solver.Create()
 # print("Solver object created successfully")
@@ -209,8 +209,11 @@ print("constraint_score:",constraint_score)
 # sol_x = sol_x.reshape
 print(len(sol_x))
 print(len(sol_u))
-sol_x = np.reshape(sol_x, (30, 5))
-sol_u = np.reshape(sol_u, (30, 3))
+sol_x = np.reshape(sol_x, (N, 5))
+sol_u = np.reshape(sol_u, (N, 3))
+
+print("solution x",sol_x)
+print("solution u",sol_u)
 
 # plot results
 plot_result(sol_x, sol_u, 'black', '--')

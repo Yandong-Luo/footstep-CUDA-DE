@@ -79,11 +79,11 @@ void CudaDiffEvolveSolver::MallocSetup(){
 
     CHECK_CUDA(cudaMalloc(&footstep::d_sol_state, footstep::state_dims * footstep::N * sizeof(float)));
 
-    CHECK_CUDA(cudaMalloc(&footstep::d_sol_score, 3 * sizeof(float)));  // all socre, objective score, constraint score
+    CHECK_CUDA(cudaMalloc(&footstep::d_sol_score, 4 * sizeof(float)));  // all socre, objective score, constraint score, dist_to_goal
 
     CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_state, footstep::state_dims * footstep::N * sizeof(float), cudaHostAllocDefault)); 
 
-    CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_score, 3 * sizeof(float), cudaHostAllocDefault)); 
+    CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_score, 4 * sizeof(float), cudaHostAllocDefault)); 
 
     if (DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
         // printf("Debug flags enabled, allocating host memory\n");
@@ -496,7 +496,7 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
     host_evolve_data_->problem_param.dims = dims_;
     host_evolve_data_->problem_param.int_var_dims = int_var_dims_;
 
-    host_evolve_data_->problem_param.max_round = 60;
+    host_evolve_data_->problem_param.max_round = 100;
 
     host_evolve_data_->problem_param.accuracy_rng = 0.5;
 
@@ -576,7 +576,7 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
     // float sol_score = CUDA_MAX_FLOAT;
     // float *sol_state = nullptr;
     // bool satisify = false;
-    for (int i = 0; i < host_evolve_data_->problem_param.max_round; ++i) {
+    for (int i = 0; i < host_evolve_data_->problem_param.max_round && i < CUDA_MAX_ROUND_NUM; ++i) {
         // printf("generation i:%d\n", i);
         Evolution(i, CudaEvolveType::GLOBAL);
 
@@ -609,9 +609,13 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
             footstep::EvaluateModel<CUDA_SOLVER_POP_SIZE*3><<<1, 32, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::d_sol_state, evaluate_score_, footstep::d_sol_score);
 
             CHECK_CUDA(cudaMemcpy(footstep::h_sol_state, footstep::d_sol_state, footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
-            CHECK_CUDA(cudaMemcpy(footstep::h_sol_score, footstep::d_sol_score, 3 * sizeof(float), cudaMemcpyDeviceToHost));
-            CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-            printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f\n",footstep::h_sol_score[0], footstep::h_sol_score[1], footstep::h_sol_score[2]);
+            CHECK_CUDA(cudaMemcpy(footstep::h_sol_score, footstep::d_sol_score, 4 * sizeof(float), cudaMemcpyDeviceToHost));
+            // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+            printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f dist_to_target:%f\n",footstep::h_sol_score[0], footstep::h_sol_score[1], footstep::h_sol_score[2], footstep::h_sol_score[3]);
+
+            // if(footstep::h_sol_score[2] != 0){
+            //     host_evolve_data_->problem_param.max_round += 100;
+            // }
         }
     }
     

@@ -42,7 +42,7 @@ F = np.array([
     [0, 0, 1]
 ])
 
-N = 30  # 计算前 10 步
+N = 10  # 计算前 10 步
 big_F_python = construct_big_F(E, F, N)
 
 # 保存 big_F 矩阵到 CSV 文件

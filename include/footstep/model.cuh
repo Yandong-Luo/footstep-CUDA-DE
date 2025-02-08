@@ -71,9 +71,9 @@ namespace footstep{
         // current individual control input (N step)
         float *cur_individual_param = cluster_data->all_param + blockIdx.x * CUDA_PARAM_MAX_SIZE;
 
-        for(int i = 0; i < CUDA_PARAM_MAX_SIZE && blockIdx.x >= CUDA_SOLVER_POP_SIZE-10; i++) {
-            printf("blockIdx.x: %d, param[%d]: %f\n", blockIdx.x, i, cur_individual_param[i]);
-        }
+        // for(int i = 0; i < CUDA_PARAM_MAX_SIZE && blockIdx.x >= CUDA_SOLVER_POP_SIZE-10; i++) {
+        //     printf("blockIdx.x: %d, param[%d]: %f\n", blockIdx.x, i, cur_individual_param[i]);
+        // }
 
         float *N_states = cluster_state + blockIdx.x * N * state_dims;
         
@@ -109,6 +109,11 @@ namespace footstep{
 
         // current_step_objective_score
         float cs_obj_score = 0.0f;
+
+        float cs_u_theta_cost = 0.0f;
+        
+        float cs_dist_to_target = 0.0f;
+        float last_dist_to_target = 0.0f;
 
         if(threadIdx.x < N){
             float *current_state = cluster_state + blockIdx.x * N * state_dims + threadIdx.x * state_dims;
@@ -154,6 +159,10 @@ namespace footstep{
             cs_constraint_score += fabsf(cur_individual_param[1]) > uy_ub ? control_penalty : 0.0f;
             cs_constraint_score += fabsf(cur_individual_param[2]) > utheta_ub ? control_penalty : 0.0f;
 
+            if(fabsf(cur_individual_param[0]) > ux_ub || fabsf(cur_individual_param[1]) > uy_ub || fabsf(cur_individual_param[2]) > utheta_ub){
+                printf("current param exceed the range:%f %f %f\n", cur_individual_param[0], cur_individual_param[1], cur_individual_param[2]);
+            }
+
             // ##########################
             // foothold constraint
             // ##########################
@@ -185,21 +194,33 @@ namespace footstep{
             // ##########################
             // objective function
             // ##########################
-            float2 cur_target_circle = target_circle;
+            float2 cur_fk = fk;
             if (threadIdx.x & 1 != first_step_num){
-                cur_target_circle = target_circle2;
+                cur_fk = fk2;
             }
 
-            float dist_to_target_x = fabsf(current_state[0] - (__cosf(current_state[4]) * cur_target_circle.x - __sinf(current_state[4]) * cur_target_circle.y));
-            float dist_to_target_y = fabsf(current_state[1] - (__sinf(current_state[4]) * cur_target_circle.x - __cosf(current_state[4]) * cur_target_circle.y));
+            // float dist_to_target_x = fabsf(current_state[0] - (__cosf(current_state[4]) * cur_target_circle.x - __sinf(current_state[4]) * cur_target_circle.y));
+            // float dist_to_target_y = fabsf(current_state[1] - (__sinf(current_state[4]) * cur_target_circle.x - __cosf(current_state[4]) * cur_target_circle.y));
 
-            cs_obj_score = 5.0f * (dist_to_target_x * dist_to_target_x + dist_to_target_y * dist_to_target_y);
+            // equal to uRu^T
+            cs_u_theta_cost = 5.0f * cur_individual_param[2] * cur_individual_param[2];
 
-            cs_score = cs_obj_score + cs_constraint_score;
-            // printf("block:%d, thread:%d, score:%f, obj_score:%f, constraint:%f x_pos:%f, y_pos:%f, theta:%f, ux:%f, uy:%f, utheta:%f\n",
-            //          blockIdx.x, threadIdx.x, cs_score, cs_obj_score, cs_constraint_score, current_state[0], current_state[1], current_state[4], cur_individual_param[0], cur_individual_param[1], cur_individual_param[2]);
+            float forceTrackingPenalty_x = fabsf(cur_individual_param[0] - (__cosf(current_state[4]) * cur_fk.x - __sinf(current_state[4]) * cur_fk.y));
+
+            float forceTrackingPenalty_y = fabsf(cur_individual_param[1] - (__sinf(current_state[4]) * cur_fk.x - __cosf(current_state[4]) * cur_fk.y));
+
+            cs_obj_score = cs_u_theta_cost + 5.0f * (forceTrackingPenalty_x * forceTrackingPenalty_x + forceTrackingPenalty_y * forceTrackingPenalty_y);
+
+            cs_dist_to_target = target_weight * sqrtf((current_state[0] - target_pos.x) * (current_state[0] - target_pos.x) + (current_state[1] - target_pos.y) * (current_state[1] - target_pos.y));
+
+            if(threadIdx.x == N-1){
+                last_dist_to_target = sqrtf((current_state[0] - target_pos.x) * (current_state[0] - target_pos.x) + (current_state[1] - target_pos.y) * (current_state[1] - target_pos.y));    
+                // printf("blockIdx.x:%d dist_to_target:%f\n", blockIdx.x, dist_to_target);
+            }
+            cs_score = cs_obj_score + cs_constraint_score + cs_dist_to_target;
+            // cs_score = cs_obj_score + cs_constraint_score;
         }
-
+        last_dist_to_target = __shfl_sync(0xffffffff, last_dist_to_target, N-1);
         
         // N_obj_score_sum[threadIdx.x] = cs_obj_score;
 
@@ -229,10 +250,12 @@ namespace footstep{
             
             if (threadIdx.x == 0) {
                 score[blockIdx.x] = cs_score;
+                
                 if(sol_score != nullptr){
                     sol_score[0] = cs_score;
                     sol_score[1] = cs_obj_score;
-                    sol_score[2] = cs_score - cs_obj_score;
+                    sol_score[2] = cs_constraint_score;
+                    sol_score[3] = last_dist_to_target;
                 }
                 // printf("")
                 // printf("block:%d, thread:%d, score:%f, obj_score:%f, constraint:%f\n",

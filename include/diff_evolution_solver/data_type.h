@@ -13,7 +13,7 @@ namespace cudaprocess{
 #define CUDA_MAX_FLOAT 1e30
 #define CUDA_MAX_TASKS 1
 #define CUDA_MAX_POTENTIAL_SOLUTION 4
-#define CUDA_MAX_ROUND_NUM 100
+#define CUDA_MAX_ROUND_NUM 1000
 #define CUDA_MAX_NUM_CONSTRAINT 10
 
 enum CudaEvolveType { CON = 0, INT = 1, GLOBAL = 2 };

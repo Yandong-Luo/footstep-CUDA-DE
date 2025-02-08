@@ -221,3 +221,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.8] - 2025-2-7
 ### Changed
 - Yandong Luo: All limitations on increasing population and increasing parameter dimensions have been fixed and validated. But now when N=30, the state update in footstep causes the precision of float to be exceeded. This problem has not been solved yet.
+
+## [0.3.9] - 2025-2-7
+### Changed
+- Yandong Luo: Updated the evaluation of model (each step consider the distance between goal and current position). But now when N=30, the score issue hasn't been solved.
