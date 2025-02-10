@@ -6,6 +6,7 @@
 // #include "diff_evolution_solver/random_center.cuh"
 #include "diff_evolution_solver/random_manager.cuh"
 #include "yaml-cpp/yaml.h"
+#include "utils/utils.cuh"
 
 namespace cudaprocess{
     class CudaSolverCenter

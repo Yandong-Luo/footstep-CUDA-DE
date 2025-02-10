@@ -4,20 +4,21 @@
 #include <thrust/host_vector.h>
 #include <thrust/device_vector.h>
 #include <cublas_v2.h>
+// #include "utils/config.h"
 #include "utils/utils.cuh"
 
-#ifndef CUDA_SOLVER_POP_SIZE
-#define CUDA_SOLVER_POP_SIZE 128
-#endif
+// #ifndef CUDA_SOLVER_POP_SIZE
+// #define CUDA_SOLVER_POP_SIZE 512
+// #endif
 
-#ifndef CUDA_PARAM_MAX_SIZE
-#define CUDA_PARAM_MAX_SIZE 96
-#endif
+// #ifndef CUDA_PARAM_MAX_SIZE
+// #define CUDA_PARAM_MAX_SIZE 32
+// #endif
 
 namespace footstep{
 
 // CONSTANT
-constexpr int N = 30;                           // prediction step
+constexpr int N = 20;                           // prediction step
 constexpr float T = 0.4f;           // Delta t
 
 constexpr float legLength = 1.0f;
@@ -65,18 +66,23 @@ constexpr float My = 10.0f;
 constexpr float Mu = 5.0f;
 constexpr float Mt = 7.0f;
 
-const bool left_stand_first = false;
+constexpr bool left_stand_first = false;
 
-const int first_step_num = left_stand_first? 0 : 1;
+constexpr int first_step_num = left_stand_first? 0 : 1;
 
-const int row_init_state = 5, col_init_state = 1;
+constexpr int row_init_state = 5, col_init_state = 1;
 extern __constant__ float init_state[5];
 
 // circle center
-const int circle_num = 2;
-extern __constant__ float2 circles[circle_num];
-extern __constant__ float2 circles2[circle_num];
-extern __constant__ float radii[circle_num];
+constexpr int foothold_circle_num = 2;
+extern __constant__ float2 foothold_circles[foothold_circle_num];
+extern __constant__ float2 foothold_circles2[foothold_circle_num];
+extern __constant__ float foothold_radii[foothold_circle_num];
+
+// velocity circle center
+constexpr int vel_circle_num = 2;
+extern __constant__ float2 vel_circle[vel_circle_num];
+extern __constant__ float vel_circle_radii[vel_circle_num];
 
 
 extern __constant__ float2 fk;
@@ -162,12 +168,14 @@ extern float *h_sol_score;
 // ################################
 // ########## Penalty #############
 // ################################
-const float pos_penalty = 50000.0f;
-const float state_penalty = 100.0f;
-const float control_penalty = 200.0f;
+constexpr float pos_penalty = 50000.0f;
+constexpr float state_penalty = 500.0f;
+constexpr float control_penalty = 200.0f;
+constexpr float velocity_penalty = 500.0f;
+constexpr float foothold_penalty = 100.0f;
 
 // the weight of the distance between N position and target position
-const float target_weight = 1000.0f;
+constexpr float target_weight = 1000.0f;
 
 // ##############################
 // ########## DEBUG #############

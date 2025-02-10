@@ -100,6 +100,8 @@ namespace cudaprocess{
 
             int task_id_ = 0;
 
+            cudaDeviceProp prop;
+
             // !--------------- CART POLE ---------------!
             float *h_state;             // pos, speed, theta, angular velocity from environment (x in paper)
             float *env_constraint, *h_env_constraint;     // h(\theta) in paper

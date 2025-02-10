@@ -417,8 +417,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.h \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_bf16.hpp \
  /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
- /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
- /usr/local/cuda-11.4/targets/x86_64-linux/include/curand.h \
+ /home/chris/footstep-CUDA-DE/include/utils/config.h \
  /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/host_vector.h \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config.h \
@@ -760,6 +759,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/new.h \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/fancy_pointer_resource.h \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h \
+ /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
+ /usr/local/cuda-11.4/targets/x86_64-linux/include/curand.h \
  /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/converter.cuh \
  /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_kernel.h \
@@ -777,4 +778,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_normal_static.h \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_lognormal.h \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_poisson.h \
- /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_discrete2.h
+ /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_discrete2.h \
+ /usr/include/c++/10/random /usr/include/c++/10/bits/random.h \
+ /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h \
+ /usr/include/c++/10/bits/random.tcc

@@ -225,3 +225,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.9] - 2025-2-7
 ### Changed
 - Yandong Luo: Updated the evaluation of model (each step consider the distance between goal and current position). But now when N=30, the score issue hasn't been solved.
+
+## [0.3.10] - 2025-2-9
+### Changed
+- Yandong Luo: Fixed the issue from old param sorting. Updated the evaluation of model (Add all constraint into the evalution). I also found the issue from SortOldParamBasedBitonic. The root cause may be that the threads are competing to modify the data, causing param to be modified randomly and out of order during large-scale processing. This can be observed in test/sort_param.cu. This part will be re-implemented based on the thrust library in the future.

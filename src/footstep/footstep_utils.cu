@@ -21,14 +21,18 @@ namespace footstep{
         {2.8, 3, 1.4, 1.6}
     };
 
-    // circle center
-    __constant__ float2 circles[circle_num] = {{0.0f, 1.0f}, {0.0f, -2.8f}};
-    __constant__ float2 circles2[circle_num] = {{0.0f, -1.0f}, {0.0f, 2.8f}};
-    __constant__ float radii[circle_num] = {0.95f, 0.95f};
+    // foothold bound circle center
+    __constant__ float2 foothold_circles[foothold_circle_num] = {{0.0f, 1.0f}, {0.0f, -2.8f}};   // upper boundary and lower (first step num)
+    __constant__ float2 foothold_circles2[foothold_circle_num] = {{0.0f, -1.0f}, {0.0f, 2.8f}};  // upper boundary and lower 
+    __constant__ float foothold_radii[foothold_circle_num] = {0.95f, 3.0f};
+
+    // velocity circle
+    __constant__ float2 vel_circle[vel_circle_num] = {{-0.1f, 0.0f}, {3.0f, 0.0f}};      // forward and backward
+    __constant__ float vel_circle_radii[vel_circle_num] = {0.3f, 3.3f};
 
     // target
-    __constant__ float2 fk = {0.0f, -0.13f};
-    __constant__ float2 fk2 = {0.0f, 0.13f};
+    __constant__ float2 fk = {0.0f, 0.13f};
+    __constant__ float2 fk2 = {0.0f,-0.13f};
 
     // __device__ float E[25] = {
     //     1.0f, 0.0f, 0.513166f,        0.0f,               0.0f,
@@ -123,7 +127,7 @@ namespace footstep{
         PI / 12.0f          // u_theta lower boundary
     };
 
-    __constant__ float2 target_pos = {0.5f, 2.5f};
+    __constant__ float2 target_pos = {0.5f, 2.0f};
 
     // __constant__ float Inx[16] = {
     //     1.0f, 0.0f, 0.0f, 0.0f,
@@ -270,7 +274,4 @@ namespace footstep{
         cudaFree(d_E_power);
         cudaFree(result_block);
     }
-    
-    __constant__ float4 current_state = {0,0,0,0};
-    __constant__ float2 current_wall_pos = {0,0};
 }

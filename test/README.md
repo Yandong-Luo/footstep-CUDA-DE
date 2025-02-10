@@ -21,3 +21,12 @@ nvcc big_E_F_matrix.cu -o compute_big_E_F -lcublas -L/usr/local/cuda/lib64 -I/us
 ```
 LD_LIBRARY_PATH=/usr/local/cuda/lib64 ./compute_big_E_F
 ```
+
+#### Test sorting param
+```
+nvcc -O3 -arch sm_86 -std=c++14 -Xcompiler -fPIC --use_fast_math sort_param.cu -o sort_param
+```
+#### Run
+```
+./sort_param
+```

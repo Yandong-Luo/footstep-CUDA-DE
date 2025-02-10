@@ -891,5 +891,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o : /home/chris/footstep-C
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_bf16.hpp \
     /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda.h \
+    /home/chris/footstep-CUDA-DE/include/utils/config.h \
     /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand.h

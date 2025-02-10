@@ -75,6 +75,14 @@ namespace footstep{
         //     printf("blockIdx.x: %d, param[%d]: %f\n", blockIdx.x, i, cur_individual_param[i]);
         // }
 
+        // if(blockIdx.x == 0 && threadIdx.x == 0){
+        //     printf("update state param:");
+        //     for(int i = 0; i < CUDA_PARAM_MAX_SIZE; ++i){
+        //         printf("%f ", cur_individual_param[i]);
+        //     }
+        //     printf("\n");
+        // }
+
         float *N_states = cluster_state + blockIdx.x * N * state_dims;
         
         extern __shared__ __align__(16) char smem[];
@@ -87,7 +95,7 @@ namespace footstep{
         // matrix bigE times init_states, and plus the result at F
         gemm_kernel<Fu_GEMM>(1.0f, bigF, cur_individual_param, 1.0f, N_states, smem);
 
-        __syncthreads();
+        // __syncthreads();
     }
 
     template<int T = CUDA_SOLVER_POP_SIZE>
@@ -100,6 +108,14 @@ namespace footstep{
         // __shared__ ALIGN(64) float N_obj_score_sum[32];
         // N_score_sum[threadIdx.x] = 0.0f;
         // N_obj_score_sum[threadIdx.x] = 0.0f;
+
+        // if(blockIdx.x == 0 && threadIdx.x == 0 && sol_score!=nullptr){
+        //     printf("evaluate model param:");
+        //     for(int i = 0; i < CUDA_PARAM_MAX_SIZE; ++i){
+        //         printf("%f ", cluster_data->all_param[i]);
+        //     }
+        //     printf("\n");
+        // }
 
         // current_step_score
         float cs_score = 0.0f;
@@ -162,42 +178,72 @@ namespace footstep{
             if(fabsf(cur_individual_param[0]) > ux_ub || fabsf(cur_individual_param[1]) > uy_ub || fabsf(cur_individual_param[2]) > utheta_ub){
                 printf("current param exceed the range:%f %f %f\n", cur_individual_param[0], cur_individual_param[1], cur_individual_param[2]);
             }
+            
+            // ##########################
+            // velocity constraint
+            // ##########################
+            float backward_vel_constraint = (current_state[2] - (__cosf(current_state[4]) * vel_circle[0].x - __sinf(current_state[4]) * vel_circle[0].y)) * (current_state[2] - (__cosf(current_state[4]) * vel_circle[0].x - __sinf(current_state[4]) * vel_circle[0].y))
+                                 + (current_state[3] - (__sinf(current_state[4]) * vel_circle[0].x + __cosf(current_state[4]) * vel_circle[0].y)) * (current_state[3] - (__sinf(current_state[4]) * vel_circle[0].x + __cosf(current_state[4]) * vel_circle[0].y))
+                                 - (vel_circle_radii[0] * vel_circle_radii[0]);
+
+            float forward_vel_constraint = (current_state[2] - (__cosf(current_state[4]) * vel_circle[1].x - __sinf(current_state[4]) * vel_circle[1].y)) * (current_state[2] - (__cosf(current_state[4]) * vel_circle[1].x - __sinf(current_state[4]) * vel_circle[1].y))
+                                 + (current_state[3] - (__sinf(current_state[4]) * vel_circle[1].x + __cosf(current_state[4]) * vel_circle[1].y)) * (current_state[3] - (__sinf(current_state[4]) * vel_circle[1].x + __cosf(current_state[4]) * vel_circle[1].y))
+                                 - (vel_circle_radii[1] * vel_circle_radii[1]);
+
+            cs_constraint_score += (forward_vel_constraint > 0.0f) ? velocity_penalty * forward_vel_constraint : 0.0f;
+
+            cs_constraint_score += (backward_vel_constraint > 0.0f) ? velocity_penalty * backward_vel_constraint : 0.0f;
 
             // ##########################
             // foothold constraint
             // ##########################
             // foothold bound
 
-            const float2 *cur_circle = (threadIdx.x & 1 != first_step_num) ? circles2 : circles;
-
-            // I think should not use last state. The correct one is next state I think
-            float *last_state = nullptr;
-            if(threadIdx.x == 0){
-                last_state = init_state;
-            }
-            else{
-                last_state = cluster_state + blockIdx.x * N * state_dims + (threadIdx.x - 1) * state_dims;
+            float2 cur_fk = fk;
+            float2 *cur_foothold_circles = foothold_circles;
+            if (threadIdx.x & 1 != first_step_num){
+                cur_fk = fk2;
+                cur_foothold_circles = foothold_circles2;
             }
 
-            // equation 3 and 4 in https://ieeexplore.ieee.org/document/7041373
-            for(int i = 0; i < circle_num; ++i){
-                if (fabsf(current_state[0] - (last_state[0] + __cosf(last_state[4]) * cur_circle[i].x - __sinf(last_state[4]) * cur_circle[i].y)) > radii[i]){
-                    cs_constraint_score += state_penalty;
-                    break;
-                }
-                else if (fabsf(current_state[1] - (last_state[1] + __sinf(last_state[4]) * cur_circle[i].x - __cosf(last_state[4]) * cur_circle[i].y)) > radii[i]){
-                    cs_constraint_score += state_penalty;
-                    break;
-                }
-            }
+            float foothold_ub_constraint = (cur_individual_param[0] - (__cosf(current_state[4]) * cur_foothold_circles[0].x - __sinf(current_state[4]) * cur_foothold_circles[0].y)) * (cur_individual_param[0] - (__cosf(current_state[4]) * cur_foothold_circles[0].x - __sinf(current_state[4]) * cur_foothold_circles[0].y))
+                                         + (cur_individual_param[1] - (__sinf(current_state[4]) * cur_foothold_circles[0].x + __cosf(current_state[4]) * cur_foothold_circles[0].y)) * (cur_individual_param[1] - (__sinf(current_state[4]) * cur_foothold_circles[0].x + __cosf(current_state[4]) * cur_foothold_circles[0].y))
+                                         - (foothold_radii[0] * foothold_radii[0]);
+
+            float foothold_lb_constraint = (cur_individual_param[0] - (__cosf(current_state[4]) * cur_foothold_circles[1].x - __sinf(current_state[4]) * cur_foothold_circles[1].y)) * (cur_individual_param[0] - (__cosf(current_state[4]) * cur_foothold_circles[1].x - __sinf(current_state[4]) * cur_foothold_circles[1].y))
+                                         + (cur_individual_param[1] - (__sinf(current_state[4]) * cur_foothold_circles[1].x + __cosf(current_state[4]) * cur_foothold_circles[1].y)) * (cur_individual_param[1] - (__sinf(current_state[4]) * cur_foothold_circles[1].x + __cosf(current_state[4]) * cur_foothold_circles[1].y))
+                                         - (foothold_radii[1] * foothold_radii[1]);
+
+            cs_constraint_score += (foothold_ub_constraint > 0.0f) ? foothold_penalty * foothold_ub_constraint : 0.0f;
+
+            cs_constraint_score += (foothold_lb_constraint > 0.0f) ? foothold_penalty * foothold_lb_constraint : 0.0f;
+
+            // const float2 *cur_circle = (threadIdx.x & 1 != first_step_num) ? circles2 : circles;
+
+            // // I think should not use last state. The correct one is next state I think
+            // float *last_state = nullptr;
+            // if(threadIdx.x == 0){
+            //     last_state = init_state;
+            // }
+            // else{
+            //     last_state = cluster_state + blockIdx.x * N * state_dims + (threadIdx.x - 1) * state_dims;
+            // }
+
+            // // equation 3 and 4 in https://ieeexplore.ieee.org/document/7041373
+            // for(int i = 0; i < circle_num; ++i){
+            //     if (fabsf(cur_individual_param[0] - (last_state[0] + __cosf(last_state[4]) * cur_circle[i].x - __sinf(last_state[4]) * cur_circle[i].y)) > radii[i]){
+            //         cs_constraint_score += state_penalty;
+            //         break;
+            //     }
+            //     else if (fabsf(current_state[1] - (last_state[1] + __sinf(last_state[4]) * cur_circle[i].x - __cosf(last_state[4]) * cur_circle[i].y)) > radii[i]){
+            //         cs_constraint_score += state_penalty;
+            //         break;
+            //     }
+            // }
 
             // ##########################
             // objective function
             // ##########################
-            float2 cur_fk = fk;
-            if (threadIdx.x & 1 != first_step_num){
-                cur_fk = fk2;
-            }
 
             // float dist_to_target_x = fabsf(current_state[0] - (__cosf(current_state[4]) * cur_target_circle.x - __sinf(current_state[4]) * cur_target_circle.y));
             // float dist_to_target_y = fabsf(current_state[1] - (__sinf(current_state[4]) * cur_target_circle.x - __cosf(current_state[4]) * cur_target_circle.y));
@@ -217,8 +263,8 @@ namespace footstep{
                 last_dist_to_target = sqrtf((current_state[0] - target_pos.x) * (current_state[0] - target_pos.x) + (current_state[1] - target_pos.y) * (current_state[1] - target_pos.y));    
                 // printf("blockIdx.x:%d dist_to_target:%f\n", blockIdx.x, dist_to_target);
             }
-            cs_score = cs_obj_score + cs_constraint_score + cs_dist_to_target;
-            // cs_score = cs_obj_score + cs_constraint_score;
+            // cs_score = cs_obj_score + cs_constraint_score + cs_dist_to_target;
+            cs_score = cs_obj_score + cs_constraint_score;
         }
         last_dist_to_target = __shfl_sync(0xffffffff, last_dist_to_target, N-1);
         
@@ -248,11 +294,14 @@ namespace footstep{
             cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 2);
             cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 1);
             
+            // __syncthreads();
+
             if (threadIdx.x == 0) {
-                score[blockIdx.x] = cs_score;
+                score[blockIdx.x] = cs_score + target_weight * last_dist_to_target;
                 
                 if(sol_score != nullptr){
-                    sol_score[0] = cs_score;
+                    printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f dist_to_target:%f\n",cs_score + target_weight * last_dist_to_target, cs_obj_score, cs_constraint_score, last_dist_to_target);
+                    sol_score[0] = cs_score + target_weight * last_dist_to_target;
                     sol_score[1] = cs_obj_score;
                     sol_score[2] = cs_constraint_score;
                     sol_score[3] = last_dist_to_target;

@@ -106,6 +106,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/solver.cuh \
   /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
+  /home/chris/footstep-CUDA-DE/include/utils/config.h \
   /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
   /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvToolsExt.h \
   /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtx3.hpp \
@@ -198,6 +199,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/include/c++/10/bits/postypes.h \
   /usr/include/c++/10/bits/predefined_ops.h \
   /usr/include/c++/10/bits/ptr_traits.h \
+  /usr/include/c++/10/bits/random.h \
+  /usr/include/c++/10/bits/random.tcc \
   /usr/include/c++/10/bits/range_access.h \
   /usr/include/c++/10/bits/range_cmp.h \
   /usr/include/c++/10/bits/ranges_uninitialized.h \
@@ -289,6 +292,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/include/c++/10/pstl/glue_memory_defs.h \
   /usr/include/c++/10/pstl/glue_numeric_defs.h \
   /usr/include/c++/10/pstl/pstl_config.h \
+  /usr/include/c++/10/random \
   /usr/include/c++/10/ratio \
   /usr/include/c++/10/shared_mutex \
   /usr/include/c++/10/sstream \
@@ -453,6 +457,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
@@ -1010,17 +1015,21 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/find.h:
 
-/usr/include/locale.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/fill.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h:
 
 /usr/include/linux/limits.h:
 
 /usr/include/inttypes.h:
 
 /usr/include/x86_64-linux-gnu/bits/statx-generic.h:
-
-/usr/include/math.h:
-
-/usr/include/fcntl.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/device_types.h:
 
@@ -1055,8 +1064,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_normal_static.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/for_each.h:
-
-/usr/include/c++/10/thread:
 
 /usr/include/c++/10/string_view:
 
@@ -1100,9 +1107,11 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInit.h:
 
-/usr/include/c++/10/bits/stl_pair.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/execution_policy.h:
 
-/usr/include/linux/stddef.h:
+/usr/include/c++/10/debug/assertions.h:
+
+/usr/include/c++/10/bits/stl_pair.h:
 
 /usr/include/c++/10/pstl/glue_algorithm_defs.h:
 
@@ -1236,6 +1245,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/fp-logb.h:
 
+/usr/include/c++/10/thread:
+
 /usr/include/c++/10/cstdint:
 
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/detail/type_caster_base.h:
@@ -1263,6 +1274,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/endian.h:
 
 /usr/include/linux/posix_types.h:
+
+/usr/include/c++/10/random:
+
+/home/chris/anaconda3/envs/lab_env/include/python3.9/pyfpe.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/object.h:
 
@@ -1376,8 +1391,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pystrtod.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h:
-
 /home/chris/anaconda3/envs/lab_env/include/python3.9/descrobject.h:
 
 /usr/include/c++/10/version:
@@ -1403,8 +1416,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/memory:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl:
 
 /usr/include/c++/10/shared_mutex:
 
@@ -1490,8 +1501,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/bits/std_mutex.h:
 
-/home/chris/anaconda3/envs/lab_env/include/python3.9/pyfpe.h:
-
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/pystate.h:
 
 /usr/include/c++/10/bits/basic_string.h:
@@ -1526,6 +1535,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
+/usr/include/c++/10/bits/random.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cstdint.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/logical_operators.h:
@@ -1535,10 +1546,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/osmodule.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
@@ -1796,10 +1803,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/dependencies_aware_execution_policy.h:
-
-/usr/include/c++/10/bits/alloc_traits.h:
-
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/methodobject.h:
 
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvToolsExt.h:
@@ -1809,6 +1812,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/bits/exception_defines.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/functional.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/dependencies_aware_execution_policy.h:
+
+/usr/include/c++/10/bits/alloc_traits.h:
 
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtx3.hpp:
 
@@ -1926,6 +1933,14 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/bits/cxxabi_forced.h:
 
+/usr/include/linux/stddef.h:
+
+/usr/include/locale.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/math.h:
+
 /usr/include/pthread.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/execute_with_allocator.h:
@@ -2001,6 +2016,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/x86_64-linux-gnu/bits/local_lim.h:
 
 /usr/include/c++/10/tuple:
+
+/usr/include/c++/10/bits/random.tcc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_mtgp32.h:
 
@@ -2129,6 +2146,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/bits/localefwd.h:
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/allocator_traits.inl:
 
@@ -2424,6 +2443,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/replace.h:
 
+/home/chris/footstep-CUDA-DE/include/utils/config.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/device_system_tag.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/host_system_tag.h:
@@ -2519,9 +2540,3 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy.h:
-
-/usr/include/c++/10/debug/assertions.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/execution_policy.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/fill.h:

@@ -1,20 +1,13 @@
 #ifndef CUDA_DIFF_EVOLUTION_DATA_TYPE_H
 #define CUDA_DIFF_EVOLUTION_DATA_TYPE_H
 #include <unordered_map>
-#include "utils/utils.cuh"
+// #include "utils/utils.cuh"
+#include "utils/config.h"
 #include "footstep/footstep_utils.cuh"
 
 namespace cudaprocess{
 
 #define ALIGN(n) __align__(n)
-
-#define CUDA_PARAM_MAX_SIZE 96
-// #define CUDA_SOLVER_POP_SIZE 128
-#define CUDA_MAX_FLOAT 1e30
-#define CUDA_MAX_TASKS 1
-#define CUDA_MAX_POTENTIAL_SOLUTION 4
-#define CUDA_MAX_ROUND_NUM 1000
-#define CUDA_MAX_NUM_CONSTRAINT 10
 
 enum CudaEvolveType { CON = 0, INT = 1, GLOBAL = 2 };
 

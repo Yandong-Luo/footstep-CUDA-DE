@@ -50,7 +50,7 @@ nx = 5
 nz = num_patch
 
 nc = 4*num_patch+6+6+4+2*3
-N = 30
+N = 20
 
 h = np.zeros([nc, 1])
 h_d_theta = np.zeros([nx, 1])

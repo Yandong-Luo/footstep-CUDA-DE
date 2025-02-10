@@ -203,31 +203,94 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o : /home/chr
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_lognormal.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_poisson.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/curand_discrete2.h \
-    /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
-    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
-    /usr/include/c++/10/unordered_map \
-    /usr/include/c++/10/initializer_list \
+    /usr/include/c++/10/random \
+    /usr/include/c++/10/string \
+    /usr/include/c++/10/bits/stringfwd.h \
+    /usr/include/c++/10/bits/memoryfwd.h \
+    /usr/include/c++/10/bits/char_traits.h \
+    /usr/include/c++/10/bits/postypes.h \
+    /usr/include/c++/10/cwchar \
+    /usr/include/wchar.h \
+    /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+    /usr/include/c++/10/cstdint \
     /usr/include/c++/10/bits/allocator.h \
     /usr/include/x86_64-linux-gnu/c++/10/bits/c++allocator.h \
     /usr/include/c++/10/ext/new_allocator.h \
-    /usr/include/c++/10/bits/memoryfwd.h \
+    /usr/include/c++/10/bits/localefwd.h \
+    /usr/include/x86_64-linux-gnu/c++/10/bits/c++locale.h \
+    /usr/include/c++/10/clocale \
+    /usr/include/locale.h \
+    /usr/include/x86_64-linux-gnu/bits/locale.h \
+    /usr/include/c++/10/iosfwd \
+    /usr/include/c++/10/cctype \
+    /usr/include/ctype.h \
+    /usr/include/c++/10/bits/ostream_insert.h \
+    /usr/include/c++/10/bits/cxxabi_forced.h \
+    /usr/include/c++/10/bits/stl_function.h \
+    /usr/include/c++/10/backward/binders.h \
+    /usr/include/c++/10/bits/range_access.h \
+    /usr/include/c++/10/initializer_list \
+    /usr/include/c++/10/bits/iterator_concepts.h \
+    /usr/include/c++/10/concepts \
+    /usr/include/c++/10/bits/range_cmp.h \
+    /usr/include/c++/10/bits/basic_string.h \
+    /usr/include/c++/10/ext/atomicity.h \
+    /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h \
+    /usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h \
+    /usr/include/pthread.h \
+    /usr/include/sched.h \
+    /usr/include/x86_64-linux-gnu/bits/sched.h \
+    /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+    /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+    /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+    /usr/include/x86_64-linux-gnu/c++/10/bits/atomic_word.h \
     /usr/include/c++/10/ext/alloc_traits.h \
     /usr/include/c++/10/bits/alloc_traits.h \
     /usr/include/c++/10/bits/stl_construct.h \
-    /usr/include/c++/10/ext/aligned_buffer.h \
-    /usr/include/c++/10/bits/stl_function.h \
-    /usr/include/c++/10/backward/binders.h \
+    /usr/include/c++/10/string_view \
     /usr/include/c++/10/bits/functional_hash.h \
+    /usr/include/c++/10/bits/string_view.tcc \
+    /usr/include/c++/10/ext/string_conversions.h \
+    /usr/include/c++/10/cstdio \
+    /usr/include/c++/10/cerrno \
+    /usr/include/errno.h \
+    /usr/include/x86_64-linux-gnu/bits/errno.h \
+    /usr/include/linux/errno.h \
+    /usr/include/x86_64-linux-gnu/asm/errno.h \
+    /usr/include/asm-generic/errno.h \
+    /usr/include/asm-generic/errno-base.h \
+    /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+    /usr/include/c++/10/bits/charconv.h \
+    /usr/include/c++/10/bits/basic_string.tcc \
+    /usr/include/c++/10/bits/random.h \
+    /usr/include/c++/10/vector \
+    /usr/include/c++/10/bits/stl_uninitialized.h \
+    /usr/include/c++/10/bits/stl_vector.h \
+    /usr/include/c++/10/bits/stl_bvector.h \
+    /usr/include/c++/10/bits/vector.tcc \
+    /usr/include/c++/10/bits/uniform_int_dist.h \
+    /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h \
+    /usr/include/c++/10/bits/random.tcc \
+    /usr/include/c++/10/numeric \
+    /usr/include/c++/10/bits/stl_numeric.h \
+    /usr/include/c++/10/pstl/glue_numeric_defs.h \
+    /usr/include/c++/10/pstl/execution_defs.h \
+    /usr/include/c++/10/chrono \
+    /usr/include/c++/10/ratio \
+    /usr/include/c++/10/ctime \
+    /usr/include/c++/10/bits/parse_numbers.h \
+    /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
+    /home/chris/footstep-CUDA-DE/include/utils/config.h \
+    /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
+    /usr/include/c++/10/unordered_map \
+    /usr/include/c++/10/ext/aligned_buffer.h \
     /usr/include/c++/10/bits/hashtable.h \
     /usr/include/c++/10/bits/hashtable_policy.h \
     /usr/include/c++/10/tuple \
     /usr/include/c++/10/utility \
     /usr/include/c++/10/bits/stl_relops.h \
     /usr/include/c++/10/array \
-    /usr/include/c++/10/bits/range_access.h \
-    /usr/include/c++/10/bits/iterator_concepts.h \
-    /usr/include/c++/10/concepts \
-    /usr/include/c++/10/bits/range_cmp.h \
     /usr/include/c++/10/bits/uses_allocator.h \
     /usr/include/c++/10/bits/invoke.h \
     /usr/include/c++/10/bits/enable_special_members.h \
@@ -255,27 +318,9 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o : /home/chr
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/detail/config/global_workarounds.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/detail/memory_wrapper.h \
     /usr/include/c++/10/memory \
-    /usr/include/c++/10/bits/stl_uninitialized.h \
     /usr/include/c++/10/bits/stl_tempbuf.h \
     /usr/include/c++/10/bits/stl_raw_storage_iter.h \
     /usr/include/c++/10/bits/ranges_uninitialized.h \
-    /usr/include/c++/10/iosfwd \
-    /usr/include/c++/10/bits/stringfwd.h \
-    /usr/include/c++/10/bits/postypes.h \
-    /usr/include/c++/10/cwchar \
-    /usr/include/wchar.h \
-    /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
-    /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
-    /usr/include/c++/10/ext/atomicity.h \
-    /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h \
-    /usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h \
-    /usr/include/pthread.h \
-    /usr/include/sched.h \
-    /usr/include/x86_64-linux-gnu/bits/sched.h \
-    /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
-    /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
-    /usr/include/x86_64-linux-gnu/bits/setjmp.h \
-    /usr/include/x86_64-linux-gnu/c++/10/bits/atomic_word.h \
     /usr/include/c++/10/ext/concurrence.h \
     /usr/include/c++/10/bits/unique_ptr.h \
     /usr/include/c++/10/bits/shared_ptr.h \
@@ -286,9 +331,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o : /home/chr
     /usr/include/c++/10/bits/atomic_base.h \
     /usr/include/c++/10/bits/atomic_lockfree_defines.h \
     /usr/include/c++/10/backward/auto_ptr.h \
-    /usr/include/c++/10/cstdint \
     /usr/include/c++/10/pstl/glue_memory_defs.h \
-    /usr/include/c++/10/pstl/execution_defs.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/detail/vector_base.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/iterator/detail/normal_iterator.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/iterator/iterator_adaptor.h \
@@ -323,34 +366,8 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o : /home/chr
     /usr/include/c++/10/bits/stream_iterator.h \
     /usr/include/c++/10/bits/streambuf_iterator.h \
     /usr/include/c++/10/streambuf \
-    /usr/include/c++/10/bits/localefwd.h \
-    /usr/include/x86_64-linux-gnu/c++/10/bits/c++locale.h \
-    /usr/include/c++/10/clocale \
-    /usr/include/locale.h \
-    /usr/include/x86_64-linux-gnu/bits/locale.h \
-    /usr/include/c++/10/cctype \
-    /usr/include/ctype.h \
     /usr/include/c++/10/bits/ios_base.h \
     /usr/include/c++/10/bits/locale_classes.h \
-    /usr/include/c++/10/string \
-    /usr/include/c++/10/bits/char_traits.h \
-    /usr/include/c++/10/bits/ostream_insert.h \
-    /usr/include/c++/10/bits/cxxabi_forced.h \
-    /usr/include/c++/10/bits/basic_string.h \
-    /usr/include/c++/10/string_view \
-    /usr/include/c++/10/bits/string_view.tcc \
-    /usr/include/c++/10/ext/string_conversions.h \
-    /usr/include/c++/10/cstdio \
-    /usr/include/c++/10/cerrno \
-    /usr/include/errno.h \
-    /usr/include/x86_64-linux-gnu/bits/errno.h \
-    /usr/include/linux/errno.h \
-    /usr/include/x86_64-linux-gnu/asm/errno.h \
-    /usr/include/asm-generic/errno.h \
-    /usr/include/asm-generic/errno-base.h \
-    /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
-    /usr/include/c++/10/bits/charconv.h \
-    /usr/include/c++/10/bits/basic_string.tcc \
     /usr/include/c++/10/bits/locale_classes.tcc \
     /usr/include/c++/10/system_error \
     /usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h \
@@ -396,14 +413,9 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o : /home/chr
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/functional.h \
     /usr/include/c++/10/functional \
     /usr/include/c++/10/bits/std_function.h \
-    /usr/include/c++/10/vector \
-    /usr/include/c++/10/bits/stl_vector.h \
-    /usr/include/c++/10/bits/stl_bvector.h \
-    /usr/include/c++/10/bits/vector.tcc \
     /usr/include/c++/10/bits/stl_algo.h \
     /usr/include/c++/10/bits/algorithmfwd.h \
     /usr/include/c++/10/bits/stl_heap.h \
-    /usr/include/c++/10/bits/uniform_int_dist.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/detail/functional/placeholder.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/detail/functional/actor.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/tuple.h \
@@ -889,10 +901,6 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o : /home/chr
     /usr/include/c++/10/memory_resource \
     /usr/include/c++/10/shared_mutex \
     /usr/include/c++/10/condition_variable \
-    /usr/include/c++/10/chrono \
-    /usr/include/c++/10/ratio \
-    /usr/include/c++/10/ctime \
-    /usr/include/c++/10/bits/parse_numbers.h \
     /usr/include/c++/10/bits/std_mutex.h \
     /usr/include/c++/10/bits/unique_lock.h \
     /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/thrust/mr/polymorphic_adaptor.h \

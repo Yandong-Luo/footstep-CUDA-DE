@@ -190,6 +190,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: /home/chri
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh \
   /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
+  /home/chris/footstep-CUDA-DE/include/utils/config.h \
   /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -244,6 +245,8 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: /home/chri
   /usr/include/c++/10/bits/postypes.h \
   /usr/include/c++/10/bits/predefined_ops.h \
   /usr/include/c++/10/bits/ptr_traits.h \
+  /usr/include/c++/10/bits/random.h \
+  /usr/include/c++/10/bits/random.tcc \
   /usr/include/c++/10/bits/range_access.h \
   /usr/include/c++/10/bits/range_cmp.h \
   /usr/include/c++/10/bits/ranges_uninitialized.h \
@@ -264,6 +267,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: /home/chri
   /usr/include/c++/10/bits/stl_iterator.h \
   /usr/include/c++/10/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/10/bits/stl_iterator_base_types.h \
+  /usr/include/c++/10/bits/stl_numeric.h \
   /usr/include/c++/10/bits/stl_pair.h \
   /usr/include/c++/10/bits/stl_raw_storage_iter.h \
   /usr/include/c++/10/bits/stl_relops.h \
@@ -321,11 +325,14 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: /home/chri
   /usr/include/c++/10/memory \
   /usr/include/c++/10/memory_resource \
   /usr/include/c++/10/new \
+  /usr/include/c++/10/numeric \
   /usr/include/c++/10/optional \
   /usr/include/c++/10/ostream \
   /usr/include/c++/10/pstl/execution_defs.h \
   /usr/include/c++/10/pstl/glue_memory_defs.h \
+  /usr/include/c++/10/pstl/glue_numeric_defs.h \
   /usr/include/c++/10/pstl/pstl_config.h \
+  /usr/include/c++/10/random \
   /usr/include/c++/10/ratio \
   /usr/include/c++/10/shared_mutex \
   /usr/include/c++/10/stdexcept \
@@ -457,6 +464,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: /home/chri
   /usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
@@ -1109,6 +1117,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/solver.cuh \
   /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
   /home/chris/footstep-CUDA-DE/include/footstep/model.cuh \
+  /home/chris/footstep-CUDA-DE/include/utils/config.h \
   /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
   /home/chris/footstep-CUDA-DE/include/utils/utils_fun.cuh \
   /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvToolsExt.h \
@@ -1179,6 +1188,8 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/bits/predefined_ops.h \
   /usr/include/c++/10/bits/ptr_traits.h \
   /usr/include/c++/10/bits/quoted_string.h \
+  /usr/include/c++/10/bits/random.h \
+  /usr/include/c++/10/bits/random.tcc \
   /usr/include/c++/10/bits/range_access.h \
   /usr/include/c++/10/bits/range_cmp.h \
   /usr/include/c++/10/bits/ranges_uninitialized.h \
@@ -1200,6 +1211,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/bits/stl_iterator.h \
   /usr/include/c++/10/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/10/bits/stl_iterator_base_types.h \
+  /usr/include/c++/10/bits/stl_numeric.h \
   /usr/include/c++/10/bits/stl_pair.h \
   /usr/include/c++/10/bits/stl_raw_storage_iter.h \
   /usr/include/c++/10/bits/stl_relops.h \
@@ -1260,12 +1272,15 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/c++/10/memory \
   /usr/include/c++/10/memory_resource \
   /usr/include/c++/10/new \
+  /usr/include/c++/10/numeric \
   /usr/include/c++/10/optional \
   /usr/include/c++/10/ostream \
   /usr/include/c++/10/pstl/execution_defs.h \
   /usr/include/c++/10/pstl/glue_algorithm_defs.h \
   /usr/include/c++/10/pstl/glue_memory_defs.h \
+  /usr/include/c++/10/pstl/glue_numeric_defs.h \
   /usr/include/c++/10/pstl/pstl_config.h \
+  /usr/include/c++/10/random \
   /usr/include/c++/10/ratio \
   /usr/include/c++/10/shared_mutex \
   /usr/include/c++/10/sstream \
@@ -1416,6 +1431,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/messages_members.h \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/c++/10/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
@@ -2314,6 +2330,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
 CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
   /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \
+  /home/chris/footstep-CUDA-DE/include/utils/config.h \
   /home/chris/footstep-CUDA-DE/include/utils/utils.cuh \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -3832,11 +3849,23 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/remove.h:
 
-/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp16_cfp16_cfp32_tn.hpp.inc:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/transform_reduce.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/10/include/float.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce_by_key.h:
 
-/usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h:
+/usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform_reduce.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/partition.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/mismatch.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/parallel_for.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/thread/thread_store.cuh:
 
@@ -3914,14 +3943,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/basic_string.h:
 
-/usr/local/mathdx/24.08/include/commondx/traits/detail/description_traits.hpp:
-
-/usr/include/x86_64-linux-gnu/c++/10/bits/c++locale.h:
-
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
 /usr/include/c++/10/functional:
 
 /usr/include/c++/10/algorithm:
@@ -3970,8 +3991,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/streambuf_iterator.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/counting_iterator.h:
-
 /usr/include/c++/10/bits/stream_iterator.h:
 
 /usr/include/c++/10/bits/stl_raw_storage_iter.h:
@@ -4019,6 +4038,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reverse.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique.h:
+
+/usr/include/c++/10/random:
 
 /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp:
 
@@ -4074,6 +4095,14 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/tagged_allocator.inl:
 
+/usr/include/c++/10/chrono:
+
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_ptr.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/for_each.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/fill.h:
 
 /usr/include/c++/10/bits/algorithmfwd.h:
@@ -4114,10 +4143,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/surface_functions.h:
 
-/usr/include/x86_64-linux-gnu/c++/10/bits/ctype_base.h:
-
-/usr/include/x86_64-linux-gnu/asm/errno.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/unique.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.h:
@@ -4139,8 +4164,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/stdint.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/surface_indirect_functions.h:
 
@@ -4178,10 +4201,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/postypes.h:
 
-/usr/include/c++/10/bits/localefwd.h:
-
-/usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/system_error.h:
 
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
@@ -4203,8 +4222,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm80.hpp:
 
 /usr/include/c++/10/exception:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/partition.h:
 
 /usr/include/c++/10/bits/iterator_concepts.h:
 
@@ -4288,15 +4305,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
-/usr/include/c++/10/chrono:
-
-/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_ptr.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/for_each.h:
-
 /usr/include/c++/10/ext/numeric_traits.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/counting_iterator.h:
+
+/usr/include/c++/10/numeric:
 
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
@@ -4312,13 +4325,7 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/linux/limits.h:
 
-/usr/include/limits.h:
-
 /usr/include/time.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_fp16.hpp:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/sm_61_intrinsics.hpp:
 
 /usr/include/c++/10/cstdint:
 
@@ -4396,8 +4403,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cstdint.h:
-
 /usr/include/c++/10/pstl/pstl_config.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
@@ -4413,6 +4418,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/c++/10/bits/stl_iterator_base_funcs.h:
 
 /usr/include/x86_64-linux-gnu/bits/local_lim.h:
+
+/usr/include/c++/10/bits/random.tcc:
 
 /usr/include/c++/10/tuple:
 
@@ -4441,8 +4448,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/c++/10/bits/ptr_traits.h:
 
 /usr/include/errno.h:
-
-/usr/include/x86_64-linux-gnu/c++/10/bits/ctype_inline.h:
 
 /usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
 
@@ -4524,8 +4529,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/typeinfo:
 
-/usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h:
-
 /home/chris/footstep-CUDA-DE/src/cart_pole/cart_pole_utils.cu:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/cub/block/block_radix_rank.cuh:
@@ -4542,15 +4545,33 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/std_abs.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cstdint.h:
+
+/usr/include/c++/10/bits/random.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/device_atomic_functions.hpp:
+
 /home/chris/footstep-CUDA-DE/include/cart_pole/cart_pole_utils.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/scan.inl:
+
+/usr/include/limits.h:
+
+/usr/include/c++/10/pstl/glue_numeric_defs.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/new.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/fill_construct_range.h:
 
 /usr/include/c++/10/atomic:
 
 /usr/include/c++/10/bits/stl_heap.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
@@ -4684,6 +4705,14 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
+
+/usr/local/mathdx/24.08/include/commondx/traits/detail/description_traits.hpp:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/c++locale.h:
+
 /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evolve.cuh:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/reverse.h:
@@ -4794,6 +4823,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/lib/gcc/x86_64-linux-gnu/10/include/syslimits.h:
 
+/usr/include/c++/10/bits/stl_numeric.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/tagged_allocator.h:
 
 /usr/include/c++/10/tr1/special_function_util.h:
@@ -4816,13 +4847,41 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/range_cmp.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/device_atomic_functions.hpp:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/driver_types.h:
 
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDefs.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/sm_32_atomic_functions.h:
+
+/usr/include/x86_64-linux-gnu/asm/errno.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/ctype_base.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/ctype_inline.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h:
+
+/usr/include/c++/10/bits/localefwd.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/ctf32_ctf32_cfp32_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefetch.hpp:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/merge.h:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm86/cfp16_cfp16_cfp32_tn.hpp.inc:
+
+/usr/lib/gcc/x86_64-linux-gnu/10/include/float.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/sm_61_intrinsics.hpp:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/cuda_fp16.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h:
 
@@ -5062,10 +5121,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/destroy_range.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/new.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/fill_construct_range.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/fill_construct_range.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_mtgp32_kernel.h:
@@ -5083,6 +5138,14 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm75/fp16_fp16_fp16_tn.hpp.inc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/core/triple_chevron_launch.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/mismatch.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/10/include/limits.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator_aware_execution_policy.h:
 
 /usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/numeric_types.hpp:
 
@@ -5252,18 +5315,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/inner_product.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/10/include/limits.h:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator_aware_execution_policy.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/mismatch.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/transform_reduce.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce_by_key.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap_ranges.inl:
@@ -5371,6 +5422,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/adjacent_difference.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/replace.h:
+
+/home/chris/footstep-CUDA-DE/include/utils/config.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/device_system_tag.h:
 
@@ -5500,10 +5553,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/sort.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/mismatch.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/parallel_for.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/binary_search.h:
@@ -5559,19 +5608,3 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/make_unsigned_special.h:
-
-/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/ctf32_ctf32_cfp32_tn.hpp.inc:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefetch.hpp:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/merge.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h:
-
-/usr/local/mathdx/24.08/include/commondx/detail/namespace_wrapper_close.hpp:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform_reduce.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce.h:

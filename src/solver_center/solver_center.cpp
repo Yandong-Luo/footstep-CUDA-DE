@@ -2,6 +2,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include "diff_evolution_solver/solver.cuh"
+#include "footstep/footstep_utils.cuh"
 
 namespace py = pybind11;
 
@@ -45,18 +46,18 @@ PYBIND11_MODULE(DE_cuda_solver, m) {
             solution["constraint_score"] = result.constraint_score;
             
             // control input (u)转换参数到numpy数组
-            auto param_array = py::array_t<float>(90);
+            auto param_array = py::array_t<float>(footstep::N * footstep::control_dims);
             auto buf = param_array.request();
             float* ptr = static_cast<float*>(buf.ptr);
-            std::memcpy(ptr, result.param, 90 * sizeof(float));
+            std::memcpy(ptr, result.param, footstep::N * footstep::control_dims * sizeof(float));
             
             solution["param"] = param_array;
 
             // state转换参数到numpy数组
-            auto state_array = py::array_t<float>(150);
+            auto state_array = py::array_t<float>(footstep::N * footstep::state_dims);
             auto state_buf = state_array.request();
             float* state_ptr = static_cast<float*>(state_buf.ptr);
-            std::memcpy(state_ptr, result.N_states, 150 * sizeof(float));
+            std::memcpy(state_ptr, result.N_states, footstep::N * footstep::state_dims * sizeof(float));
             
             solution["state"] = state_array;
             return solution;

@@ -35,6 +35,7 @@ void PrintClusterData(cudaprocess::CudaParamClusterData<T> *cluster_data){
         for(int j = 0; j < cluster_data->dims; ++j){  // 只打印实际维度的参数
             printf("%f ", cluster_data->all_param[i * CUDA_PARAM_MAX_SIZE + j]);
         }
+        break;
     }
     printf("\n\nProblem dimensions: con_var=%d, int_var=%d, total=%d\n", 
         cluster_data->con_var_dims, 
