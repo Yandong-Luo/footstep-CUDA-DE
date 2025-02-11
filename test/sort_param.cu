@@ -8,8 +8,12 @@
 #include <cmath>
 #include <iostream>
 
-#define CUDA_PARAM_MAX_SIZE 64
-#define T 256  // template parameter for SortParamBasedBitonic
+#include <thrust/sort.h>
+#include <thrust/device_vector.h>
+#include <thrust/execution_policy.h>
+
+#define CUDA_PARAM_MAX_SIZE 96
+#define T 512  // template parameter for SortParamBasedBitonic
 
 // Error checking macro
 #define CHECK_CUDA(call) { \
@@ -376,11 +380,23 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
     if (blockIdx.x == 0)    all_fitness[(threadIdx.x)] = current_fitness;
 }
 
+__global__ void ReorderParams(float *params, int *indices, const float *origin_params) {
+    int sol_id = blockIdx.x;  // 哪个solution
+    int param_id = threadIdx.x;  // 哪个参数
+    
+    // 从indices找到这个solution原来的位置
+    int old_idx = indices[sol_id];
+    
+    // 复制对应的参数
+    params[sol_id * CUDA_PARAM_MAX_SIZE + param_id] = 
+        origin_params[old_idx * CUDA_PARAM_MAX_SIZE + param_id];
+}
+
 int main() {
     // Host arrays
     float *h_fitness, *h_params;
     // Device arrays
-    float *d_fitness, *d_params;
+    float *d_fitness, *d_params, *d_origin_params;
 
     std::unordered_map<float, std::vector<float>> fitnessToParams;
 
@@ -415,10 +431,12 @@ int main() {
     // Allocate device memory
     CHECK_CUDA(cudaMalloc(&d_fitness, 2*T * sizeof(float)));
     CHECK_CUDA(cudaMalloc(&d_params, 2*T * CUDA_PARAM_MAX_SIZE * sizeof(float)));
+    CHECK_CUDA(cudaMalloc(&d_origin_params, 2*T * CUDA_PARAM_MAX_SIZE * sizeof(float)));
     
     // Copy data to device
     CHECK_CUDA(cudaMemcpy(d_fitness, h_fitness, 2*T * sizeof(float), cudaMemcpyHostToDevice));
     CHECK_CUDA(cudaMemcpy(d_params, h_params, 2*T * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyHostToDevice));
+    CHECK_CUDA(cudaMemcpy(d_origin_params, h_params, 2*T * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyHostToDevice));
 
     // Launch kernel
     // We need CUDA_PARAM_MAX_SIZE blocks because we're sorting each parameter independently
@@ -426,7 +444,25 @@ int main() {
     
     // SortParamBasedBitonic2<<<CUDA_PARAM_MAX_SIZE, 2*T>>>(d_params, d_fitness);
 
-    SortParamBasedBitonic3<<<CUDA_PARAM_MAX_SIZE, 2*T>>>(d_params, d_fitness, 0);
+    // thrust::device_ptr<float> t_key(d_fitness);
+    // thrust::device_ptr<float> t_value(d_params);
+    // thrust::sort_by_key(t_value, t_value + T, t_key);
+    // thrust::sort_by_key(t_value + T, t_value + 2*T, t_key);
+    // cudaDeviceSynchronize();
+
+    thrust::device_vector<int> d_indices(2*T);
+    thrust::sequence(d_indices.begin(), d_indices.end());
+
+    // 按fitness排序，同时移动indices
+    thrust::device_ptr<float> d_fitness_ptr(d_fitness);
+    thrust::stable_sort_by_key(d_fitness_ptr, d_fitness_ptr + T, 
+                    d_indices.begin());
+    thrust::stable_sort_by_key(d_fitness_ptr + T, d_fitness_ptr + 2*T, 
+                    d_indices.begin() + T);
+
+    ReorderParams<<<2*T, CUDA_PARAM_MAX_SIZE>>>(d_params, thrust::raw_pointer_cast(d_indices.data()), d_origin_params);
+
+    // SortParamBasedBitonic3<<<CUDA_PARAM_MAX_SIZE, 2*T>>>(d_params, d_fitness, 0);
     // SortParamBasedBitonic3<<<CUDA_PARAM_MAX_SIZE, T>>>(d_params, d_fitness, T);
     
     // Check for kernel launch errors

@@ -81,6 +81,9 @@ void CudaDiffEvolveSolver::MallocSetup(){
 
     CHECK_CUDA(cudaMalloc(&footstep::d_sol_score, 4 * sizeof(float)));  // all socre, objective score, constraint score, dist_to_goal
 
+    // JUST only copy current sol, delete sol for sorting
+    CHECK_CUDA(cudaMalloc(&d_old_param_cpy, 2 * CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float)));
+
     CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_state, footstep::state_dims * footstep::N * sizeof(float), cudaHostAllocDefault)); 
 
     CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_score, 4 * sizeof(float), cudaHostAllocDefault)); 
@@ -383,11 +386,11 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
     dim3 dim = max_dim3(footstep::Ex_GEMM().block_dim, footstep::Fu_GEMM().block_dim);
     // printf("cublasDx need share memory size:%zu max block dim:%u\n",gemm_shared_mem_size, dim.x*dim.y*dim.z); 
     
-    if (gemm_shared_mem_size > prop.sharedMemPerBlock) {
+    if (extend_sm == false && gemm_shared_mem_size > prop.sharedMemPerBlock) {
         std::cout << "Required shared memory (" << gemm_shared_mem_size 
                   << " bytes) exceeds device limit (" << prop.sharedMemPerBlock 
                   << " bytes)" << std::endl;
-
+        extend_sm = true;
         // Increase max dynamic shared memory for the kernel if needed
         CHECK_CUDA(cudaFuncSetAttribute(
             footstep::UpdateState<CUDA_SOLVER_POP_SIZE>, 
@@ -422,7 +425,7 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
     //     // PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE , footstep::N * footstep::state_dims, "cluster_N_state");
     //     PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
     // }
-    // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+    CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
     UpdateFitnessBasedMatrix<CUDA_SOLVER_POP_SIZE><<<1, size, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, evaluate_score_);
 }
 
@@ -431,20 +434,36 @@ void CudaDiffEvolveSolver::Evolution(int epoch, CudaEvolveType search_type){
     CudaEvolveProcess<<<CUDA_SOLVER_POP_SIZE, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(epoch, old_cluster_data_, new_cluster_data_, random_center_->uniform_data_, random_center_->normal_data_, evolve_data_, CUDA_SOLVER_POP_SIZE, true);
     Evaluation(CUDA_SOLVER_POP_SIZE, epoch);
 
-    CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-    printf("=======before update parameter=========\n");
-    PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
+    // CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    // // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+    // printf("=======before update parameter=========\n");
+    // PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
 
     // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
     UpdateParameter<CUDA_SOLVER_POP_SIZE><<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE*2, 0, cuda_utils_->streams_[0]>>>(epoch, evolve_data_, new_cluster_data_, old_cluster_data_);
 
-    CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-    printf("=======after update parameter=========\n");
-    PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
+    // sorting parameter based on fitness
+    CHECK_CUDA(cudaMemcpy(d_old_param_cpy, old_cluster_data_->all_param, 2 * CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToDevice));
+    // CHECK_CUDA(cudaMemcpy(h_old_param_cpy, d_old_param_cpy, sizeof(d_old_param_cpy), cudaMemcpyDeviceToHost));
+    // printf
+    thrust::device_vector<int> d_indices(2*CUDA_SOLVER_POP_SIZE);
+    thrust::sequence(d_indices.begin(), d_indices.end());
+
+    // 按fitness排序，同时移动indices
+    thrust::device_ptr<float> d_fitness_ptr(old_cluster_data_->fitness);
+    thrust::stable_sort_by_key(d_fitness_ptr, d_fitness_ptr + CUDA_SOLVER_POP_SIZE, 
+                    d_indices.begin());
+    thrust::stable_sort_by_key(d_fitness_ptr + CUDA_SOLVER_POP_SIZE, d_fitness_ptr + 2*CUDA_SOLVER_POP_SIZE, 
+                    d_indices.begin() + CUDA_SOLVER_POP_SIZE);
+
+    RecordParamBasedSortIndices<<<2*CUDA_SOLVER_POP_SIZE, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_->all_param, thrust::raw_pointer_cast(d_indices.data()), d_old_param_cpy);
+
+    // CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    // // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+    // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+    // printf("=======after update parameter=========\n");
+    // PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
 
     // CHECK_CUDA(cudaMemcpyAsync(h_terminate_flag, terminate_flag, sizeof(int), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
     // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
@@ -591,21 +610,21 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
         if(i == host_evolve_data_->problem_param.max_round - 1){
             printf("CHECK solution\n");
 
-            CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-            // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-            CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-            printf("=======before check solution=========\n");
-            PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
+            // CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+            // // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+            // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+            // printf("=======before check solution=========\n");
+            // PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
 
             const size_t gemm_shared_mem_size = std::max(footstep::Ex_GEMM().shared_memory_size, footstep::Fu_GEMM().shared_memory_size);
 
             dim3 dim = max_dim3(footstep::Ex_GEMM().block_dim, footstep::Fu_GEMM().block_dim);
             
-            if (gemm_shared_mem_size > prop.sharedMemPerBlock) {
+            if (extend_sm == false && gemm_shared_mem_size > prop.sharedMemPerBlock) {
                 // std::cout << "Required shared memory (" << gemm_shared_mem_size 
                 //         << " bytes) exceeds device limit (" << prop.sharedMemPerBlock 
                 //         << " bytes)" << std::endl;
-
+                extend_sm = true;
                 // Increase max dynamic shared memory for the kernel if needed
                 CHECK_CUDA(cudaFuncSetAttribute(
                     footstep::UpdateState<CUDA_SOLVER_POP_SIZE>,
@@ -620,31 +639,31 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
 
             // // footstep::EvaluateModel<CUDA_SOLVER_POP_SIZE><<<CUDA_SOLVER_POP_SIZE, 32, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::d_cluster_N_state, evaluate_score_);
             
-            CHECK_CUDA(cudaMemcpyAsync(footstep::h_sol_state, footstep::d_sol_state, footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-            CHECK_CUDA(cudaMemcpyAsync(footstep::h_sol_score, footstep::d_sol_score, 4 * sizeof(float), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
+            CHECK_CUDA(cudaMemcpy(footstep::h_sol_state, footstep::d_sol_state, footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
+            CHECK_CUDA(cudaMemcpy(footstep::h_sol_score, footstep::d_sol_score, 4 * sizeof(float), cudaMemcpyDeviceToHost));
 
             // // CHECK_CUDA(cudaMemcpy(host_evaluate_score_, evaluate_score_, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
 
             // // PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
-            CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+            // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
 
-            CHECK_CUDA(cudaMemset(footstep::d_cluster_N_state, 0, sizeof(footstep::d_cluster_N_state)));
+            // CHECK_CUDA(cudaMemset(footstep::d_cluster_N_state, 0, sizeof(footstep::d_cluster_N_state)));
 
-            footstep::UpdateState<CUDA_SOLVER_POP_SIZE*3><<<CUDA_SOLVER_POP_SIZE, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::bigE, footstep::bigF, footstep::d_cluster_N_state);
+            // footstep::UpdateState<CUDA_SOLVER_POP_SIZE*3><<<CUDA_SOLVER_POP_SIZE, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::bigE, footstep::bigF, footstep::d_cluster_N_state);
 
-            footstep::EvaluateModel<CUDA_SOLVER_POP_SIZE*3><<<CUDA_SOLVER_POP_SIZE, 32, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::d_cluster_N_state, evaluate_score_);
+            // footstep::EvaluateModel<CUDA_SOLVER_POP_SIZE*3><<<CUDA_SOLVER_POP_SIZE, 32, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::d_cluster_N_state, evaluate_score_);
 
-            if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
-                CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, old_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
-                // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, footstep::N * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
-                CHECK_CUDA(cudaMemcpy(host_evaluate_score_, evaluate_score_, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+            // if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
+            //     CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, old_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+            //     // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, footstep::N * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
+            //     CHECK_CUDA(cudaMemcpy(host_evaluate_score_, evaluate_score_, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
 
-                printf("=======check solution=========\n");
-                PrintMatrixByRow(footstep::h_cluster_param, CUDA_SOLVER_POP_SIZE , CUDA_PARAM_MAX_SIZE, "h_cluster_param");
-                // PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE , footstep::N * footstep::state_dims, "cluster_N_state");
-                PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
-            }
-            printf("==============================\n");
+            //     printf("=======check solution=========\n");
+            //     PrintMatrixByRow(footstep::h_cluster_param, CUDA_SOLVER_POP_SIZE , CUDA_PARAM_MAX_SIZE, "h_cluster_param");
+            //     // PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE , footstep::N * footstep::state_dims, "cluster_N_state");
+            //     PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
+            // }
+            // printf("==============================\n");
 
             printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f dist_to_target:%f\n",footstep::h_sol_score[0], footstep::h_sol_score[1], footstep::h_sol_score[2], footstep::h_sol_score[3]);
 

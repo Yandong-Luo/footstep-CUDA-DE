@@ -4,11 +4,6 @@
 #include <cuda.h>
 #include <cuda_runtime_api.h>
 
-// #ifdef __CUDACC__
-// #include <cuda.h>
-// #include <cuda_runtime_api.h>
-// #endif
-
 #include "diff_evolution_solver/data_type.h"
 
 namespace cudaprocess{
@@ -532,6 +527,18 @@ namespace cudaprocess{
     }
 
     /**
+     * Based on thrust sort the current parameter and delete part of old param (pop_size:64 0 - 256) or (pop_size: 256 - 512)
+     */
+    __global__ void RecordParamBasedSortIndices(float *params, int *indices, const float *origin_params){
+        int sol_id = blockIdx.x;
+        int param_id = threadIdx.x;
+        
+        int old_idx = indices[sol_id];
+        
+        params[sol_id * CUDA_PARAM_MAX_SIZE + param_id] = origin_params[old_idx * CUDA_PARAM_MAX_SIZE + param_id];
+    }
+    
+    /**
      * Sort the current parameter and delete part of old param (pop_size:64 0 - 256) or (pop_size: 256 - 512)
      */
     template<int T = CUDA_SOLVER_POP_SIZE>// T is the pop size
@@ -664,19 +671,6 @@ namespace cudaprocess{
             }
             __syncthreads();
 
-            // // 4. 进行128元素比较
-            // compare_idx = sol_id ^ 128;
-            // mapping_param = sm_sorted_param[compare_idx];
-            // mapping_fitness = sm_sorted_fitness[compare_idx];
-            // sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
-            // if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
-            //     current_param = mapping_param;
-            //     current_fitness = mapping_fitness;
-            //     sm_sorted_param[sol_id] = current_param;
-            //     sm_sorted_fitness[sol_id] = current_fitness;
-            // }
-            // __syncthreads();
-
             // 5. 进行64元素比较
             compare_idx = sol_id ^ 64;
             mapping_param = sm_sorted_param[compare_idx];
@@ -728,19 +722,6 @@ namespace cudaprocess{
                 sm_sorted_fitness[sol_id] = current_fitness;
             }
             __syncthreads();
-
-            // // 4. 进行256元素比较
-            // compare_idx = sol_id ^ 256;
-            // mapping_param = sm_sorted_param[compare_idx];
-            // mapping_fitness = sm_sorted_fitness[compare_idx];
-            // sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
-            // if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
-            //     current_param = mapping_param;
-            //     current_fitness = mapping_fitness;
-            //     sm_sorted_param[sol_id] = current_param;
-            //     sm_sorted_fitness[sol_id] = current_fitness;
-            // }
-            // __syncthreads();
 
             // 5. 进行128元素比较
             compare_idx = sol_id ^ 128;
@@ -1104,52 +1085,12 @@ namespace cudaprocess{
         }
         __syncthreads();
 
-        // if(threadIdx.x == 0 && blockIdx.x == 0){
-        //     printf("before sorting old param:");
-        //     // for(int i = 0; i < CUDA_PARAM_MAX_SIZE; ++i){
-        //     //     printf("%f ", cluster_data->all_param[i]);
-        //     // }
-        //     for(int i = 0; i < 2*CUDA_SOLVER_POP_SIZE; ++i){
-        //         printf("\nIndividual %d fitness: %f, lshade params(f,f1,cr): %f %f %f\nParams: ", 
-        //             i, 
-        //             old_param->fitness[i],
-        //             old_param->lshade_param[i * 3],     // scale_f
-        //             old_param->lshade_param[i * 3 + 1], // scale_f1
-        //             old_param->lshade_param[i * 3 + 2]  // crossover
-        //         );
-        //         // 打印该个体的所有参数
-        //         for(int j = 0; j < CUDA_PARAM_MAX_SIZE; ++j){  // 只打印实际维度的参数
-        //             printf("%f ", old_param->all_param[i * CUDA_PARAM_MAX_SIZE + j]);
-        //         }
-        //     }
-        //     printf("\n");
-        // }
+        // If using thrust, don't need to use Bitonic
+        // SortOldParamBasedBitonic(old_param->all_param, old_param->fitness);
+        // __syncthreads();
+        // SortOldParamBasedBitonic(old_param->all_param, old_param->fitness, CUDA_SOLVER_POP_SIZE);
 
-        SortOldParamBasedBitonic(old_param->all_param, old_param->fitness);
-        __syncthreads();
-        SortOldParamBasedBitonic(old_param->all_param, old_param->fitness, CUDA_SOLVER_POP_SIZE);
-
-        // if(threadIdx.x == 0 && blockIdx.x == 0){
-        //     printf("after sorting old param:");
-        //     // for(int i = 0; i < CUDA_PARAM_MAX_SIZE; ++i){
-        //     //     printf("%f ", cluster_data->all_param[i]);
-        //     // }
-        //     for(int i = 0; i < 2*CUDA_SOLVER_POP_SIZE; ++i){
-        //         printf("\nIndividual %d fitness: %f, lshade params(f,f1,cr): %f %f %f\nParams: ", 
-        //             i, 
-        //             old_param->fitness[i],
-        //             old_param->lshade_param[i * 3],     // scale_f
-        //             old_param->lshade_param[i * 3 + 1], // scale_f1
-        //             old_param->lshade_param[i * 3 + 2]  // crossover
-        //         );
-                
-        //         // 打印该个体的所有参数
-        //         for(int j = 0; j < CUDA_PARAM_MAX_SIZE; ++j){  // 只打印实际维度的参数
-        //             printf("%f ", old_param->all_param[i * CUDA_PARAM_MAX_SIZE + j]);
-        //         }
-        //     }
-        //     printf("\n");
-        // }
+        
 
         // The following this method is only compare current fitness and last fitness. When the bias of these two fitness lower than accuracy_rng then stop evaluation
         // __syncthreads();

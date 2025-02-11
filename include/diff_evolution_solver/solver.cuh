@@ -10,6 +10,11 @@
 #include <memory>
 #include <nvtx3/nvtx3.hpp>
 #include <cublas_v2.h>
+
+#include <thrust/sort.h>
+#include <thrust/device_vector.h>
+#include <thrust/execution_policy.h>
+
 #include "diff_evolution_solver/data_type.h"
 #include "utils/utils.cuh"
 #include "diff_evolution_solver/converter.cuh"
@@ -86,6 +91,7 @@ namespace cudaprocess{
             CudaParamIndividual *result;
             CudaParamIndividual *host_result;
 
+            float *d_old_param_cpy;
             float accuracy_rng;
             float *last_fitness;
             float last_sol_fitness = 1000000.0f;
@@ -101,6 +107,8 @@ namespace cudaprocess{
             int task_id_ = 0;
 
             cudaDeviceProp prop;
+
+            bool extend_sm = false;
 
             // !--------------- CART POLE ---------------!
             float *h_state;             // pos, speed, theta, angular velocity from environment (x in paper)

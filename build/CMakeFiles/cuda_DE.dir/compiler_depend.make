@@ -1806,7 +1806,6 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/extrema.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/find.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/for_each.h \
-  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/generate.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/get_value.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/iter_swap.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/malloc_and_free.h \
@@ -1818,6 +1817,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/remove.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scatter.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/set_operations.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/sort.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/swap_ranges.h \
@@ -3440,6 +3440,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp:
 
 /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/axpby.hpp:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scatter.h:
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
 

@@ -281,18 +281,20 @@ namespace footstep{
             cs_score += __shfl_down_sync(0xffffffff, cs_score, 2);
             cs_score += __shfl_down_sync(0xffffffff, cs_score, 1);
 
-            // float obj_score = N_obj_score_sum[threadIdx.x];
-            cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 16);
-            cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 8);
-            cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 4);
-            cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 2);
-            cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 1);
+            if (sol_score != nullptr){
+                // float obj_score = N_obj_score_sum[threadIdx.x];
+                cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 16);
+                cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 8);
+                cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 4);
+                cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 2);
+                cs_obj_score += __shfl_down_sync(0xffffffff, cs_obj_score, 1);
 
-            cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 16);
-            cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 8);
-            cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 4);
-            cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 2);
-            cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 1);
+                cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 16);
+                cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 8);
+                cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 4);
+                cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 2);
+                cs_constraint_score += __shfl_down_sync(0xffffffff, cs_constraint_score, 1);
+            }
             
             // __syncthreads();
 
@@ -300,15 +302,12 @@ namespace footstep{
                 score[blockIdx.x] = cs_score + target_weight * last_dist_to_target;
                 
                 if(sol_score != nullptr){
-                    printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f dist_to_target:%f\n",cs_score + target_weight * last_dist_to_target, cs_obj_score, cs_constraint_score, last_dist_to_target);
+                    // printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f dist_to_target:%f\n",cs_score + target_weight * last_dist_to_target, cs_obj_score, cs_constraint_score, last_dist_to_target);
                     sol_score[0] = cs_score + target_weight * last_dist_to_target;
                     sol_score[1] = cs_obj_score;
                     sol_score[2] = cs_constraint_score;
                     sol_score[3] = last_dist_to_target;
                 }
-                // printf("")
-                // printf("block:%d, thread:%d, score:%f, obj_score:%f, constraint:%f\n",
-                //     blockIdx.x, threadIdx.x, cs_score, cs_obj_score, cs_constraint_score);
             }
         }
     }

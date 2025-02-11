@@ -175,7 +175,7 @@ constexpr float velocity_penalty = 500.0f;
 constexpr float foothold_penalty = 100.0f;
 
 // the weight of the distance between N position and target position
-constexpr float target_weight = 1000.0f;
+constexpr float target_weight = 100.0f;
 
 // ##############################
 // ########## DEBUG #############

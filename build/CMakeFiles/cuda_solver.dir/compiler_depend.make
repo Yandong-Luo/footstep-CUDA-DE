@@ -514,6 +514,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/surface_types.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/texture_types.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/advance.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/copy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/advance.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/alignment.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/allocator_traits.h \
@@ -551,6 +552,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/contiguous_storage.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy_if.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cpp11_required.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/cstdint.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/dependencies_aware_execution_policy.h \
@@ -586,6 +589,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/internal_functional.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/malloc_and_free.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/memory_wrapper.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/merge.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/minmax.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/mismatch.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/numeric_traits.h \
@@ -600,11 +604,15 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reference_forward_declaration.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/replace.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reverse.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/scan.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/scatter.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/seq.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/sort.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/static_assert.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap_ranges.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_array.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_array.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_buffer.h \
@@ -634,6 +642,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_vector.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/distance.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/equal.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/execution_policy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/fill.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/find.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/for_each.h \
@@ -676,6 +685,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/transform_iterator.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/zip_iterator.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/memory.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/merge.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mismatch.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/allocator.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/device_memory_resource.h \
@@ -688,61 +698,99 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/pair.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/reduce.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/reverse.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/swap.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/adjacent_difference.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/assign_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/binary_search.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy_if.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/extrema.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/find.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/for_each.h \
-  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/generate.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/get_value.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/iter_swap.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/par.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/partition.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/remove.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/swap_ranges.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/execution_policy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/memory_resource.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/adjacent_difference.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/assign_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/binary_search.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/count.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/extrema.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/fill.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/find.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/for_each.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/gather.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/generate.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/get_value.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/guarded_cuda_runtime_api.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/guarded_driver_types.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/inner_product.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/internal/copy_cross_system.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/internal/copy_device_to_device.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/iter_swap.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/merge.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/mismatch.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/partition.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/remove.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reverse.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan_by_key.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/swap_ranges.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/tabulate.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/temporary_buffer.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_reduce.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/uninitialized_copy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/uninitialized_fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/unique_by_key.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/util.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/error.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/execution_policy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/memory_resource.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/pointer.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/assign_value.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy_if.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/equal.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/fill.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/find.h \
@@ -751,13 +799,17 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/get_value.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/iter_swap.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/merge.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/mismatch.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reduce.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reduce_by_key.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reverse.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/scan_by_key.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/swap_ranges.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/temporary_buffer.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/transform.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/uninitialized_fill.h \
@@ -770,6 +822,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/advance.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy_if.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy_if.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/equal.h \
@@ -782,6 +836,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/generate.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/memory.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/memory.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/merge.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/mismatch.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/mismatch.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce.h \
@@ -790,6 +846,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce_by_key.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan_by_key.h \
@@ -799,6 +857,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system_exists.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/swap_ranges.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/swap_ranges.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/tag.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/temporary_buffer.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/temporary_buffer.inl \
@@ -806,30 +868,53 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/adjacent_difference.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/assign_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/binary_search.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_backward.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_if.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/equal.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/execution_policy.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/extrema.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/fill.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/find.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/for_each.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/general_copy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/generate.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/get_value.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/insertion_sort.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/iter_swap.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/malloc_and_free.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/merge.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/merge.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/mismatch.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/partition.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce_by_key.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/remove.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/replace.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reverse.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan_by_key.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scatter.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/set_operations.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_merge_sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_merge_sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.inl \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/swap_ranges.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/temporary_buffer.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/transform.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/trivial_copy.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/uninitialized_fill.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique.h \
+  /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique_by_key.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/system_error.inl \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/error_code.h \
   /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/system_error.h \
@@ -863,17 +948,33 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/temporary_buffer.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/swap_ranges.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_merge_sort.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_merge_sort.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/sort.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scatter.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/scan.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce_by_key.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reverse.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/remove.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/partition.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/mismatch.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/malloc_and_free.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/insertion_sort.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/get_value.h:
 
@@ -881,7 +982,11 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/find.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/extrema.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/equal.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_if.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy.inl:
 
@@ -889,13 +994,19 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/assign_value.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.inl:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/adjacent_difference.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/transform.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/temporary_buffer.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/swap_ranges.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sort.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system.inl:
 
@@ -909,6 +1020,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/scan.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/swap_ranges.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/replace.h:
@@ -918,6 +1033,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/mismatch.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/merge.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/memory.inl:
 
@@ -936,6 +1053,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/distance.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy_if.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy_if.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/copy.inl:
 
@@ -969,8 +1090,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/malloc_and_free.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/iter_swap.h:
-
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/get_value.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/generate.h:
@@ -989,17 +1108,35 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/util.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/unique_by_key.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/uninitialized_fill.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_scan.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_reduce.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/find.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/temporary_buffer.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/tabulate.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/swap_ranges.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/sort.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/set_operations.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan_by_key.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/scan.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/remove.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reduce_by_key.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/partition.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/par.h:
 
@@ -1009,6 +1146,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/internal/copy_cross_system.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/inner_product.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/gather.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/for_each.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/generate.h:
@@ -1017,6 +1158,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/fill.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/extrema.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/error.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy.h:
@@ -1024,6 +1167,42 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/equal.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/cross_system.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/count.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/assign_value.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/adjacent_difference.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/execution_policy.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/reverse.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/swap_ranges.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/sort.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/set_operations.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/remove.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/par.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/malloc_and_free.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/for_each.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/extrema.h:
 
 /usr/include/linux/limits.h:
 
@@ -1061,9 +1240,13 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/tr1/gamma.tcc:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/curand_normal_static.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/for_each.h:
+/usr/include/c++/10/tr1/bessel_function.tcc:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/swap_ranges.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/curand_normal_static.h:
 
 /usr/include/c++/10/string_view:
 
@@ -1117,6 +1300,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/ext/numeric_traits.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.inl:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/equal.h:
 
 /usr/include/c++/10/ext/new_allocator.h:
@@ -1126,6 +1311,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/c++/10/ext/alloc_traits.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/copy_if.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/frameobject.h:
 
@@ -1173,6 +1360,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/set_operations.h:
+
 /usr/include/c++/10/bits/streambuf_iterator.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/transform.h:
@@ -1213,6 +1402,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/bits/specfun.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/unique_by_key.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/sort.h:
+
 /usr/include/c++/10/bits/allocator.h:
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
@@ -1222,6 +1415,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/bits/parse_numbers.h:
 
 /usr/include/c++/10/stdexcept:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/has_member_function.h:
 
@@ -1285,7 +1480,11 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy_if.inl:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/integer_traits.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_radix_sort.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/numeric_traits.h:
 
@@ -1353,6 +1552,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/picklebufobject.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique_by_key.h:
+
 /usr/include/c++/10/bits/stl_relops.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/patchlevel.h:
@@ -1375,6 +1576,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/relational_operators.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy_if.h:
+
 /home/chris/anaconda3/envs/lab_env/include/python3.9/warnings.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pyconfig.h:
@@ -1383,13 +1586,15 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pymath.h:
 
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
 /home/chris/anaconda3/envs/lab_env/include/python3.9/namespaceobject.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/traceback.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pystrtod.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/merge.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/binary_search.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/descrobject.h:
 
@@ -1426,10 +1631,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/x86_64-linux-gnu/bits/stat.h:
 
 /usr/include/c++/10/bits/uses_allocator.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/temporary_buffer.h:
-
-/usr/include/c++/10/string:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/genericaliasobject.h:
 
@@ -1571,6 +1772,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/bits/atomic_lockfree_defines.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/binary_search.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/unique.h:
+
 /home/chris/anaconda3/envs/lab_env/include/python3.9/code.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/texture_types.h:
@@ -1598,6 +1803,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/detail/value_and_holder.h:
 
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_backward.h:
 
 /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh:
 
@@ -1643,6 +1850,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/boolobject.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce_by_key.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/exec_check_disable.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/reduce_by_key.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/weakrefobject.h:
@@ -1651,7 +1862,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/unicodeobject.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/config.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/sort.inl:
 
 /usr/include/c++/10/bits/stl_uninitialized.h:
 
@@ -1671,8 +1882,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/object.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/assign_value.h:
-
 /usr/include/x86_64-linux-gnu/asm/types.h:
 
 /usr/include/c++/10/bits/predefined_ops.h:
@@ -1680,6 +1889,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/tr1/legendre_function.tcc:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/detail/any_assign.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scatter.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/abstract.h:
 
@@ -1739,6 +1950,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/pstl/glue_numeric_defs.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/merge.h:
+
 /home/chris/anaconda3/envs/lab_env/include/python3.9/longintrepr.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_deduction.h:
@@ -1784,6 +1997,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/bits/streambuf.tcc:
 
 /usr/include/c++/10/tr1/beta_function.tcc:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/driver_functions.h:
 
 /usr/include/c++/10/bits/stl_iterator_base_funcs.h:
 
@@ -1844,8 +2061,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDefs.h:
 
 /usr/include/c++/10/bits/cpp_type_traits.h:
-
-/usr/include/c++/10/bits/uniform_int_dist.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/longobject.h:
 
@@ -1955,9 +2170,11 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/assignment_operator.h:
 
-/usr/include/stdint.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/merge.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/pointer.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/execution_policy.h:
+
+/usr/include/stdint.h:
 
 /usr/include/stdio.h:
 
@@ -1971,6 +2188,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/unistd.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h:
+
+/usr/include/wchar.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/fill_construct_range.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/new.h:
@@ -1980,6 +2201,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/replace.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/pointer.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reverse.inl:
 
 /usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
 
@@ -1992,6 +2215,12 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/x86_64-linux-gnu/bits/dlfcn.h:
 
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/find.h:
+
+/usr/include/x86_64-linux-gnu/bits/floatn.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/stable_primitive_sort.inl:
 
 /usr/include/x86_64-linux-gnu/bits/environments.h:
 
@@ -2045,6 +2274,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/simple_defines.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/binary_search.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/select_system_exists.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/operators/bitwise_operators.h:
@@ -2061,10 +2292,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
-/usr/include/c++/10/tr1/bessel_function.tcc:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan.h:
-
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 
 /usr/include/x86_64-linux-gnu/bits/timex.h:
@@ -2076,6 +2303,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/c++locale.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/reverse.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
@@ -2117,8 +2346,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/transform.h:
-
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/zip_iterator.h:
@@ -2147,6 +2374,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/gthr.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/merge.h:
+
 /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/allocator/allocator_traits.inl:
@@ -2164,6 +2393,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/vector_base.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/distance.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/merge.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/pair.h:
 
@@ -2259,9 +2490,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/surface_types.h:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/driver_functions.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce.h:
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/sort.h:
 
 /usr/include/c++/10/bits/unique_lock.h:
 
@@ -2309,6 +2538,14 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/swap.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/temporary_buffer.h:
+
+/usr/include/c++/10/string:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/copy_if.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/distance.inl:
@@ -2320,6 +2557,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/type_traits/void_t.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/execute_with_dependencies.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/merge.inl:
 
 /usr/include/c++/10/tr1/hypergeometric.tcc:
 
@@ -2343,7 +2582,11 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/functional/placeholder.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy_if.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/generate.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/generic/sort.h:
 
 /usr/include/c++/10/pstl/glue_memory_defs.h:
 
@@ -2369,8 +2612,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/reduce.inl:
 
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/generate.h:
-
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pyarena.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/replace.inl:
@@ -2379,9 +2620,17 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/scatter.inl:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/adl/iter_swap.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/sort.inl:
+
 /usr/include/c++/10/pstl/execution_defs.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/static_assert.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap_ranges.inl:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_array.h:
 
@@ -2392,6 +2641,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/temporary_buffer.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/transform.inl:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/partition.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/tuple.inl:
 
@@ -2406,6 +2657,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/swap.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/is_metafunction_defined.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/copy.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/type_traits/iterator/is_output_iterator.h:
 
@@ -2425,11 +2678,17 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_reference.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/merge.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_vector.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pythonrun.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/equal.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce_by_key.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/execution_policy.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/device_allocator.h:
 
@@ -2497,7 +2756,13 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/iterator/transform_iterator.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/detail/sequential/unique.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/memory.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/merge.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mismatch.h:
 
@@ -2511,6 +2776,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/polymorphic_adaptor.h:
 
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/reverse.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/mr/validator.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/reduce.h:
@@ -2521,22 +2788,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/scan.h:
 
+/usr/include/c++/10/bits/uniform_int_dist.h:
+
+/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/adjacent_difference.h:
+
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/copy.h:
 
 /usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/execution_policy.h:
-
-/usr/include/x86_64-linux-gnu/bits/floatn.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/find.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/malloc_and_free.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/detail/config/exec_check_disable.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/reduce_by_key.h:
-
-/usr/include/wchar.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cpp/detail/scan_by_key.h:
-
-/usr/local/cuda-11.4/targets/x86_64-linux/include/thrust/system/cuda/detail/copy.h:
