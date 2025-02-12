@@ -13,7 +13,7 @@
 #include <thrust/execution_policy.h>
 
 #define CUDA_PARAM_MAX_SIZE 96
-#define T 512  // template parameter for SortParamBasedBitonic
+#define T 1024  // template parameter for SortParamBasedBitonic
 
 // Error checking macro
 #define CHECK_CUDA(call) { \

@@ -29,7 +29,7 @@ namespace cudaprocess{
             ~CudaDiffEvolveSolver();
             void MallocSetup();
             void MallocReset();
-            void InitDiffEvolveParam(float best = 0.0, float d_top = 0. /*0.002*/, float min_top = 0.0, float diff = 5.0, float d_diff = 0.05, float min_diff = 0.05, float scale_f = 0.6, float cr = 0.9);
+            void InitDiffEvolveParam(float best = 0.0, float d_top = 0. /*0.002*/, float min_top = 0.0, float diff = 5.0, float d_diff = 0.05, float min_diff = 0.05, float scale_f = 0.8, float cr = 0.9);
             void WarmStart();
             void InitSolver(int gpu_device);
             void SetBoundary();

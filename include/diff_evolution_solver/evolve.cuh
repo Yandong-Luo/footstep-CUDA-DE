@@ -51,6 +51,50 @@ namespace cudaprocess{
         }
     }
 
+    template <int T = CUDA_SOLVER_POP_SIZE>
+    __global__ void DuplicateBestAndReorganize2(int epoch, CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, int copy_num){
+        // if(epoch > 0)   return;
+        int size = 2 * T;
+
+        if (epoch == 0){
+            size = T;
+        }
+
+        int sol_id = blockIdx.x;
+        int param_id = threadIdx.x;  // 交换这两行，因为现在 blockIdx.x 对应solution，threadIdx.x 对应parameter
+
+        float param;
+        float best_fitness;
+        
+        if (sol_id < size + copy_num){
+            if (sol_id <= copy_num){
+                // For the first copy_num solutions, use the parameters of the best solution (sol_id=0)
+                param = old_param->all_param[param_id];
+                if (param_id == 0)  best_fitness = old_param->fitness[0];   // copy the best fitness
+            }
+            else{
+                // for the remaining solution, use the original parameters
+                param = old_param->all_param[(sol_id - copy_num) * CUDA_PARAM_MAX_SIZE + param_id];
+                if(param_id == 0){
+                    best_fitness = old_param->fitness[sol_id - copy_num];
+                }
+            }
+        }
+        // wait for all thread finish above all copy step
+        __syncthreads();
+        // reorganize
+        
+        if(sol_id < size + copy_num){
+            old_param->all_param[sol_id * CUDA_PARAM_MAX_SIZE + param_id] = param;
+            if (param_id == 0){
+                old_param->fitness[sol_id] = best_fitness;
+                if(sol_id == 0){
+                    old_param->len = size + copy_num;
+                }
+            }
+        }
+    }
+
     template <CudaEvolveType SearchType = CudaEvolveType::GLOBAL>
     __global__ void CudaEvolveProcess(int epoch, CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, CudaParamClusterData<CUDA_SOLVER_POP_SIZE> *new_param, float *uniform_data,
                                       float *normal_data, CudaEvolveData *evolve_data, int pop_size, float eliteRatio){
@@ -943,6 +987,134 @@ namespace cudaprocess{
                 *terminate_flag = 1;
             }
         }
+    }
+
+    template <int T = CUDA_SOLVER_POP_SIZE>
+    __global__ void UpdateParameter2(int epoch, CudaEvolveData *evolve, CudaParamClusterData<CUDA_SOLVER_POP_SIZE> *new_param, 
+                                CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, int* terminate_flag=nullptr, float *last_f=nullptr) {
+        
+        const int sol_id = threadIdx.x;
+        const int param_id = blockIdx.x;
+        
+        // Each thread handles one solution's parameters
+        if (sol_id < T) {
+            float old_fitness = old_param->fitness[sol_id];
+            float new_fitness = new_param->fitness[sol_id];
+
+            // Update parameter if within valid parameter range
+            if (param_id < CUDA_PARAM_MAX_SIZE) {
+                float old_param_value = old_param->all_param[sol_id * CUDA_PARAM_MAX_SIZE + param_id];
+                float new_param_value = new_param->all_param[sol_id * CUDA_PARAM_MAX_SIZE + param_id];
+
+                // Compare fitness and update parameters accordingly
+                if (new_fitness < old_fitness) {
+                    // Select better solution as current sol, move previous to replaced part
+                    old_param->all_param[sol_id * CUDA_PARAM_MAX_SIZE + param_id] = new_param_value;
+                    old_param->fitness[sol_id] = new_fitness;
+                    old_param->all_param[(sol_id + 2 * T) * CUDA_PARAM_MAX_SIZE + param_id] = old_param_value;
+                    old_param->fitness[sol_id + 2 * T] = old_fitness;
+                } else {
+                    // Keep old solution, move new solution to replaced part
+                    old_param->all_param[(sol_id + 2 * T) * CUDA_PARAM_MAX_SIZE + param_id] = new_param_value;
+                    old_param->fitness[sol_id + 2 * T] = new_fitness;
+                }
+            }
+
+            // Synchronize before L-SHADE parameter updates
+            __syncthreads();
+
+            /**
+             * L-SHADE hyperparameter update section
+             */
+            if (blockIdx.x == 0) {
+                // Calculate 8 float data for a warp
+                float ALIGN(64) adaptiveParamSums[8];
+                const int num_warps = T / 32;
+                __shared__ ALIGN(64) float share_sum[num_warps * 8];
+
+                // Load and calculate L-SHADE parameters
+                float3 lshade_param = reinterpret_cast<float3 *>(new_param->lshade_param)[sol_id];
+                float scale_f = lshade_param.x;
+                float scale_f1 = lshade_param.y;
+                float cr = lshade_param.z;
+                
+                // Calculate weight based on fitness improvement
+                float w = (new_fitness - old_fitness) / max(1e-4f, new_fitness);
+
+                // Calculate weighted parameters for L-SHADE update equations
+                adaptiveParamSums[0] = w;
+                adaptiveParamSums[1] = w * scale_f;
+                adaptiveParamSums[2] = w * scale_f * scale_f;
+                adaptiveParamSums[3] = w * scale_f1;
+                adaptiveParamSums[4] = w * scale_f1 * scale_f1;
+                adaptiveParamSums[5] = w * cr;
+                adaptiveParamSums[6] = w * cr * cr;
+                adaptiveParamSums[7] = 0;
+
+                // Warp-level parallel reduction
+                for (int i = 0; i < 7; ++i) {
+                    adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 16);
+                    adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 8);
+                    adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 4);
+                    adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 2);
+                    adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 1);
+                }
+
+                // Store warp results in shared memory
+                if ((threadIdx.x & 31) == 0) {
+                    reinterpret_cast<float4 *>(share_sum)[(threadIdx.x >> 5) * 2] = reinterpret_cast<float4 *>(adaptiveParamSums)[0];
+                    reinterpret_cast<float4 *>(share_sum)[(threadIdx.x >> 5) * 2 + 1] = reinterpret_cast<float4 *>(adaptiveParamSums)[1];
+                }
+                
+                __syncthreads();
+
+                // Final reduction across warps
+                if (threadIdx.x < (T >> 5)) {
+                    // Load parameters from shared memory
+                    reinterpret_cast<float4 *>(adaptiveParamSums)[0] = reinterpret_cast<float4 *>(share_sum)[threadIdx.x * 2];
+                    reinterpret_cast<float4 *>(adaptiveParamSums)[1] = reinterpret_cast<float4 *>(share_sum)[threadIdx.x * 2 + 1];
+                    
+                    // Parallel reduction based on population size
+                    for(int i = 0; i < 7; ++i) {
+                        if (T == 1024){
+                            adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 8);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000ffff, adaptiveParamSums[i], 8);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x000000ff, adaptiveParamSums[i], 4);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        }
+                        if (T == 512) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000ffff, adaptiveParamSums[i], 8);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x000000ff, adaptiveParamSums[i], 4);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        }
+                        else if (T == 256) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x000000ff, adaptiveParamSums[i], 4);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        }
+                        else if (T == 128) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        }
+                        else if (T == 64) {
+                            adaptiveParamSums[i] += __shfl_down_sync(0x00000003, adaptiveParamSums[i], 1);
+                        }
+                    }
+
+                    // Update evolve parameters
+                    if (threadIdx.x == 0) {
+                        if (adaptiveParamSums[2] > 1e-4f && adaptiveParamSums[4] > 1e-4f && adaptiveParamSums[6] > 1e-4f) {
+                            evolve->hist_lshade_param.scale_f = adaptiveParamSums[2] * adaptiveParamSums[0] / max(1e-4f, adaptiveParamSums[1] * adaptiveParamSums[0]);
+                            evolve->hist_lshade_param.scale_f1 = adaptiveParamSums[4] * adaptiveParamSums[0] / max(1e-4f, adaptiveParamSums[3] * adaptiveParamSums[0]);
+                            evolve->hist_lshade_param.Cr = adaptiveParamSums[6] * adaptiveParamSums[0] / max(1e-4f, adaptiveParamSums[5] * adaptiveParamSums[0]);
+                        }
+                    }
+                }
+            }
+        }
+        __syncthreads();
     }
 
     template <int T = CUDA_SOLVER_POP_SIZE>

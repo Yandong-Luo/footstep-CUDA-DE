@@ -140,7 +140,8 @@ def plot_result(sol_x, sol_u, color, linestyle):
     # Add heading angles as lines coming out of CoM points
     ang = sol_x[:,4]
     ax.plot([sol_x[:, 0], sol_x[:, 0]+0.15*np.cos(ang)], [sol_x[:, 1] , sol_x[:, 1]+0.15*np.sin(ang)], color=color, alpha=0.5, linewidth=0.3) # directions
-    ax.plot(sol_x[:-1, 0] + sol_u[:-1, 0], sol_x[:-1, 1] + sol_u[:-1, 1], linestyle='--', color='blue', alpha=0.8, linewidth=0.5) # dashed line connecting footstep
+    # ax.plot(sol_x[:-1, 0] + sol_u[:-1, 0], sol_x[:-1, 1] + sol_u[:-1, 1], linestyle='--', color='blue', alpha=0.8, linewidth=0.5) # dashed line connecting footstep
+    ax.plot(sol_x[:-1, 0] + sol_u[:, 0], sol_x[:-1, 1] + sol_u[:, 1], linestyle='--', color='blue', alpha=0.8, linewidth=0.5) # dashed line connecting footstep
     
     # Add footstep dots
     for i in range(sol_u.shape[0]): 
@@ -210,6 +211,7 @@ print("constraint_score:",constraint_score)
 print(len(sol_x))
 print(len(sol_u))
 sol_x = np.reshape(sol_x, (N, 5))
+sol_x = np.vstack([x0_MLD, sol_x])
 sol_u = np.reshape(sol_u, (N, 3))
 
 print("solution x",sol_x)

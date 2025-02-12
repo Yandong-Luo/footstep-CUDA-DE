@@ -127,7 +127,7 @@ namespace footstep{
         PI / 12.0f          // u_theta lower boundary
     };
 
-    __constant__ float2 target_pos = {0.5f, 2.5f};
+    __constant__ float2 target_pos = {1.5f, 2.8f};
 
     // __constant__ float Inx[16] = {
     //     1.0f, 0.0f, 0.0f, 0.0f,

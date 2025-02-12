@@ -121,7 +121,7 @@ __global__ void InitCudaEvolveData(CudaEvolveData* evolve, CudaParamClusterData<
     int idx = threadIdx.x;
     if (idx == 0) {
         evolve->problem_param.top_ratio = 0.;
-        evolve->hist_lshade_param.scale_f = evolve->hist_lshade_param.scale_f1 = 0.6;
+        evolve->hist_lshade_param.scale_f = evolve->hist_lshade_param.scale_f1 = 0.8;
         evolve->hist_lshade_param.Cr = 0.9;
         // evolve->new_cluster_vec->len = pop_size;
         old_cluster_data->len = pop_size;
@@ -431,6 +431,11 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
 
 void CudaDiffEvolveSolver::Evolution(int epoch, CudaEvolveType search_type){
     // DuplicateBestAndReorganize<<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE*3, 0, cuda_utils_->streams_[0]>>>(epoch, old_cluster_data_, 2);
+    // if (footstep::h_sol_score[0] != 0.0f && footstep::h_sol_score[0] < 100.0f){
+    //     // printf("Duplicate Best And Reorganize:%f\n", footstep::h_sol_score[0]);
+    //     DuplicateBestAndReorganize2<<<CUDA_SOLVER_POP_SIZE*3, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(epoch, old_cluster_data_, 2);
+    // }
+    
     CudaEvolveProcess<<<CUDA_SOLVER_POP_SIZE, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(epoch, old_cluster_data_, new_cluster_data_, random_center_->uniform_data_, random_center_->normal_data_, evolve_data_, CUDA_SOLVER_POP_SIZE, true);
     Evaluation(CUDA_SOLVER_POP_SIZE, epoch);
 
@@ -441,7 +446,8 @@ void CudaDiffEvolveSolver::Evolution(int epoch, CudaEvolveType search_type){
     // PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
 
     // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-    UpdateParameter<CUDA_SOLVER_POP_SIZE><<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE*2, 0, cuda_utils_->streams_[0]>>>(epoch, evolve_data_, new_cluster_data_, old_cluster_data_);
+    // UpdateParameter<CUDA_SOLVER_POP_SIZE><<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE*2, 0, cuda_utils_->streams_[0]>>>(epoch, evolve_data_, new_cluster_data_, old_cluster_data_);
+    UpdateParameter2<CUDA_SOLVER_POP_SIZE><<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(epoch, evolve_data_, new_cluster_data_, old_cluster_data_);
 
     // sorting parameter based on fitness
     CHECK_CUDA(cudaMemcpy(d_old_param_cpy, old_cluster_data_->all_param, 2 * CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToDevice));
@@ -700,6 +706,7 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
     CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
     // cudaDeviceSynchronize();
 
+    // printf("f1:%f, f2:%f, cr:%f\n", host_result.)
     host_result->objective_score = footstep::h_sol_score[1];
     host_result->constraint_score = footstep::h_sol_score[2];
     host_result->N_states = footstep::h_sol_state;

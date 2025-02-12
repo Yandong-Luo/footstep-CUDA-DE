@@ -97,7 +97,7 @@ struct CudaParamIndividual{
     float param[CUDA_PARAM_MAX_SIZE];
     // float state[footstep::N * footstep::state_dims];
     int con_var_dims, int_var_dims, dims;
-    float cur_scale_f{0.5F}, cur_scale_f1{0.5F}, cur_Cr{0.5F};
+    float cur_scale_f{0.8F}, cur_scale_f1{0.8F}, cur_Cr{0.9F};
     float fitness;
     float objective_score;
     float constraint_score;

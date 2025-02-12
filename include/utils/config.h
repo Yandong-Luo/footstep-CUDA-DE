@@ -3,14 +3,14 @@
 
 #define DEBUG_PRINT_FLAG false
 #define DEBUG_PRINT_EVALUATE_FLAG false
-#define DEBUG_PRINT_SOLVER_FLAG true
+#define DEBUG_PRINT_SOLVER_FLAG false
 #define DEBUG_PRINT_INIT_SOLVER_FLAG false
 #define DEBUG_PRINT_WARM_START_FLAG false
 #define DEBUG_ENABLE_NVTX false
-#define DEBUG_FOOTSTEP true
+#define DEBUG_FOOTSTEP false
 
 #define HOST_DEVICE __device__ __forceinline__ __host__
-#define CUDA_SOLVER_POP_SIZE 512
+#define CUDA_SOLVER_POP_SIZE 1024
 #define REGENRATE_RANDOM_FREQUENCE 1000
 
 #define CUDA_PARAM_MAX_SIZE 96

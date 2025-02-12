@@ -233,3 +233,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.11] - 2025-2-10
 ### Changed
 - Yandong Luo: Use thrust to complete the sorting (verified). When N>=25, T=512, there is still a race condition error.
+
+## [0.3.12] - 2025-2-11
+### Changed
+- Yandong Luo: Modified UpdateParameter2 and DuplicateBestAndReorganize2 to support 1024 population size.
