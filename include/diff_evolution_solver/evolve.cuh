@@ -95,6 +95,106 @@ namespace cudaprocess{
         }
     }
 
+    /**
+     * param_diversity
+     */
+    __global__ void calculate_cluster_diversity(const CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, float *diversity){
+        // __shared__ float diversity[T];
+        int sol_id = threadIdx.x;
+        int param_id = blockIdx.x;
+
+        const int warp_size = 32;
+        const int warp_num = (CUDA_SOLVER_POP_SIZE >> 5);
+        const int block_warp_num = (CUDA_PARAM_MAX_SIZE >> 5);
+        int warp_id = (threadIdx.x >> 5);
+        int lane_id = (threadIdx.x & 31);
+
+        // record the one parameter difference
+        __shared__ float sm_diff_sum[warp_num];
+        // record all parameter difference
+        __shared__ float sm_param_diff[CUDA_PARAM_MAX_SIZE];
+        // record the result of block reduction sum
+        __shared__ float sm_block_sum[block_warp_num];
+
+        // param_diff_sum[warp_id] = 0.0; 
+
+        // the difference between current individual and best individual
+        float diff = 0.0f;
+
+        // skip the first one (the best) and last one (the worst)
+        if(sol_id > 0 && sol_id < CUDA_SOLVER_POP_SIZE - 1){
+            diff = fabsf(old_param->all_param[param_id] - old_param->all_param[sol_id * CUDA_PARAM_MAX_SIZE + param_id]);
+        }
+        
+        float diff_sum = diff;
+        diff_sum += __shfl_down_sync(0xffffffff, diff_sum, 16);
+        diff_sum += __shfl_down_sync(0xffffffff, diff_sum, 8);
+        diff_sum += __shfl_down_sync(0xffffffff, diff_sum, 4);
+        diff_sum += __shfl_down_sync(0xffffffff, diff_sum, 2);
+        diff_sum += __shfl_down_sync(0xffffffff, diff_sum, 1);
+
+        if(lane_id == 0)    sm_diff_sum[warp_id] = (diff_sum / static_cast<float>(warp_size));
+
+        __syncthreads();
+        
+        if(threadIdx.x < warp_num){
+            float current_param_diff = sm_diff_sum[threadIdx.x];
+            if (warp_num == 32){                // also means POP_SIZE = 1024
+                current_param_diff += __shfl_down_sync(0xffffffff, current_param_diff, 16);
+                current_param_diff += __shfl_down_sync(0x0000ffff, current_param_diff, 8);
+                current_param_diff += __shfl_down_sync(0x000000ff, current_param_diff, 4);
+                current_param_diff += __shfl_down_sync(0x0000000f, current_param_diff, 2);
+                current_param_diff += __shfl_down_sync(0x00000003, current_param_diff, 1);
+            }
+            else if (warp_num == 16) {          // also means POP_SIZE = 512
+                current_param_diff += __shfl_down_sync(0x0000ffff, current_param_diff, 8);
+                current_param_diff += __shfl_down_sync(0x000000ff, current_param_diff, 4);
+                current_param_diff += __shfl_down_sync(0x0000000f, current_param_diff, 2);
+                current_param_diff += __shfl_down_sync(0x00000003, current_param_diff, 1);
+            }
+            else if (warp_num == 8) {            // also means POP_SIZE = 256
+                current_param_diff += __shfl_down_sync(0x000000ff, current_param_diff, 4);
+                current_param_diff += __shfl_down_sync(0x0000000f, current_param_diff, 2);
+                current_param_diff += __shfl_down_sync(0x00000003, current_param_diff, 1);
+            }
+            else if (warp_num == 4) {            // also means POP_SIZE = 128
+                current_param_diff += __shfl_down_sync(0x0000000f, current_param_diff, 2);
+                current_param_diff += __shfl_down_sync(0x00000003, current_param_diff, 1);
+            }
+            else if (warp_num == 2) {           // also means POP_SIZE = 64    
+                current_param_diff += __shfl_down_sync(0x00000003, current_param_diff, 1);
+            }
+            if(threadIdx.x == 0) sm_param_diff[param_id] = (current_param_diff / static_cast<float>(warp_num));
+        }
+        __syncthreads();
+
+        // 在每个block中，计算完sm_param_diff[blockIdx.x]后
+        if(threadIdx.x == 0) {  // 只需要一个线程
+            // 每个block直接添加自己的贡献到最终结果
+            atomicAdd(diversity, sm_param_diff[blockIdx.x] / static_cast<float>(CUDA_PARAM_MAX_SIZE));
+        }
+        
+        // // block parallel reduction sum 
+        // if(threadIdx.x < CUDA_PARAM_MAX_SIZE){
+        //     float block_warp_sum = sm_param_diff[threadIdx.x];
+        //     block_warp_sum += __shfl_down_sync(0xffffffff, block_warp_sum, 16);
+        //     block_warp_sum += __shfl_down_sync(0xffffffff, block_warp_sum, 8);
+        //     block_warp_sum += __shfl_down_sync(0xffffffff, block_warp_sum, 4);
+        //     block_warp_sum += __shfl_down_sync(0xffffffff, block_warp_sum, 2);
+        //     block_warp_sum += __shfl_down_sync(0xffffffff, block_warp_sum, 1);
+
+        //     sm_block_sum[warp_id] = (block_warp_sum / static_cast<float>(block_warp_num));
+        // }
+        // __syncthreads();
+
+        // if(threadIdx.x == 0 && blockIdx.x == 0){
+        //     diversity[0] = 0.0f;
+        //     for(int i = 0; i < block_warp_num; ++i){
+        //         diversity[0] += sm_block_sum[i];
+        //     }
+        // }
+    }
+
     template <CudaEvolveType SearchType = CudaEvolveType::GLOBAL>
     __global__ void CudaEvolveProcess(int epoch, CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3> *old_param, CudaParamClusterData<CUDA_SOLVER_POP_SIZE> *new_param, float *uniform_data,
                                       float *normal_data, CudaEvolveData *evolve_data, int pop_size, float eliteRatio){
@@ -1077,7 +1177,7 @@ namespace cudaprocess{
                     // Parallel reduction based on population size
                     for(int i = 0; i < 7; ++i) {
                         if (T == 1024){
-                            adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 8);
+                            adaptiveParamSums[i] += __shfl_down_sync(0xffffffff, adaptiveParamSums[i], 16);
                             adaptiveParamSums[i] += __shfl_down_sync(0x0000ffff, adaptiveParamSums[i], 8);
                             adaptiveParamSums[i] += __shfl_down_sync(0x000000ff, adaptiveParamSums[i], 4);
                             adaptiveParamSums[i] += __shfl_down_sync(0x0000000f, adaptiveParamSums[i], 2);

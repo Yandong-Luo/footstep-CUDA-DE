@@ -237,3 +237,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.12] - 2025-2-11
 ### Changed
 - Yandong Luo: Modified UpdateParameter2 and DuplicateBestAndReorganize2 to support 1024 population size.
+
+## [0.3.13] - 2025-2-13
+### Changed
+- Yandong Luo: Modified the error from foothold constraint. Added diversity and param_reset module for the solver to avoid local optimality.

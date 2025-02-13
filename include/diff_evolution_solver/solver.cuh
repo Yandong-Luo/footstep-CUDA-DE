@@ -110,6 +110,9 @@ namespace cudaprocess{
 
             bool extend_sm = false;
 
+            float *d_diversity;
+            float *h_diversity;
+
             // !--------------- CART POLE ---------------!
             float *h_state;             // pos, speed, theta, angular velocity from environment (x in paper)
             float *env_constraint, *h_env_constraint;     // h(\theta) in paper

@@ -31,8 +31,8 @@ namespace footstep{
     __constant__ float vel_circle_radii[vel_circle_num] = {0.3f, 3.3f};
 
     // target
-    __constant__ float2 fk = {0.0f, 0.13f};
-    __constant__ float2 fk2 = {0.0f,-0.13f};
+    __constant__ float2 obj_circle = {0.0f, 0.13f};
+    __constant__ float2 obj_circle2 = {0.0f,-0.13f};
 
     // __device__ float E[25] = {
     //     1.0f, 0.0f, 0.513166f,        0.0f,               0.0f,
@@ -127,7 +127,7 @@ namespace footstep{
         PI / 12.0f          // u_theta lower boundary
     };
 
-    __constant__ float2 target_pos = {1.5f, 2.8f};
+    __constant__ float2 target_pos = {0.5f, 2.7f};
 
     // __constant__ float Inx[16] = {
     //     1.0f, 0.0f, 0.0f, 0.0f,

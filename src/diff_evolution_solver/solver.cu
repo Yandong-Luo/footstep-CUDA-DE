@@ -86,7 +86,11 @@ void CudaDiffEvolveSolver::MallocSetup(){
 
     CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_state, footstep::state_dims * footstep::N * sizeof(float), cudaHostAllocDefault)); 
 
-    CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_score, 4 * sizeof(float), cudaHostAllocDefault)); 
+    CHECK_CUDA(cudaHostAlloc(&footstep::h_sol_score, 4 * sizeof(float), cudaHostAllocDefault));
+
+    CHECK_CUDA(cudaMalloc(&d_diversity, sizeof(float)));
+
+    CHECK_CUDA(cudaHostAlloc(&h_diversity, sizeof(float), cudaHostAllocDefault));
 
     if (DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
         // printf("Debug flags enabled, allocating host memory\n");
@@ -431,7 +435,7 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
 
 void CudaDiffEvolveSolver::Evolution(int epoch, CudaEvolveType search_type){
     // DuplicateBestAndReorganize<<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE*3, 0, cuda_utils_->streams_[0]>>>(epoch, old_cluster_data_, 2);
-    // if (footstep::h_sol_score[0] != 0.0f && footstep::h_sol_score[0] < 100.0f){
+    // if (footstep::h_sol_score[2] == 0.0f && footstep::h_sol_score[0] != 0.0f){
     //     // printf("Duplicate Best And Reorganize:%f\n", footstep::h_sol_score[0]);
     //     DuplicateBestAndReorganize2<<<CUDA_SOLVER_POP_SIZE*3, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(epoch, old_cluster_data_, 2);
     // }
@@ -642,12 +646,13 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
             // // CHECK_CUDA(cudaMemset(footstep::d_sol_state, 0.0f, sizeof(footstep::d_sol_state)));
             footstep::UpdateState<<<1, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::bigE, footstep::bigF, footstep::d_sol_state);
             footstep::EvaluateModel<<<1, 32, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::d_sol_state, evaluate_score_, footstep::d_sol_score);
-
+            CHECK_CUDA(cudaMemset(d_diversity, 0, sizeof(float)));
+            calculate_cluster_diversity<<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, d_diversity);
             // // footstep::EvaluateModel<CUDA_SOLVER_POP_SIZE><<<CUDA_SOLVER_POP_SIZE, 32, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, footstep::d_cluster_N_state, evaluate_score_);
             
             CHECK_CUDA(cudaMemcpy(footstep::h_sol_state, footstep::d_sol_state, footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
             CHECK_CUDA(cudaMemcpy(footstep::h_sol_score, footstep::d_sol_score, 4 * sizeof(float), cudaMemcpyDeviceToHost));
-
+            CHECK_CUDA(cudaMemcpy(h_diversity, d_diversity, sizeof(float), cudaMemcpyDeviceToHost));
             // // CHECK_CUDA(cudaMemcpy(host_evaluate_score_, evaluate_score_, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
 
             // // PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
@@ -671,20 +676,24 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
             // }
             // printf("==============================\n");
 
-            printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f dist_to_target:%f\n",footstep::h_sol_score[0], footstep::h_sol_score[1], footstep::h_sol_score[2], footstep::h_sol_score[3]);
+            printf("sol_score:%f, sol_obj_score:%f, sol_constraint_score:%f dist_to_target:%f, diversity:%f\n",footstep::h_sol_score[0], footstep::h_sol_score[1], footstep::h_sol_score[2], footstep::h_sol_score[3], *h_diversity);
 
             // CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
             // // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
             // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
             // printf("=======after check solution=========\n");
             // PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
-            
 
-            if(footstep::h_sol_score[2] != 0){
+            if(*h_diversity < 0.003){
+                RestOldParameter<<<1, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, CUDA_SOLVER_POP_SIZE, old_cluster_data_, random_center_->uniform_data_, 0.05);
+            }
+            
+            if(footstep::h_sol_score[2] != 0 || footstep::h_sol_score[1] > 0.8){
                 if (i != 0 && i % REGENRATE_RANDOM_FREQUENCE == 0) random_center_->Regenerate();
                 host_evolve_data_->problem_param.max_round += 100;
             }
         }
+        // if (i != 0 && i % REGENRATE_RANDOM_FREQUENCE == 0) random_center_->Regenerate();
     }
     
     // if (DEBUG_PRINT_FLAG || DEBUG_PRINT_SOLVER_FLAG){

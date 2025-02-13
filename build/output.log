@@ -1,10 +1,12 @@
-Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts/7" COLUMNS="68" LINES="36"]
-[1m[7m%[27m[1m[0m                                                                    ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
-[1m[33m16:33:24[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[64C[1A[1B[64D[?1h=[?2004h[A[A[0m[27m[24m[J
-[1m[33m16:33:24[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[64C[1A[1B[64D[1m[31mm[0m[39m[1m[31mm[0m[39m[90make[39m[1m[31mm[1m[31ma[0m[39m[1m[31mm[1m[31ma[1m[31mk[0m[39m[0m[32mm[0m[32ma[0m[32mk[32me[39m[?1l>[?2004l
+Script started on 2025-02-12 22:39:51-06:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="61" LINES="29"]
+[1m[7m%[27m[1m[0m                                                             ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
+[1m[33m22:39:51[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[57C[1A[1B[57D[?1h=[?2004h[A[A[0m[27m[24m[J
+[1m[33m22:39:51[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[57C[1A[1B[57D[1m[31mm[0m[39m[1m[31mm[0m[39m[90make[39m[1m[31mm[1m[31ma[0m[39m[1m[31mm[1m[31ma[1m[31mk[0m[39m[0m[32mm[0m[32ma[0m[32mk[32me[39m[?1l>[?2004l
 ]2;make]1;make[ 11%] [32mBuilding CUDA object CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o[0m
+[01m[0m[01m/home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evolve.cuh(117)[0m: [01;35mwarning[0m: variable [01m"sm_block_sum"[0m was declared but never referenced
+
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=int]"[0m
           detected during:
             instantiation of [01m"auto cute::as_arithmetic_tuple(const T &) [with T=int]"[0m [32m
@@ -101,7 +103,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of class [01m"cublasdx::detail::blas_block_execution<Operators...> [with Operators=<cublasdx::Size<100U, 1U, 5U>, cublasdx::Precision<float, float, float>, cublasdx::Type<(cublasdx::type)0>, cublasdx::Function<cublasdx::function::MM>, cublasdx::Arrangement<cublasdx::arrangement::row_major, cublasdx::arrangement::row_major, cublasdx::arrangement::col_major>, cublasdx::SM<860U>, cublasdx::Block>]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(18): here[0m
 
-[01m[0m[01m/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(124)[0m: [01;31merror[0m: identifier "[01mlshade_param_[0m" is undefined
+[01m[0m[01m/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(687)[0m: [01;31merror[0m: operand types are incompatible ("float *" and "double")
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/../database/cute_utils.hpp(73)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::choose<M,ArgA,ArgB,ArgC>(const ArgA &, const ArgB &, const ArgC &) [with M=cublasdx::detail::matrix::B, ArgA=cublasdx::arrangement, ArgB=cublasdx::arrangement, ArgC=cublasdx::arrangement]"[0m
           detected during:
@@ -114,7 +116,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/../database/cute_utils.hpp(73)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::choose<M,ArgA,ArgB,ArgC>(const ArgA &, const ArgB &, const ArgC &) [with M=cublasdx::detail::matrix::B, ArgA=unsigned int, ArgB=unsigned int, ArgC=unsigned int]"[0m
           detected during:
@@ -127,7 +129,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/../database/cute_utils.hpp(73)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::choose<M,ArgA,ArgB,ArgC>(const ArgA &, const ArgB &, const ArgC &) [with M=cublasdx::detail::matrix::C, ArgA=cublasdx::arrangement, ArgB=cublasdx::arrangement, ArgC=cublasdx::arrangement]"[0m
           detected during:
@@ -140,7 +142,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/../database/cute_utils.hpp(73)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::choose<M,ArgA,ArgB,ArgC>(const ArgA &, const ArgB &, const ArgC &) [with M=cublasdx::detail::matrix::C, ArgA=unsigned int, ArgB=unsigned int, ArgC=unsigned int]"[0m
           detected during:
@@ -153,7 +155,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/tensor.hpp(38)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::pointer_layout<PointerTag, Layout>::make_ptr_impl<T,K>(K *) [with PointerTag=cublasdx::detail::smem_tag, Layout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<5>>, cute::tuple<cute::C<5>, cute::_1>>, T=std::conditional_t<false, cublasdx::complex<float>, float>, K=std::conditional_t<false, cublasdx::complex<float>, float>]"[0m
           detected during:
@@ -166,7 +168,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/tensor.hpp(38)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::pointer_layout<PointerTag, Layout>::make_ptr_impl<T,K>(K *) [with PointerTag=cublasdx::detail::smem_tag, Layout=cute::Layout<cute::Shape<cute::Int<5>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<1>>>, T=std::conditional_t<false, cublasdx::complex<float>, float>, K=std::conditional_t<false, cublasdx::complex<float>, float>]"[0m
           detected during:
@@ -179,7 +181,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/tensor.hpp(38)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::pointer_layout<PointerTag, Layout>::make_ptr_impl<T,K>(K *) [with PointerTag=cublasdx::detail::smem_tag, Layout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<100>>>, T=std::conditional_t<false, cublasdx::complex<float>, float>, K=std::conditional_t<false, cublasdx::complex<float>, float>]"[0m
           detected during:
@@ -192,7 +194,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/../database/cute.hpp(29)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::get_thread_idx<BlockDimRank>() [with BlockDimRank=1U]"[0m
           detected during:
@@ -203,7 +205,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp(108)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::heuristic_permutation(const cute::Tensor<AEngine, ALayout> &, const cute::Tensor<BEngine, BLayout> &) [with AEngine=cute::ViewEngine<cute::gmem_ptr<const float *>>, ALayout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<5>>, cute::tuple<cute::C<5>, cute::_1>>, BEngine=cute::ViewEngine<cute::smem_ptr<float *>>, BLayout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<5>>, cute::tuple<cute::C<5>, cute::_1>>]"[0m
           detected during:
@@ -218,7 +220,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(893)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"lambda [](const auto &, const auto &)->auto [with <auto-1>=cute::_1, <auto-2>=cute::Int<1>]"[0m
           detected during:
@@ -242,7 +244,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=cute::C<499>]"[0m
           detected during:
@@ -265,7 +267,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::Int<100>, cute::Int<5>>, Stride=cute::tuple<cute::C<5>, cute::_1>]"[0m
           detected during:
@@ -288,7 +290,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp(108)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::heuristic_permutation(const cute::Tensor<AEngine, ALayout> &, const cute::Tensor<BEngine, BLayout> &) [with AEngine=cute::ViewEngine<cute::gmem_ptr<const float *>>, ALayout=cute::Layout<cute::Shape<cute::Int<5>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<1>>>, BEngine=cute::ViewEngine<cute::smem_ptr<float *>>, BLayout=cute::Layout<cute::Shape<cute::Int<5>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<1>>>]"[0m
           detected during:
@@ -303,7 +305,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=cute::C<4>]"[0m
           detected during:
@@ -326,7 +328,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp(108)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::heuristic_permutation(const cute::Tensor<AEngine, ALayout> &, const cute::Tensor<BEngine, BLayout> &) [with AEngine=cute::ViewEngine<cute::gmem_ptr<float *>>, ALayout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<100>>>, BEngine=cute::ViewEngine<cute::smem_ptr<float *>>, BLayout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<100>>>]"[0m
           detected during:
@@ -341,7 +343,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=cute::C<99>]"[0m
           detected during:
@@ -364,7 +366,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Int<100>, Stride=cute::Int<5>]"[0m
           detected during:
@@ -388,7 +390,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=std::__tuple_element_t<1UL, std::tuple<cute::tuple<cute::C<1>>, cute::C<5>>>, Stride=cute::C<1>]"[0m
           detected during:
@@ -412,7 +414,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(893)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"lambda [](const auto &, const auto &)->auto [with <auto-1>=cute::_1, <auto-2>=cute::C<100>]"[0m
           detected during:
@@ -436,7 +438,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<100>>, Stride=cute::Stride<cute::_0, cute::Int<5>>]"[0m
           detected during:
@@ -460,7 +462,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(893)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"lambda [](const auto &, const auto &)->auto [with <auto-1>=cute::_1, <auto-2>=cute::Int<5>]"[0m
           detected during:
@@ -484,7 +486,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<5>>, Stride=cute::Stride<cute::_0, cute::Int<1>>]"[0m
           detected during:
@@ -508,7 +510,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=cute::C<0>]"[0m
           detected during:
@@ -532,7 +534,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(893)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"lambda [](const auto &, const auto &)->auto [with <auto-1>=cute::_32, <auto-2>=cute::Int<1>]"[0m
           detected during:
@@ -556,7 +558,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Int<100>, Stride=cute::_1]"[0m
           detected during:
@@ -580,7 +582,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<100>>, Stride=cute::Stride<cute::_0, cute::Int<1>>]"[0m
           detected during:
@@ -604,7 +606,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=std::__tuple_element_t<1UL, std::tuple<cute::tuple<>, cute::C<32>>>, Stride=cute::C<100>]"[0m
           detected during:
@@ -628,7 +630,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::C<500>, Stride=cute::_1]"[0m
           detected during:
@@ -652,7 +654,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp(366)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::MakeTensor<T>::operator()(const Arg0 &, const Args &...) const [with T=cublasdx::detail::convert_to_cutlass_type_t<std::conditional_t<false, cublasdx::complex<float>, float>>, Arg0=cute::Layout<cute::tuple<cute::C<1>, cute::Int<100>, cute::Int<5>>, cute::tuple<cute::C<0>, cute::C<5>, cute::_1>>, Args=<>]"[0m
           detected during:
@@ -676,7 +678,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp(366)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::MakeTensor<T>::operator()(const Arg0 &, const Args &...) const [with T=cublasdx::detail::convert_to_cutlass_type_t<std::conditional_t<false, cublasdx::complex<float>, float>>, Arg0=cute::Layout<cute::tuple<cute::C<1>, cute::Int<1>, cute::C<5>>, cute::tuple<cute::Int<0>, cute::_0, cute::_1>>, Args=<>]"[0m
           detected during:
@@ -700,7 +702,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp(366)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::MakeTensor<T>::operator()(const Arg0 &, const Args &...) const [with T=cublasdx::detail::convert_to_cutlass_type_t<std::conditional_t<false, cublasdx::complex<float>, float>>, Arg0=cute::tuple<cute::C<1>, cute::Int<100>, cute::Int<1>>, Args=<>]"[0m
           detected during:
@@ -723,7 +725,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Int<100>, Stride=cute::ScaledBasis<cute::C<1>, 0>]"[0m
           detected during:
@@ -747,7 +749,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Int<5>, Stride=cute::ScaledBasis<cute::C<1>, 1>]"[0m
           detected during:
@@ -771,7 +773,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<100>>, Stride=cute::Stride<cute::_0, cute::ScaledBasis<cute::C<1>, 0>>]"[0m
           detected during:
@@ -795,7 +797,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<5>>, Stride=cute::Stride<cute::_0, cute::ScaledBasis<cute::C<1>, 1>>]"[0m
           detected during:
@@ -819,7 +821,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=std::__tuple_element_t<1UL, std::tuple<cute::tuple<>, cute::C<32>>>, Stride=cute::ScaledBasis<cute::C<1>, 0>]"[0m
           detected during:
@@ -843,7 +845,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=unsigned int]"[0m
           detected during:
@@ -867,7 +869,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp(366)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::MakeTensor<T>::operator()(const Arg0 &, const Args &...) const [with T=__nv_bool, Arg0=cute::tuple<cute::Int<1>, cute::C<100>>, Args=<>]"[0m
           detected during:
@@ -888,7 +890,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp(366)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::MakeTensor<T>::operator()(const Arg0 &, const Args &...) const [with T=__nv_bool, Arg0=cute::tuple<cute::_1, cute::_1>, Args=<>]"[0m
           detected during:
@@ -909,7 +911,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=std::__tuple_element_t<1UL, std::tuple<cute::tuple<>, cute::C<32>>>, Stride=cute::ScaledBasis<cute::C<1>, 1>]"[0m
           detected during:
@@ -933,7 +935,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Ex_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(91): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/tensor.hpp(38)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::pointer_layout<PointerTag, Layout>::make_ptr_impl<T,K>(K *) [with PointerTag=cublasdx::detail::smem_tag, Layout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<60>>, cute::tuple<cute::C<60>, cute::_1>>, T=std::conditional_t<false, cublasdx::complex<float>, float>, K=std::conditional_t<false, cublasdx::complex<float>, float>]"[0m
           detected during:
@@ -946,7 +948,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/tensor.hpp(38)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::pointer_layout<PointerTag, Layout>::make_ptr_impl<T,K>(K *) [with PointerTag=cublasdx::detail::smem_tag, Layout=cute::Layout<cute::Shape<cute::Int<60>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<1>>>, T=std::conditional_t<false, cublasdx::complex<float>, float>, K=std::conditional_t<false, cublasdx::complex<float>, float>]"[0m
           detected during:
@@ -959,7 +961,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp(108)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::heuristic_permutation(const cute::Tensor<AEngine, ALayout> &, const cute::Tensor<BEngine, BLayout> &) [with AEngine=cute::ViewEngine<cute::gmem_ptr<const float *>>, ALayout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<60>>, cute::tuple<cute::C<60>, cute::_1>>, BEngine=cute::ViewEngine<cute::smem_ptr<float *>>, BLayout=cute::Layout<cute::Shape<cute::Int<100>, cute::Int<60>>, cute::tuple<cute::C<60>, cute::_1>>]"[0m
           detected during:
@@ -974,7 +976,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=cute::C<5999>]"[0m
           detected during:
@@ -997,7 +999,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::Int<100>, cute::Int<60>>, Stride=cute::tuple<cute::C<60>, cute::_1>]"[0m
           detected during:
@@ -1020,7 +1022,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp(108)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::heuristic_permutation(const cute::Tensor<AEngine, ALayout> &, const cute::Tensor<BEngine, BLayout> &) [with AEngine=cute::ViewEngine<cute::gmem_ptr<const float *>>, ALayout=cute::Layout<cute::Shape<cute::Int<60>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<1>>>, BEngine=cute::ViewEngine<cute::smem_ptr<float *>>, BLayout=cute::Layout<cute::Shape<cute::Int<60>, cute::Int<1>>, cute::Stride<cute::Int<1>, cute::Int<1>>>]"[0m
           detected during:
@@ -1035,7 +1037,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/numeric/arithmetic_tuple.hpp(87)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::as_arithmetic_tuple(const T &) [with T=cute::C<59>]"[0m
           detected during:
@@ -1058,7 +1060,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Int<100>, Stride=cute::Int<60>]"[0m
           detected during:
@@ -1082,7 +1084,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=std::__tuple_element_t<1UL, std::tuple<cute::tuple<cute::C<1>>, cute::C<60>>>, Stride=cute::C<1>]"[0m
           detected during:
@@ -1106,7 +1108,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<100>>, Stride=cute::Stride<cute::_0, cute::Int<60>>]"[0m
           detected during:
@@ -1130,7 +1132,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(893)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"lambda [](const auto &, const auto &)->auto [with <auto-1>=cute::_1, <auto-2>=cute::Int<60>]"[0m
           detected during:
@@ -1154,7 +1156,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<60>>, Stride=cute::Stride<cute::_0, cute::Int<1>>]"[0m
           detected during:
@@ -1178,7 +1180,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::C<6000>, Stride=cute::_1]"[0m
           detected during:
@@ -1202,7 +1204,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp(366)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::MakeTensor<T>::operator()(const Arg0 &, const Args &...) const [with T=cublasdx::detail::convert_to_cutlass_type_t<std::conditional_t<false, cublasdx::complex<float>, float>>, Arg0=cute::Layout<cute::tuple<cute::C<1>, cute::Int<100>, cute::Int<60>>, cute::tuple<cute::C<0>, cute::C<60>, cute::_1>>, Args=<>]"[0m
           detected during:
@@ -1226,7 +1228,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/tensor_impl.hpp(366)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::MakeTensor<T>::operator()(const Arg0 &, const Args &...) const [with T=cublasdx::detail::convert_to_cutlass_type_t<std::conditional_t<false, cublasdx::complex<float>, float>>, Arg0=cute::Layout<cute::tuple<cute::C<1>, cute::Int<1>, cute::C<60>>, cute::tuple<cute::Int<0>, cute::_0, cute::_1>>, Args=<>]"[0m
           detected during:
@@ -1250,7 +1252,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Int<60>, Stride=cute::ScaledBasis<cute::C<1>, 1>]"[0m
           detected during:
@@ -1274,7 +1276,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/usr/local/mathdx/24.08/external/cutlass/include/cute/layout.hpp(827)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cute::detail::coalesce_x(const cute::Layout<Shape, Stride> &) [with Shape=cute::Shape<cute::_1, cute::Int<60>>, Stride=cute::Stride<cute::_0, cute::ScaledBasis<cute::C<1>, 1>>]"[0m
           detected during:
@@ -1298,7 +1300,7 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of [01m"void footstep::gemm_kernel<GEMM>(float, const float *, const float *, float, float *, char *) [with GEMM=footstep::Fu_GEMM]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(96): here[0m
             instantiation of [01m"void footstep::UpdateState(cudaprocess::CudaParamClusterData<T> *, const float *, const float *, float *) [with T=1024]"[0m [32m
-/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(396): here[0m
+/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(399): here[0m
 
 [01m[0m[01m/home/chris/footstep-CUDA-DE/include/footstep/model.cuh(131)[0m: [01;35mwarning[0m: variable [01m"cs_dist_to_target"[0m was set but never used
 
@@ -1306,10 +1308,10 @@ Script started on 2025-02-11 16:33:24-06:00 [TERM="xterm-256color" TTY="/dev/pts
 make[2]: *** [CMakeFiles/cuda_DE.dir/build.make:110: CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o] Error 1
 make[1]: *** [CMakeFiles/Makefile2:144: CMakeFiles/cuda_DE.dir/all] Error 2
 make: *** [Makefile:91: all] Error 2
-[1m[7m%[27m[1m[0m                                                                    ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
-[1m[33m16:33:27[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[64C[1A[1B[64D[?1h=[?2004h[A[A[0m[27m[24m[J
-[1m[33m16:33:27[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[64C[1A[1B[64D[1m[31me[0m[39m[1m[31me[0m[39m[90mxit[39m[0m[32me[32mx[39m[32me[32mx[32mi[32mt[39m[?1l>[?2004l
+[1m[7m%[27m[1m[0m                                                             ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
+[1m[33m22:39:54[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[57C[1A[1B[57D[?1h=[?2004h[A[A[0m[27m[24m[J
+[1m[33m22:39:55[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[57C[1A[1B[57D[1m[31me[0m[39m[1m[31me[0m[39m[90mxit[39m[0m[32me[32mx[32mi[32mt[39m[?1l>[?2004l
 ]2;exit]1;exit
-Script done on 2025-02-11 16:33:28-06:00 [COMMAND_EXIT_CODE="2"]
+Script done on 2025-02-12 22:40:39-06:00 [COMMAND_EXIT_CODE="2"]

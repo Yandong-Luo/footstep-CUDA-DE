@@ -85,13 +85,11 @@ extern __constant__ float2 vel_circle[vel_circle_num];
 extern __constant__ float vel_circle_radii[vel_circle_num];
 
 
-extern __constant__ float2 fk;
-extern __constant__ float2 fk2;
+extern __constant__ float2 obj_circle;
+extern __constant__ float2 obj_circle2;
 
 // target
 extern __constant__ float2 target_pos;
-
-
 
 // __constant__ float2 center1 = {0, 1};
 // __constant__ float2 center2 = {0, -0.44};
@@ -171,11 +169,11 @@ extern float *h_sol_score;
 constexpr float pos_penalty = 50000.0f;
 constexpr float state_penalty = 500.0f;
 constexpr float control_penalty = 200.0f;
-constexpr float velocity_penalty = 500.0f;
-constexpr float foothold_penalty = 100.0f;
+constexpr float velocity_penalty = 200.0f;
+constexpr float foothold_penalty = 200.0f;
 
 // the weight of the distance between N position and target position
-constexpr float target_weight = 100.0f;
+constexpr float target_weight = 200.0f;
 
 // ##############################
 // ########## DEBUG #############
