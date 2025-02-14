@@ -684,11 +684,11 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
             // printf("=======after check solution=========\n");
             // PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
 
-            if(*h_diversity < 0.003){
-                RestOldParameter<<<1, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, CUDA_SOLVER_POP_SIZE, old_cluster_data_, random_center_->uniform_data_, 0.05);
+            if(*h_diversity < 0.005){
+                RestOldParameter<<<1, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, CUDA_SOLVER_POP_SIZE, old_cluster_data_, random_center_->uniform_data_, 0.0625);
             }
             
-            if(footstep::h_sol_score[2] != 0 || footstep::h_sol_score[1] > 0.8){
+            if(footstep::h_sol_score[2] != 0 || footstep::h_sol_score[1] > 8){
                 if (i != 0 && i % REGENRATE_RANDOM_FREQUENCE == 0) random_center_->Regenerate();
                 host_evolve_data_->problem_param.max_round += 100;
             }

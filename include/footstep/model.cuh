@@ -193,22 +193,22 @@ namespace footstep{
             // ##########################
             // velocity constraint
             // ##########################
-            float before_vel_score = cs_constraint_score;
-            float backward_vel_constraint = (current_state[2] - (__cosf(current_state[4]) * vel_circle[0].x - __sinf(current_state[4]) * vel_circle[0].y)) * (current_state[2] - (__cosf(current_state[4]) * vel_circle[0].x - __sinf(current_state[4]) * vel_circle[0].y))
-                                        + (current_state[3] - (__sinf(current_state[4]) * vel_circle[0].x + __cosf(current_state[4]) * vel_circle[0].y)) * (current_state[3] - (__sinf(current_state[4]) * vel_circle[0].x + __cosf(current_state[4]) * vel_circle[0].y))
-                                        - (vel_circle_radii[0] * vel_circle_radii[0]);
+            // float before_vel_score = cs_constraint_score;
+            // float backward_vel_constraint = (current_state[2] - (__cosf(current_state[4]) * vel_circle[0].x - __sinf(current_state[4]) * vel_circle[0].y)) * (current_state[2] - (__cosf(current_state[4]) * vel_circle[0].x - __sinf(current_state[4]) * vel_circle[0].y))
+            //                             + (current_state[3] - (__sinf(current_state[4]) * vel_circle[0].x + __cosf(current_state[4]) * vel_circle[0].y)) * (current_state[3] - (__sinf(current_state[4]) * vel_circle[0].x + __cosf(current_state[4]) * vel_circle[0].y))
+            //                             - (vel_circle_radii[0] * vel_circle_radii[0]);
 
-            float forward_vel_constraint = (current_state[2] - (__cosf(current_state[4]) * vel_circle[1].x - __sinf(current_state[4]) * vel_circle[1].y)) * (current_state[2] - (__cosf(current_state[4]) * vel_circle[1].x - __sinf(current_state[4]) * vel_circle[1].y))
-                                 + (current_state[3] - (__sinf(current_state[4]) * vel_circle[1].x + __cosf(current_state[4]) * vel_circle[1].y)) * (current_state[3] - (__sinf(current_state[4]) * vel_circle[1].x + __cosf(current_state[4]) * vel_circle[1].y))
-                                 - (vel_circle_radii[1] * vel_circle_radii[1]);
+            // float forward_vel_constraint = (current_state[2] - (__cosf(current_state[4]) * vel_circle[1].x - __sinf(current_state[4]) * vel_circle[1].y)) * (current_state[2] - (__cosf(current_state[4]) * vel_circle[1].x - __sinf(current_state[4]) * vel_circle[1].y))
+            //                      + (current_state[3] - (__sinf(current_state[4]) * vel_circle[1].x + __cosf(current_state[4]) * vel_circle[1].y)) * (current_state[3] - (__sinf(current_state[4]) * vel_circle[1].x + __cosf(current_state[4]) * vel_circle[1].y))
+            //                      - (vel_circle_radii[1] * vel_circle_radii[1]);
 
-            cs_constraint_score += (forward_vel_constraint > 0.0f) ? velocity_penalty * forward_vel_constraint : 0.0f;
+            // cs_constraint_score += (forward_vel_constraint > 0.0f) ? velocity_penalty * forward_vel_constraint : 0.0f;
 
-            cs_constraint_score += (backward_vel_constraint > 0.0f) ? velocity_penalty * backward_vel_constraint : 0.0f;
+            // cs_constraint_score += (backward_vel_constraint > 0.0f) ? velocity_penalty * backward_vel_constraint : 0.0f;
 
-            if(sol_score != nullptr && (cs_constraint_score - before_vel_score) != 0){
-                printf("constraint from velocity constraint:%f\n",cs_constraint_score - before_vel_score);
-            }
+            // if(sol_score != nullptr && (cs_constraint_score - before_vel_score) != 0){
+            //     printf("current step: %d constraint from velocity constraint:%f\n", threadIdx.x, cs_constraint_score - before_vel_score);
+            // }
 
             // ##########################
             // foothold constraint
@@ -271,11 +271,14 @@ namespace footstep{
             // equal to uRu^T
             cs_u_theta_cost = 5.0f * cur_individual_param[2] * cur_individual_param[2];
 
+            // equal to xQx^T
+            cs_u_theta_cost += (0.5f * current_state[2] * current_state[2] + 0.5f * current_state[3] * current_state[3]);
+
             float forceTrackingPenalty_x = fabsf(cur_individual_param[0] - (__cosf(current_state[4]) * cur_obj_circle.x - __sinf(current_state[4]) * cur_obj_circle.y));
 
             float forceTrackingPenalty_y = fabsf(cur_individual_param[1] - (__sinf(current_state[4]) * cur_obj_circle.x - __cosf(current_state[4]) * cur_obj_circle.y));
 
-            cs_obj_score = cs_u_theta_cost + 5.0f * (forceTrackingPenalty_x * forceTrackingPenalty_x + forceTrackingPenalty_y * forceTrackingPenalty_y);
+            cs_obj_score = cs_u_theta_cost + 50.0f * (forceTrackingPenalty_x * forceTrackingPenalty_x + forceTrackingPenalty_y * forceTrackingPenalty_y);
 
             cs_dist_to_target = target_weight * sqrtf((current_state[0] - target_pos.x) * (current_state[0] - target_pos.x) + (current_state[1] - target_pos.y) * (current_state[1] - target_pos.y));
 

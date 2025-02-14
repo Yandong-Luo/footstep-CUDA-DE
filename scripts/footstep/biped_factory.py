@@ -30,13 +30,34 @@ import DE_cuda_solver
 #          {'xl':   4.5, 'xu':   5.5, 'yl':   9, 'yu':   10, 'color': 'black' }, #5
 #          {'xl':   9, 'xu':   10, 'yl': 4.5, 'yu': 5.5, 'color': 'purple'}] #6
 
-x_lim = [{'xl':   0, 'xu':   1., 'yl':   0, 'yu':  3, 'color': 'lightcoral'   }, #0
-         {'xl':   1., 'xu':   2., 'yl':   0, 'yu':   1., 'color': 'orange'}, #1
-         {'xl':   2, 'xu':  3, 'yl':   0, 'yu':  3, 'color': 'lime' }, #2
-         {'xl':   1, 'xu':   2, 'yl':   2, 'yu':   3, 'color': 'yellow'}, #3
-         {'xl':   0, 'xu':   0.2, 'yl':   1.4, 'yu':   1.6, 'color': 'lightcyan'  }, #4
-         {'xl':   1.4, 'xu':   1.6, 'yl':   2.8, 'yu':   3, 'color': 'greenyellow' }, #5
-         {'xl':   2.8, 'xu':   3, 'yl': 1.4, 'yu': 1.6, 'color': 'pink'}] #6
+# x_lim = [{'xl':   0, 'xu':   1., 'yl':   0, 'yu':  3, 'color': 'lightcoral'   }, #0
+#          {'xl':   1., 'xu':   2., 'yl':   0, 'yu':   1., 'color': 'orange'}, #1
+#          {'xl':   2, 'xu':  3, 'yl':   0, 'yu':  3, 'color': 'lime' }, #2
+#          {'xl':   1, 'xu':   2, 'yl':   2, 'yu':   3, 'color': 'yellow'}, #3
+#          {'xl':   0, 'xu':   0.2, 'yl':   1.4, 'yu':   1.6, 'color': 'lightcyan'  }, #4
+#          {'xl':   1.4, 'xu':   1.6, 'yl':   2.8, 'yu':   3, 'color': 'greenyellow' }, #5
+#          {'xl':   2.8, 'xu':   3, 'yl': 1.4, 'yu': 1.6, 'color': 'pink'}] #6
+
+x_lim = [
+    # Left section (around x=2-8)
+    {'xl': 2, 'xu': 3, 'yl': 0, 'yu': 11, 'color': 'lightcyan'},    # Left most vertical bar
+    {'xl': 3, 'xu': 8, 'yl': 0, 'yu': 1, 'color': 'lightcyan'},     # Bottom horizontal
+    {'xl': 3, 'xu': 8, 'yl': 7, 'yu': 8, 'color': 'lightcyan'},     # Upper horizontal
+    {'xl': 7, 'xu': 8, 'yl': 1, 'yu': 7, 'color': 'lightcyan'},     # Right vertical
+    
+    # Middle section (around x=8-20)
+    {'xl': 8, 'xu': 14, 'yl': 3, 'yu': 4, 'color': 'lightcyan'},    # Lower horizontal
+    {'xl': 13, 'xu': 14, 'yl': 4, 'yu': 11, 'color': 'lightcyan'},  # Upper vertical
+    {'xl': 14, 'xu': 20, 'yl': 10, 'yu': 11, 'color': 'lightcyan'}, # Top horizontal
+    {'xl': 19, 'xu': 20, 'yl': 0, 'yu': 10, 'color': 'lightcyan'},  # Right vertical
+    {'xl': 14, 'xu': 19, 'yl': 6, 'yu': 7, 'color': 'lightcyan'},   # Middle horizontal
+    
+    # Right section (around x=20-30)
+    {'xl': 20, 'xu': 26, 'yl': 8, 'yu': 9, 'color': 'lightcyan'},   # Upper horizontal
+    {'xl': 20, 'xu': 26, 'yl': 3, 'yu': 4, 'color': 'lightcyan'},   # Lower horizontal
+    {'xl': 25, 'xu': 26, 'yl': 4, 'yu': 8, 'color': 'lightcyan'},   # Middle vertical
+    {'xl': 26, 'xu': 30, 'yl': 5, 'yu': 6, 'color': 'lightcyan'},   # Right horizontal
+]
 
 num_patch = len(x_lim)
 # x0_MLD = np.array([0.45, 0.5, 0, 0.0, math.pi/2])
@@ -181,7 +202,12 @@ solver = DE_cuda_solver.Create()
 solver.init_solver(0)
 # print("Solver initialized successfully")
 
+solve_start = time.time()
+
 solution = solver.Solve()
+
+solver_time = time.time() - solve_start
+print("solver time:", solver_time)
 
 # MLD_solver = MLD.GBD(nx, nu, nz, nc, N, "factory", h, M, False)
 # sol = MLD_solver.solve_full_problem(x0_MLD)
