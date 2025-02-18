@@ -1,7 +1,7 @@
 #include "footstep/footstep_utils.cuh"
 namespace footstep{
-
     __constant__ float init_state[5] = {0.29357406,  0.29125562, -0.01193462, -0.01774755,  1.58432257};
+    // __constant__ float init_state[5] = {0.05,  0.5, -0.01193462, -0.01774755,  1.57};
 
     __constant__ float4 region1 = {0, 1, 0, 3};
     __constant__ float4 region2 = {1, 2, 0, 1};
@@ -19,6 +19,27 @@ namespace footstep{
         {0, 0.2, 1.4, 1.6},
         {1.4, 1.6, 2.8, 3},
         {2.8, 3, 1.4, 1.6}
+    };
+
+    // environment 2
+    __constant__ float4 all_region2[14] = {
+        {-0.1*scale, 0.1*scale, 0.0*scale, 1.0*scale},      // Left vertical bar
+        {0.2*scale, 1.1*scale, 0.0*scale, 0.1*scale},      // Bottom horizontal
+        {1.2*scale, 1.3*scale, 0.0*scale, 1.0*scale},      // Right vertical
+        {0.2*scale, 1.1*scale, 0.9*scale, 1.0*scale},      // Top horizontal
+        
+        {0.2*scale, 0.9*scale, 0.7*scale, 0.8*scale},      // left center horizontal
+        {1.0*scale, 1.1*scale, 0.2*scale, 0.8*scale},      // left center vertical
+        
+        {1.4*scale, 1.5*scale, 0.6*scale, 0.8*scale},      // center vertical upper
+        {1.4*scale, 1.5*scale, 0.3*scale, 0.5*scale},      // center vertical lower
+        
+        {2.8*scale, 3.0*scale, 0.0*scale, 1.0*scale},      // Right vertical bar
+        {1.8*scale, 2.7*scale, 0.0*scale, 0.1*scale},      // Bottom horizontal
+        {1.6*scale, 1.7*scale, 0.0*scale, 1.0*scale},      // Left vertical
+        {1.8*scale, 2.7*scale, 0.9*scale, 1.0*scale},      // Top horizontal
+        {2.0*scale, 2.7*scale, 0.7*scale, 0.8*scale},      // right center horizontal
+        {1.8*scale, 1.9*scale, 0.2*scale, 0.8*scale}       // right center vertical
     };
 
     // foothold bound circle center
@@ -127,8 +148,8 @@ namespace footstep{
         PI / 12.0f          // u_theta lower boundary
     };
 
-    __constant__ float2 target_pos = {1.5f, 2.7f};
-
+    __constant__ float2 target_pos = {1.5f, 2.8f};
+    // __constant__ float2 target_pos = {2.85f, 0.5f};
     // __constant__ float Inx[16] = {
     //     1.0f, 0.0f, 0.0f, 0.0f,
     //     0.0f, 1.0f, 0.0f, 0.0f,

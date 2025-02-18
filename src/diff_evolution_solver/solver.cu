@@ -453,30 +453,21 @@ void CudaDiffEvolveSolver::Evolution(int epoch, CudaEvolveType search_type){
     // UpdateParameter<CUDA_SOLVER_POP_SIZE><<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE*2, 0, cuda_utils_->streams_[0]>>>(epoch, evolve_data_, new_cluster_data_, old_cluster_data_);
     UpdateParameter2<CUDA_SOLVER_POP_SIZE><<<CUDA_PARAM_MAX_SIZE, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(epoch, evolve_data_, new_cluster_data_, old_cluster_data_);
 
-    // sorting parameter based on fitness
-    CHECK_CUDA(cudaMemcpy(d_old_param_cpy, old_cluster_data_->all_param, 2 * CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToDevice));
-    // CHECK_CUDA(cudaMemcpy(h_old_param_cpy, d_old_param_cpy, sizeof(d_old_param_cpy), cudaMemcpyDeviceToHost));
-    // printf
-    thrust::device_vector<int> d_indices(2*CUDA_SOLVER_POP_SIZE);
-    thrust::sequence(d_indices.begin(), d_indices.end());
+    // // sorting parameter based on fitness
+    // CHECK_CUDA(cudaMemcpy(d_old_param_cpy, old_cluster_data_->all_param, 2 * CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToDevice));
+    // // CHECK_CUDA(cudaMemcpy(h_old_param_cpy, d_old_param_cpy, sizeof(d_old_param_cpy), cudaMemcpyDeviceToHost));
+    // // printf
+    // thrust::device_vector<int> d_indices(2*CUDA_SOLVER_POP_SIZE);
+    // thrust::sequence(d_indices.begin(), d_indices.end());
 
-    // 按fitness排序，同时移动indices
-    thrust::device_ptr<float> d_fitness_ptr(old_cluster_data_->fitness);
-    thrust::stable_sort_by_key(d_fitness_ptr, d_fitness_ptr + CUDA_SOLVER_POP_SIZE, 
-                    d_indices.begin());
-    thrust::stable_sort_by_key(d_fitness_ptr + CUDA_SOLVER_POP_SIZE, d_fitness_ptr + 2*CUDA_SOLVER_POP_SIZE, 
-                    d_indices.begin() + CUDA_SOLVER_POP_SIZE);
+    // // 按fitness排序，同时移动indices
+    // thrust::device_ptr<float> d_fitness_ptr(old_cluster_data_->fitness);
+    // thrust::stable_sort_by_key(d_fitness_ptr, d_fitness_ptr + CUDA_SOLVER_POP_SIZE, 
+    //                 d_indices.begin());
+    // thrust::stable_sort_by_key(d_fitness_ptr + CUDA_SOLVER_POP_SIZE, d_fitness_ptr + 2*CUDA_SOLVER_POP_SIZE, 
+    //                 d_indices.begin() + CUDA_SOLVER_POP_SIZE);
 
-    RecordParamBasedSortIndices<<<2*CUDA_SOLVER_POP_SIZE, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_->all_param, thrust::raw_pointer_cast(d_indices.data()), d_old_param_cpy);
-
-    // CHECK_CUDA(cudaMemcpyAsync(host_old_cluster_data_, old_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    // // CHECK_CUDA(cudaMemcpyAsync(host_new_cluster_data_, new_cluster_data_, sizeof(CudaParamClusterData<CUDA_SOLVER_POP_SIZE>), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-    // printf("=======after update parameter=========\n");
-    // PrintClusterData<CUDA_SOLVER_POP_SIZE*3>(host_old_cluster_data_);
-
-    // CHECK_CUDA(cudaMemcpyAsync(h_terminate_flag, terminate_flag, sizeof(int), cudaMemcpyDeviceToHost, cuda_utils_->streams_[0]));
-    // CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
+    // RecordParamBasedSortIndices<<<2*CUDA_SOLVER_POP_SIZE, CUDA_PARAM_MAX_SIZE, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_->all_param, thrust::raw_pointer_cast(d_indices.data()), d_old_param_cpy);
 }
 
 void CudaDiffEvolveSolver::InitSolver(int gpu_device){
@@ -688,7 +679,7 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
                 RestOldParameter<<<1, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(evolve_data_, CUDA_SOLVER_POP_SIZE, old_cluster_data_, random_center_->uniform_data_, 0.0625);
             }
             
-            if(footstep::h_sol_score[2] != 0 || footstep::h_sol_score[1] > 8){
+            if(footstep::h_sol_score[2] != 0 || footstep::h_sol_score[1] > 5 || footstep::h_sol_score[0] > 5){
                 if (i != 0 && i % REGENRATE_RANDOM_FREQUENCE == 0) random_center_->Regenerate();
                 host_evolve_data_->problem_param.max_round += 100;
             }

@@ -242,6 +242,10 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Yandong Luo: Modified the error from foothold constraint. Added diversity and param_reset module for the solver to avoid local optimality.
 
-## [0.3.13] - 2025-2-14
+## [0.3.14] - 2025-2-14
 ### Changed
 - Yandong Luo: Adjust the parameter of objective function to reach out a better performance.
+
+## [0.3.15] - 2025-2-18
+### Changed
+- Yandong Luo: Fixed some race in bitonic sorting method.

@@ -12,7 +12,9 @@
 #include <thrust/device_vector.h>
 #include <thrust/execution_policy.h>
 
-#define CUDA_PARAM_MAX_SIZE 16
+#include <mutex>
+
+#define CUDA_PARAM_MAX_SIZE 64
 #define T 1024  // template parameter for SortParamBasedBitonic
 
 // Error checking macro
@@ -163,6 +165,9 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
     // record the warp sorting result to share memory
     sm_sorted_param[sol_id ] = current_param;
     sm_sorted_fitness[sol_id] = current_fitness;
+
+    // atomicExch(&sm_sorted_param[sol_id], current_param);
+    // atomicExch(&sm_sorted_param[sol_id], current_fitness);
     
     // Wait for all thread finish above computation
     __syncthreads();
@@ -171,9 +176,12 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         compare_idx = sol_id ^ 63;
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
+        
+        // atomicExch(&mapping_param, sm_sorted_param[compare_idx]);
+        // atomicExch(&mapping_fitness, sm_sorted_param[compare_idx]);
 
         sortOrder = (threadIdx.x > (threadIdx.x ^ 63)) ? -1.0 : 1.0;
-
+        __syncthreads();
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -192,12 +200,16 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         // 1. 先存储当前值到共享内存
         sm_sorted_param[sol_id] = current_param;
         sm_sorted_fitness[sol_id] = current_fitness;
+        // atomicExch(&sm_sorted_param[sol_id], current_param);
+        // atomicExch(&sm_sorted_param[sol_id], current_fitness);
         __syncthreads();
 
         // 2. 进行128元素的比较
         compare_idx = sol_id ^ 127;
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
+        // atomicExch(&mapping_param, sm_sorted_param[compare_idx]);
+        // atomicExch(&mapping_fitness, sm_sorted_param[compare_idx]);
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
         __syncthreads();
 
@@ -207,6 +219,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
             current_param = mapping_param;
             sm_sorted_param[sol_id] = current_param;
             sm_sorted_fitness[sol_id] = current_fitness;
+            // atomicExch(&sm_sorted_param[sol_id], current_param);
+            // atomicExch(&sm_sorted_param[sol_id], current_fitness);
         }
         __syncthreads();
 
@@ -215,11 +229,13 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
         }
-
+        __syncthreads();
         // 5. 最后的warp内部清理
         BitonicWarpCompare(current_param, current_fitness, 16);
         BitonicWarpCompare(current_param, current_fitness, 8);
@@ -267,6 +283,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -280,10 +298,14 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
         }
+        __syncthreads();
 
         // 7. 最后的warp内部清理
         BitonicWarpCompare(current_param, current_fitness, 16);
@@ -332,6 +354,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -345,6 +369,7 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -358,6 +383,7 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -373,7 +399,7 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         BitonicWarpCompare(current_param, current_fitness, 2);
         BitonicWarpCompare(current_param, current_fitness, 1);
     }
-    else if(T >= 1024){
+    if(T >= 1024){
         // 1. 先存储当前值到共享内存
         sm_sorted_param[sol_id] = current_param;
         sm_sorted_fitness[sol_id] = current_fitness;
@@ -400,6 +426,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -413,6 +441,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -426,6 +456,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -439,6 +471,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
         mapping_param = sm_sorted_param[compare_idx];
         mapping_fitness = sm_sorted_fitness[compare_idx];
         sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+        __syncthreads();
+
         if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
             current_param = mapping_param;
             current_fitness = mapping_fitness;
@@ -456,8 +490,8 @@ __global__ void SortParamBasedBitonic3(float *all_param, float *all_fitness, int
     }
     __syncthreads();
     if (blockIdx.x < CUDA_PARAM_MAX_SIZE){
-        // all_param[(sol_id + bias)* CUDA_PARAM_MAX_SIZE + param_id] = current_param;
-        atomicExch(&all_param[(sol_id + bias)* CUDA_PARAM_MAX_SIZE + param_id], current_param);
+        all_param[(sol_id + bias)* CUDA_PARAM_MAX_SIZE + param_id] = current_param;
+        // atomicExch(&all_param[(sol_id + bias)* CUDA_PARAM_MAX_SIZE + param_id], current_param);
     }
     if (blockIdx.x == 0)    all_fitness[(threadIdx.x+bias)] = current_fitness;
 }
@@ -545,7 +579,7 @@ int main() {
     // ReorderParams<<<2*T, CUDA_PARAM_MAX_SIZE>>>(d_params, thrust::raw_pointer_cast(d_indices.data()), d_origin_params);
 
     SortParamBasedBitonic3<<<CUDA_PARAM_MAX_SIZE, T>>>(d_params, d_fitness, 0);
-    cudaDeviceSynchronize();
+    // cudaDeviceSynchronize();
     SortParamBasedBitonic3<<<CUDA_PARAM_MAX_SIZE, T>>>(d_params, d_fitness, T);
     
     // Check for kernel launch errors

@@ -22,29 +22,40 @@ if lib_path not in sys.path:
 
 import DE_cuda_solver
 
-# x_lim = [{'xl':   0, 'xu':   3.5, 'yl':   0, 'yu':  10, 'color': 'red'   }, #0
-#          {'xl':   3.5, 'xu':   6.5, 'yl':   0, 'yu':   3.5, 'color': 'orange'}, #1
-#          {'xl':   6.5, 'xu':  10, 'yl':   0, 'yu':  10, 'color': 'green' }, #2
-#          {'xl':   3.5, 'xu':   6.5, 'yl':   6.5, 'yu':   10, 'color': 'yellow'}, #3
-#          {'xl':   0, 'xu':   1, 'yl':   4.5, 'yu':   5.5, 'color': 'blue'  }, #4
-#          {'xl':   4.5, 'xu':   5.5, 'yl':   9, 'yu':   10, 'color': 'black' }, #5
-#          {'xl':   9, 'xu':   10, 'yl': 4.5, 'yu': 5.5, 'color': 'purple'}] #6
+scale = 1.0  # 可以随时调整这个值来改变缩放比例
 
-x_lim = [{'xl':   0, 'xu':   1., 'yl':   0, 'yu':  3, 'color': 'lightcoral'   }, #0
-         {'xl':   1., 'xu':   2., 'yl':   0, 'yu':   1., 'color': 'orange'}, #1
-         {'xl':   2, 'xu':  3, 'yl':   0, 'yu':  3, 'color': 'lime' }, #2
-         {'xl':   1, 'xu':   2, 'yl':   2, 'yu':   3, 'color': 'yellow'}, #3
-         {'xl':   0, 'xu':   0.2, 'yl':   1.4, 'yu':   1.6, 'color': 'lightcyan'  }, #4
-         {'xl':   1.4, 'xu':   1.6, 'yl':   2.8, 'yu':   3, 'color': 'greenyellow' }, #5
-         {'xl':   2.8, 'xu':   3, 'yl': 1.4, 'yu': 1.6, 'color': 'pink'}] #6
+# Define original regions and scale them
+x_lim = [
+    # Left section (L shape)
+    {'xl': -0.1*scale, 'xu': 0.1*scale, 'yl': 0*scale, 'yu': 1*scale, 'color': 'orange'},    # Left vertical bar
+    {'xl': 0.2*scale, 'xu': 1.1*scale, 'yl': 0*scale, 'yu': 0.1*scale, 'color': 'orange'},     # Bottom horizontal
+    {'xl': 1.2*scale, 'xu': 1.3*scale, 'yl': 0*scale, 'yu': 1*scale, 'color': 'orange'},     # Right vertical
+    {'xl': 0.2*scale, 'xu': 1.1*scale, 'yl': 0.9*scale, 'yu': 1*scale, 'color': 'orange'},     # Top horizontal
 
+    {'xl': 0.2*scale, 'xu': 0.9*scale, 'yl': 0.7*scale, 'yu': 0.8*scale, 'color': 'orange'},     # left center horizontal
+    {'xl': 1.0*scale, 'xu': 1.1*scale, 'yl': 0.2*scale, 'yu': 0.8*scale, 'color': 'orange'},     # left center vertical
+
+    {'xl': 1.4*scale, 'xu': 1.5*scale, 'yl': 0.6*scale, 'yu': 0.8*scale, 'color': 'orange'},     # center vertical
+    {'xl': 1.4*scale, 'xu': 1.5*scale, 'yl': 0.3*scale, 'yu': 0.5*scale, 'color': 'orange'},     # center vertical
+
+    {'xl': 2.8*scale, 'xu': 3.0*scale, 'yl': 0*scale, 'yu': 1*scale, 'color': 'orange'},    # Right vertical bar
+    {'xl': 1.8*scale, 'xu': 2.7*scale, 'yl': 0*scale, 'yu': 0.1*scale, 'color': 'orange'},     # Bottom horizontal
+    {'xl': 1.6*scale, 'xu': 1.7*scale, 'yl': 0*scale, 'yu': 1*scale, 'color': 'orange'},     # Left vertical
+    {'xl': 1.8*scale, 'xu': 2.7*scale, 'yl': 0.9*scale, 'yu': 1*scale, 'color': 'orange'},     # Top horizontal
+    {'xl': 2.0*scale, 'xu': 2.7*scale, 'yl': 0.7*scale, 'yu': 0.8*scale, 'color': 'orange'},     # right center horizontal
+    {'xl': 1.8*scale, 'xu': 1.9*scale, 'yl': 0.2*scale, 'yu': 0.8*scale, 'color': 'orange'},     # right center vertical
+]
 
 num_patch = len(x_lim)
 # x0_MLD = np.array([0.45, 0.5, 0, 0.0, math.pi/2])
 # x0_MLD = np.array([1.0*0.3, 1.0*0.3, 0, 0., math.pi/2])
 
-# Roman's infeasible solutions
-x0_MLD = np.array([ 0.29357406,  0.29125562, -0.01193462, -0.01774755,  1.58432257])
+# # Roman's infeasible solutions
+# x0_MLD = np.array([ 0.29357406,  0.29125562, -0.01193462, -0.01774755,  1.58432257])
+
+# x0_MLD = np.array([ 0.05,  0.5, -0.0, -0.0,  1.57])
+
+x0_MLD = np.array([ 0.1,  0.5, -0.01193462, -0.01774755,  1.57])
 
 nu = 3
 nx = 5
@@ -63,68 +74,11 @@ M = [Mx, My, Mu, Mt]
 
 i_con = 0
 
-# Constraints on v limits
-h[i_con:(i_con+4)] = np.array([[0.5],
-                               [0.5],
-                               [0.5],
-                               [0.5]])
-
-i_con += 4
-
-# Constraints on theta limites
-h[i_con:(i_con+2)] = np.array([[math.pi*5/4],
-                               [math.pi*5/4]])
-i_con += 2
-
-# Constraints on control limits: p_foot_x, p_foot_y, theta_dot
-h[i_con:(i_con+6)] = np.array([[0.25],
-                               [0.25],
-                               [0.25],
-                               [0.25],
-                               [math.pi/12],
-                               [math.pi/12]])
-
-i_con += 6
-
-# Constraints on patches
-for ii in range(num_patch):
-    h[(i_con+ii*4+0):(i_con+ii*4+4)] = np.array([[ x_lim[ii]['xu']+Mx],
-                                                 [-x_lim[ii]['xl']+Mx],
-                                                 [ x_lim[ii]['yu']+My],
-                                                 [-x_lim[ii]['yl']+My]])
-
-i_con += num_patch*4
-
-# Constraints on standing mode selection: Vx and Vy == 0
-h[i_con:(i_con+4)] = np.array([[Mu],
-                               [Mu],
-                               [Mu],
-                               [Mu]])
-i_con += 4
-
-# Constraints on orientation selection
-# breakpoints = [-math.pi -math.pi/4+ (ii)/4 *math.pi for ii in range(nk+1)]   # breakpoints = [-math.pi, -math.pi * 2 / 3, -math.pi / 3, 0, math.pi / 3, math.pi * 2 / 3, math.pi]
-for ii in range(3):
-    h[(i_con+ii*2+0):(i_con+ii*2+2)] = np.array([[(math.pi - ii*math.pi/2) + Mt],
-                                                 [-(math.pi - ii*math.pi/2) + Mt]])
-i_con += 2*3
-
-# for ii in range(nk):
-#     h[(i_con+ii*2+0):(i_con+ii*2+2)] = np.array([[ breakpoints[ii+1]+Mt],
-#                                                  [-breakpoints[ii]  +Mt]])
-# i_con += 2*nk
-# Specific direction of interest: -pi("8") | -pi/2("9") | 0("10") | pi/2("11") | pi("12")
-# for ii in range(5):
-#     h[(i_con+ii*2+0):(i_con+ii*2+2)] = np.array([[(-math.pi + ii*math.pi/2)+0.15  + Mt],
-#                                                  [-(-math.pi + ii*math.pi/2) + Mt]])
-# i_con += 2*5
-# print("nc size: ", nc)
-# print("h: ", h)
 
 def plot_result(sol_x, sol_u, color, linestyle):
     ax = plt.gca()
     ax.set_aspect('equal') 
-    ax.set_facecolor("gray")
+    ax.set_facecolor("white")
 
     # Add patches
     for item in x_lim:
@@ -208,6 +162,9 @@ objective_score = solution["objective_score"]
 constraint_score = solution["constraint_score"]
 sol_x = solution["state"]
 sol_u = solution["param"]
+
+# sol_x = sol_x * scale
+# sol_u = sol_u * scale
 
 print("fitness:",fitness)
 print("objective_score:",objective_score)

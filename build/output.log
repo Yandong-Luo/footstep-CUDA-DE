@@ -1,9 +1,9 @@
-Script started on 2025-02-12 22:39:51-06:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="61" LINES="29"]
-[1m[7m%[27m[1m[0m                                                             ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
-[1m[33m22:39:51[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[57C[1A[1B[57D[?1h=[?2004h[A[A[0m[27m[24m[J
-[1m[33m22:39:51[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[57C[1A[1B[57D[1m[31mm[0m[39m[1m[31mm[0m[39m[90make[39m[1m[31mm[1m[31ma[0m[39m[1m[31mm[1m[31ma[1m[31mk[0m[39m[0m[32mm[0m[32ma[0m[32mk[32me[39m[?1l>[?2004l
+Script started on 2025-02-15 23:17:26-06:00 [TERM="xterm-256color" TTY="/dev/pts/10" COLUMNS="64" LINES="17"]
+[1m[7m%[27m[1m[0m                                                                ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
+[1m[33m23:17:26[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[60C[1A[1B[60D[?1h=[?2004h[A[A[0m[27m[24m[J
+[1m[33m23:17:26[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[32m➜ [0m[32m[39m[1m [0m[K[60C[1A[1B[60D[1m[31mm[0m[39m[1m[31mm[0m[39m[90make[39m[1m[31mm[1m[31ma[0m[39m[1m[31mm[1m[31ma[1m[31mk[0m[39m[0m[32mm[0m[32ma[0m[32mk[32me[39m[?1l>[?2004l
 ]2;make]1;make[ 11%] [32mBuilding CUDA object CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o[0m
 [01m[0m[01m/home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evolve.cuh(117)[0m: [01;35mwarning[0m: variable [01m"sm_block_sum"[0m was declared but never referenced
 
@@ -103,7 +103,7 @@ Script started on 2025-02-12 22:39:51-06:00 [TERM="xterm-256color" TTY="/dev/pts
             instantiation of class [01m"cublasdx::detail::blas_block_execution<Operators...> [with Operators=<cublasdx::Size<100U, 1U, 5U>, cublasdx::Precision<float, float, float>, cublasdx::Type<(cublasdx::type)0>, cublasdx::Function<cublasdx::function::MM>, cublasdx::Arrangement<cublasdx::arrangement::row_major, cublasdx::arrangement::row_major, cublasdx::arrangement::col_major>, cublasdx::SM<860U>, cublasdx::Block>]"[0m [32m
 /home/chris/footstep-CUDA-DE/include/footstep/model.cuh(18): here[0m
 
-[01m[0m[01m/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(687)[0m: [01;31merror[0m: operand types are incompatible ("float *" and "double")
+[01m[0m[01m/home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu(691)[0m: [01;31merror[0m: identifier "[01mh_sol_score[0m" is undefined
 
 [01m[0m[01m/usr/local/mathdx/24.08/include/cublasdx/include/detail/../database/cute_utils.hpp(73)[0m: [01;35mwarning[0m: missing return statement at end of non-void function [01m"cublasdx::detail::choose<M,ArgA,ArgB,ArgC>(const ArgA &, const ArgB &, const ArgC &) [with M=cublasdx::detail::matrix::B, ArgA=cublasdx::arrangement, ArgB=cublasdx::arrangement, ArgC=cublasdx::arrangement]"[0m
           detected during:
@@ -1308,10 +1308,10 @@ Script started on 2025-02-12 22:39:51-06:00 [TERM="xterm-256color" TTY="/dev/pts
 make[2]: *** [CMakeFiles/cuda_DE.dir/build.make:110: CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o] Error 1
 make[1]: *** [CMakeFiles/Makefile2:144: CMakeFiles/cuda_DE.dir/all] Error 2
 make: *** [Makefile:91: all] Error 2
-[1m[7m%[27m[1m[0m                                                             ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
-[1m[33m22:39:54[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[57C[1A[1B[57D[?1h=[?2004h[A[A[0m[27m[24m[J
-[1m[33m22:39:55[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
-[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[57C[1A[1B[57D[1m[31me[0m[39m[1m[31me[0m[39m[90mxit[39m[0m[32me[32mx[32mi[32mt[39m[?1l>[?2004l
+[1m[7m%[27m[1m[0m                                                                ]2;chris@chris-pc:~/footstep-CUDA-DE/build]1;..CUDA-DE/build]7;file://chris-pc/home/chris/footstep-CUDA-DE/build\[0m[27m[24m[J
+[1m[33m23:17:31[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[60C[1A[1B[60D[?1h=[?2004h[A[A[0m[27m[24m[J
+[1m[33m23:17:31[0m[33m[39m[1m [0m[1min [0m[1m[36mfootstep-CUDA-DE/build[0m[36m[39m[1m [0m[1mon [0m[1m[37m[1m[37m[35m main[0m[35m[39m[1m[31m [!?][0m[31m[39m[0m[39m[1m [0m[1mvia 💻 [0m[1m[34mlab_env[0m[34m[39m[1m [0m[1m[37m
+[0m[37m[39m[1m[31m➜ [0m[31m[39m[1m [0m[K[60C[1A[1B[60D[1m[31me[0m[39m[1m[31me[0m[39m[90mxit[39m[0m[32me[32mx[39m[32me[32mx[32mi[32mt[39m[?1l>[?2004l
 ]2;exit]1;exit
-Script done on 2025-02-12 22:40:39-06:00 [COMMAND_EXIT_CODE="2"]
+Script done on 2025-02-15 23:17:33-06:00 [COMMAND_EXIT_CODE="2"]

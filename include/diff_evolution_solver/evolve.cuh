@@ -737,8 +737,9 @@ namespace cudaprocess{
             compare_idx = sol_id ^ 63;
             mapping_param = sm_sorted_param[compare_idx];
             mapping_fitness = sm_sorted_fitness[compare_idx];
-
             sortOrder = (threadIdx.x > (threadIdx.x ^ 63)) ? -1.0 : 1.0;
+
+            __syncthreads();
 
             if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
                 current_param = mapping_param;
@@ -781,10 +782,13 @@ namespace cudaprocess{
             mapping_param = sm_sorted_param[compare_idx];
             mapping_fitness = sm_sorted_fitness[compare_idx];
             sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+
             if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
                 current_param = mapping_param;
                 current_fitness = mapping_fitness;
             }
+            __syncthreads();
 
             // 5. 最后的warp内部清理
             BitonicWarpCompare(current_param, current_fitness, 16);
@@ -820,6 +824,8 @@ namespace cudaprocess{
             mapping_param = sm_sorted_param[compare_idx];
             mapping_fitness = sm_sorted_fitness[compare_idx];
             sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+
             if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
                 current_param = mapping_param;
                 current_fitness = mapping_fitness;
@@ -833,10 +839,13 @@ namespace cudaprocess{
             mapping_param = sm_sorted_param[compare_idx];
             mapping_fitness = sm_sorted_fitness[compare_idx];
             sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+
             if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
                 current_param = mapping_param;
                 current_fitness = mapping_fitness;
             }
+            __syncthreads();
 
             // 7. 最后的warp内部清理
             BitonicWarpCompare(current_param, current_fitness, 16);
@@ -872,6 +881,8 @@ namespace cudaprocess{
             mapping_param = sm_sorted_param[compare_idx];
             mapping_fitness = sm_sorted_fitness[compare_idx];
             sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+
             if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
                 current_param = mapping_param;
                 current_fitness = mapping_fitness;
@@ -885,6 +896,8 @@ namespace cudaprocess{
             mapping_param = sm_sorted_param[compare_idx];
             mapping_fitness = sm_sorted_fitness[compare_idx];
             sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+
             if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
                 current_param = mapping_param;
                 current_fitness = mapping_fitness;
@@ -898,10 +911,13 @@ namespace cudaprocess{
             mapping_param = sm_sorted_param[compare_idx];
             mapping_fitness = sm_sorted_fitness[compare_idx];
             sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+
             if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
                 current_param = mapping_param;
                 current_fitness = mapping_fitness;
             }
+            __syncthreads();
 
             // 8. 最后的warp内部清理
             BitonicWarpCompare(current_param, current_fitness, 16);
@@ -910,6 +926,96 @@ namespace cudaprocess{
             BitonicWarpCompare(current_param, current_fitness, 2);
             BitonicWarpCompare(current_param, current_fitness, 1);
         }
+        if(T >= 1024){
+            // 1. 先存储当前值到共享内存
+            sm_sorted_param[sol_id] = current_param;
+            sm_sorted_fitness[sol_id] = current_fitness;
+            __syncthreads();
+    
+            // 2. 进行512元素的比较
+            compare_idx = sol_id ^ 1023;
+            mapping_param = sm_sorted_param[compare_idx];
+            mapping_fitness = sm_sorted_fitness[compare_idx];
+            sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+    
+            // 3. 更新结果到共享内存
+            if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
+                current_fitness = mapping_fitness;
+                current_param = mapping_param;
+                sm_sorted_param[sol_id] = current_param;
+                sm_sorted_fitness[sol_id] = current_fitness;
+            }
+            __syncthreads();
+    
+            // 4. 进行256元素比较
+            compare_idx = sol_id ^ 256;
+            mapping_param = sm_sorted_param[compare_idx];
+            mapping_fitness = sm_sorted_fitness[compare_idx];
+            sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+    
+            if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
+                current_param = mapping_param;
+                current_fitness = mapping_fitness;
+                sm_sorted_param[sol_id] = current_param;
+                sm_sorted_fitness[sol_id] = current_fitness;
+            }
+            __syncthreads();
+    
+            // 5. 进行128元素比较
+            compare_idx = sol_id ^ 128;
+            mapping_param = sm_sorted_param[compare_idx];
+            mapping_fitness = sm_sorted_fitness[compare_idx];
+            sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+    
+            if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
+                current_param = mapping_param;
+                current_fitness = mapping_fitness;
+                sm_sorted_param[sol_id] = current_param;
+                sm_sorted_fitness[sol_id] = current_fitness;
+            }
+            __syncthreads();
+    
+            // 6. 进行64元素比较
+            compare_idx = sol_id ^ 64;
+            mapping_param = sm_sorted_param[compare_idx];
+            mapping_fitness = sm_sorted_fitness[compare_idx];
+            sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+    
+            if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
+                current_param = mapping_param;
+                current_fitness = mapping_fitness;
+                sm_sorted_param[sol_id] = current_param;
+                sm_sorted_fitness[sol_id] = current_fitness;
+            }
+            __syncthreads();
+    
+            // 7. 进行32元素比较
+            compare_idx = sol_id ^ 32;
+            mapping_param = sm_sorted_param[compare_idx];
+            mapping_fitness = sm_sorted_fitness[compare_idx];
+            sortOrder = (threadIdx.x > compare_idx) ? -1.f : 1.f;
+            __syncthreads();
+    
+            if(sortOrder * (mapping_fitness - current_fitness) < 0.f){
+                current_param = mapping_param;
+                current_fitness = mapping_fitness;
+                sm_sorted_param[sol_id] = current_param;
+                sm_sorted_fitness[sol_id] = current_fitness;
+            }
+            __syncthreads();
+    
+            // 8. 最后的warp内部清理
+            BitonicWarpCompare(current_param, current_fitness, 16);
+            BitonicWarpCompare(current_param, current_fitness, 8);
+            BitonicWarpCompare(current_param, current_fitness, 4);
+            BitonicWarpCompare(current_param, current_fitness, 2);
+            BitonicWarpCompare(current_param, current_fitness, 1);
+        }
+        
         if (blockIdx.x < CUDA_PARAM_MAX_SIZE){
             all_param[(sol_id + bias) * CUDA_PARAM_MAX_SIZE + param_id] = current_param;
         }
@@ -1215,6 +1321,12 @@ namespace cudaprocess{
             }
         }
         __syncthreads();
+
+        // If using thrust, don't need to use Bitonic
+        SortOldParamBasedBitonic(old_param->all_param, old_param->fitness);
+        // __syncthreads();
+        SortOldParamBasedBitonic(old_param->all_param, old_param->fitness, CUDA_SOLVER_POP_SIZE);
+
     }
 
     template <int T = CUDA_SOLVER_POP_SIZE>

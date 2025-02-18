@@ -150,13 +150,21 @@ namespace footstep{
             // calculate the region
             int current_region = -1;
             for(int i = 0; i < num_regions; ++i){
-                if(current_state[0] >= all_region[i].x && current_state[0] <= all_region[i].y && current_state[1] >= all_region[i].z && current_state[1] <= all_region[i].w){
+                // if(current_state[0] + cur_individual_param[0] >= all_region2[i].x && current_state[0] + cur_individual_param[0] <= all_region2[i].y && current_state[1] + cur_individual_param[1] >= all_region2[i].z && current_state[1] + cur_individual_param[1] <= all_region2[i].w){
+                //     current_region = i;
+                //     break;
+                // }
+                if(current_state[0] + cur_individual_param[0] >= all_region[i].x && current_state[0] + cur_individual_param[0] <= all_region[i].y && current_state[1] + cur_individual_param[1] >= all_region[i].z && current_state[1] + cur_individual_param[1] <= all_region[i].w){
                     current_region = i;
                     break;
                 }
             }
 
             if(current_region == -1)    cs_constraint_score += pos_penalty;
+
+            if(sol_score != nullptr && cs_constraint_score != 0){
+                printf("current step: %d constraint from region:%f\n", threadIdx.x, cs_constraint_score);
+            }
 
             // ##########################
             // speed and theta constraint
@@ -171,10 +179,6 @@ namespace footstep{
             cs_constraint_score += fabsf(current_state[2]) > speed_x_ub ? state_penalty * fabsf(current_state[2]) : 0.0f;
             cs_constraint_score += fabsf(current_state[3]) > speed_y_ub ? state_penalty * fabsf(current_state[3]): 0.0f;
             cs_constraint_score += fabsf(current_state[4]) > theta_ub ? state_penalty * fabsf(current_state[4]): 0.0f;
-
-            if(sol_score != nullptr && cs_constraint_score != 0){
-                printf("constraint from state:%f\n",cs_constraint_score);
-            }
 
             // ##########################
             // control constraint
@@ -237,29 +241,6 @@ namespace footstep{
             if(sol_score != nullptr && (cs_constraint_score - before_foothold) != 0){
                 printf("current step: %d constraint from foothold:%f\n", threadIdx.x, cs_constraint_score - before_foothold);
             }
-
-            // const float2 *cur_circle = (threadIdx.x & 1 != first_step_num) ? circles2 : circles;
-
-            // // I think should not use last state. The correct one is next state I think
-            // float *last_state = nullptr;
-            // if(threadIdx.x == 0){
-            //     last_state = init_state;
-            // }
-            // else{
-            //     last_state = cluster_state + blockIdx.x * N * state_dims + (threadIdx.x - 1) * state_dims;
-            // }
-
-            // // equation 3 and 4 in https://ieeexplore.ieee.org/document/7041373
-            // for(int i = 0; i < circle_num; ++i){
-            //     if (fabsf(cur_individual_param[0] - (last_state[0] + __cosf(last_state[4]) * cur_circle[i].x - __sinf(last_state[4]) * cur_circle[i].y)) > radii[i]){
-            //         cs_constraint_score += state_penalty;
-            //         break;
-            //     }
-            //     else if (fabsf(current_state[1] - (last_state[1] + __sinf(last_state[4]) * cur_circle[i].x - __cosf(last_state[4]) * cur_circle[i].y)) > radii[i]){
-            //         cs_constraint_score += state_penalty;
-            //         break;
-            //     }
-            // }
 
             // ##########################
             // objective function

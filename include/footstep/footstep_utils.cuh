@@ -48,10 +48,16 @@ const float theta_ub = 5.0f * PI / 4.0f;
 constexpr int num_constraints = 12;     // n_c in paper
 constexpr int state_dims = 5;           // n_x in paper: x, y, dot x, dot y, theta, 
 constexpr int control_dims = 3;         // n_u in paper: u_x, u_y, u_theta
-constexpr int num_regions = 7;          // n_delta in paper: 7 differents regions
 
+constexpr float scale = 1.0f;   // for environment2
+
+constexpr int num_regions = 7;          // n_delta in paper: 7 differents regions (if environment2 we have 14 regions)
 // x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
 extern __constant__ float4 all_region[num_regions];
+
+// constexpr int num_regions = 14;          // n_delta in paper: 7 differents regions (if environment2 we have 14 regions)
+// // Environment2 x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
+// extern __constant__ float4 all_region2[num_regions];
 
 extern __constant__ float4 region1;
 extern __constant__ float4 region2;
@@ -169,7 +175,7 @@ extern float *h_sol_score;
 constexpr float pos_penalty = 50000.0f;
 constexpr float state_penalty = 500.0f;
 constexpr float control_penalty = 200.0f;
-constexpr float velocity_penalty = 200.0f;
+constexpr float velocity_penalty = 10.0f;
 constexpr float foothold_penalty = 200.0f;
 
 // the weight of the distance between N position and target position
