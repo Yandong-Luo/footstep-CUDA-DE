@@ -249,3 +249,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.15] - 2025-2-18
 ### Changed
 - Yandong Luo: Fixed some race in bitonic sorting method.
+
+## [0.3.16] - 2025-2-22
+### Changed
+- Yandong Luo: Implement Bezier curve to decode the whole trajectory. Still testing velocity of bezier curve. The velocity part stills wrong. But the position is correct.

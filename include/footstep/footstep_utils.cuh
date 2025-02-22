@@ -55,6 +55,8 @@ constexpr int num_regions = 7;          // n_delta in paper: 7 differents region
 // x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
 extern __constant__ float4 all_region[num_regions];
 
+typedef cudaprocess::CudaVector<float, state_dims> StateVector;
+
 // constexpr int num_regions = 14;          // n_delta in paper: 7 differents regions (if environment2 we have 14 regions)
 // // Environment2 x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
 // extern __constant__ float4 all_region2[num_regions];

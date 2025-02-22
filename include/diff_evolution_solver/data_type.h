@@ -15,7 +15,7 @@ enum CudaEvolveType { CON = 0, INT = 1, GLOBAL = 2 };
 template <typename T, int size>
 struct CudaVector {
   T data[size];
-  int len{0};
+  int len{size};
 };
 
 struct Problem{
