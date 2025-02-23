@@ -138,40 +138,52 @@ int main() {
     CHECK_CUDA_ERROR(cudaMemcpy(cuda_results.data(), d_results, sizeof(float) * OUTPUT_DIMS * (NUM_STEPS + 1), cudaMemcpyDeviceToHost));
 
     // 打印 CUDA 贝塞尔曲线上的点
-    printf("\n%-5s %-15s %-15s %-15s %-15s %-15s\n", "t", "X", "Y", "Vx", "Vy", "Theta");
-    printf("-----------------------------------------------------------------------\n");
+    // printf("\n%-5s %-15s %-15s %-15s %-15s %-15s\n", "t", "X", "Y", "Vx", "Vy", "Theta");
+    // printf("-----------------------------------------------------------------------\n");
+
+    // Print points and velocities along the curve
+    std::cout << "Points and Velocities along the curve:" << std::endl;
+    std::cout << std::setw(10) << "Step" 
+              << std::setw(10) << "t" 
+              << std::setw(15) << "X" 
+              << std::setw(15) << "Y" 
+              << std::setw(15) << "Vx" 
+              << std::setw(15) << "Vy" 
+              << std::endl;
+    
+    std::cout << std::string(85, '-') << std::endl;
     
     for (int i = 0; i <= NUM_STEPS; ++i) {
         float t = static_cast<float>(i) / NUM_STEPS;
         if(OUTPUT_DIMS == 5){
-            printf("%.3f %-15.6f %-15.6f %-15.6f %-15.6f %-15.6f\n", 
-                t, 
-                cuda_results[i * 5],     // x
-                cuda_results[i * 5 + 1], // y
-                cuda_results[i * 5 + 2], // vx
-                cuda_results[i * 5 + 3], // vy
-                cuda_results[i * 5 + 4]  // theta
-            );
+            std::cout << std::fixed << std::setprecision(4)
+                    << std::setw(10) << i
+                    << std::setw(10) << t
+                    << std::setw(15) << cuda_results[i * 5]
+                    << std::setw(15) << cuda_results[i * 5 + 1]
+                    << std::setw(15) << cuda_results[i * 5 + 2]
+                    << std::setw(15) << cuda_results[i * 5 + 3]
+                    << std::endl;
         }
         else if(OUTPUT_DIMS == 2){
-            printf("%.3f %-15.6f %-15.6f \n", 
-                t, 
-                cuda_results[i * OUTPUT_DIMS],     // x
-                cuda_results[i * OUTPUT_DIMS + 1] // y
-                // cuda_results[i * OUTPUT_DIMS + 2], // vx
-                // cuda_results[i * OUTPUT_DIMS + 3], // vy
-                // cuda_results[i * OUTPUT_DIMS + 4]  // theta
-            );
+            std::cout << std::fixed << std::setprecision(4)
+                    << std::setw(10) << i
+                    << std::setw(10) << t
+                    << std::setw(15) << cuda_results[i * 5]
+                    << std::setw(15) << cuda_results[i * 5 + 1]
+                    // << std::setw(15) << cuda_results[i * 5 + 2]
+                    // << std::setw(15) << cuda_results[i * 5 + 3]
+                    << std::endl;
         }
         else{
-            printf("%.3f %-15.6f \n", 
-                t, 
-                cuda_results[i * OUTPUT_DIMS]     // x
-                // cuda_results[i * OUTPUT_DIMS + 1], // y
-                // cuda_results[i * OUTPUT_DIMS + 2], // vx
-                // cuda_results[i * OUTPUT_DIMS + 3], // vy
-                // cuda_results[i * OUTPUT_DIMS + 4]  // theta
-            );
+            std::cout << std::fixed << std::setprecision(4)
+                    << std::setw(10) << i
+                    << std::setw(10) << t
+                    << std::setw(15) << cuda_results[i * 5]
+                    // << std::setw(15) << cuda_results[i * 5 + 1]
+                    // << std::setw(15) << cuda_results[i * 5 + 2]
+                    // << std::setw(15) << cuda_results[i * 5 + 3]
+                    << std::endl;
         }
     }
 

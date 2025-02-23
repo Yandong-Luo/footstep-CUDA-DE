@@ -33,6 +33,30 @@ __device__ __forceinline__ float2 PolarVelocityToCartesian(float2 position, floa
 	return make_float2(Vx, Vy);
 }
 
+// __device__ __forceinline__ void GetVec(BezierCurve *curve, CudaBezierParam *out, float t, bool convert = false) {
+// 	float t_powers[BEZIER_SIZE], one_minus_t_powers[BEZIER_SIZE];
+// 	t_powers[0] = one_minus_t_powers[0] = 1;
+// 	for (int i{1}; i < BEZIER_SIZE; ++i) {
+// 		t_powers[i] = t_powers[i - 1] * t;
+// 		one_minus_t_powers[i] = one_minus_t_powers[i - 1] * (1.f - t);
+// 	}
+// 	for (int i = 0; i < BEZIER_SIZE; ++i) {
+// 		out->data[i] = curve->binomial_coeff_[i] * t_powers[i] * one_minus_t_powers[BEZIER_SIZE - 1 - i];
+// 	}
+// }
+
+__device__ __forceinline__ void PolarAllState2Cartesian(float2 position, float2 velocity, float *state, int step_idx){
+    float radius = position.x, theta = position.y;
+    float v_r = velocity.x, v_theta = velocity.y;
+	int idx = step_idx * 6;
+	state[idx] = radius * __cosf(theta);
+    state[idx + 1] = radius * __sinf(theta);
+    state[idx + 2] = v_r * __cosf(theta) - radius * v_theta * __sinf(theta);
+    state[idx + 3] = v_r * __sinf(theta) + radius * v_theta * __cosf(theta);
+    state[idx + 4] = theta;
+	state[idx + 5] = radius;
+}
+
 __global__ void PrepareBinomial(BezierCurve* curve) {
 	float t_powers[BEZIER_SIZE], one_minus_t_powers[BEZIER_SIZE];	// record t^j, (1-t)^{n-j}
 
@@ -182,7 +206,7 @@ __device__ __forceinline__ float2 GetBezierPositionVelocity(BezierCurve *curve, 
 	return convert ? PolarVelocityToCartesian(position, velocity) : velocity; 
 }
 
-__device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float *params, int step_idx, int l, int r, int ll, int rr, float *state){
+__device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float *params, int step_idx, int l, int r, int ll, int rr, float *state, bool convert = false){
     // 计算实际的 t 值 (0 到 1 之间)
     float t = step_idx * (1.0f / NUM_STEPS);
     
@@ -223,16 +247,22 @@ __device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float
 		}
     }
 
-    // 存储状态
-    int idx = step_idx * 5;
-    state[idx] = position.x;
-    state[idx + 1] = position.y;
-    state[idx + 2] = velocity.x;
-    state[idx + 3] = velocity.y;
-    state[idx + 4] = 0.0;
+	if(!convert){
+		// 存储状态
+		int idx = step_idx * 6;
+		state[idx] = position.x;
+		state[idx + 1] = position.y;
+		state[idx + 2] = velocity.x;
+		state[idx + 3] = velocity.y;
+		state[idx + 4] = 0.0;		// theta
+		state[idx + 5] = 0.0;		// radius for polar coordinate system
+	}
+    else{
+		PolarAllState2Cartesian(position, velocity, state, step_idx);
+	}
 }
 
-__device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *curve, float *params, int t, int l, int r, int ll, int rr, float *state){
+__device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *curve, float *params, int t, int l, int r, int ll, int rr, float *state, bool convert){
 
     float2 position{0.0f, 0.0f};
 	float2 velocity{0.0f, 0.0f};
@@ -254,14 +284,19 @@ __device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *c
 		}
 	}
 
-    int idx = t * 5; // 每个时间步有5个状态值
-    
-    state[idx] = position.x;
-    state[idx + 1] = position.y;
-    state[idx + 2] = velocity.x;
-    state[idx + 3] = velocity.y;
-    state[idx + 4] = 0.0; // 或者根据需要设置角度
-	// return PolarAllState2Cartesian(position, velocity, state);
+    if(!convert){
+		// 存储状态
+		int idx = t * 6;
+		state[idx] = position.x;
+		state[idx + 1] = position.y;
+		state[idx + 2] = velocity.x;
+		state[idx + 3] = velocity.y;
+		state[idx + 4] = 0.0;		// theta
+		state[idx + 5] = 0.0;		// radius for polar coordinate system
+	}
+    else{
+		PolarAllState2Cartesian(position, velocity, state, t);
+	}
 }
 
 __device__ __forceinline__ float2 GetBezierPositionVelocityBasedLookup(BezierCurve *curve, float *params, int t, int l, int r, int ll, int rr, bool convert = false) {
@@ -314,29 +349,6 @@ __device__ __forceinline__ float GetBezierAtBasedLookup(BezierCurve *curve, floa
 	}
 	return ret;
 }
-
-// __device__ __forceinline__ void GetVec(BezierCurve *curve, CudaBezierParam *out, float t, bool convert = false) {
-// 	float t_powers[BEZIER_SIZE], one_minus_t_powers[BEZIER_SIZE];
-// 	t_powers[0] = one_minus_t_powers[0] = 1;
-// 	for (int i{1}; i < BEZIER_SIZE; ++i) {
-// 		t_powers[i] = t_powers[i - 1] * t;
-// 		one_minus_t_powers[i] = one_minus_t_powers[i - 1] * (1.f - t);
-// 	}
-// 	for (int i = 0; i < BEZIER_SIZE; ++i) {
-// 		out->data[i] = curve->binomial_coeff_[i] * t_powers[i] * one_minus_t_powers[BEZIER_SIZE - 1 - i];
-// 	}
-// }
-
-// __device__ __forceinline__ void PolarAllState2Cartesian(float2 position, float2 velocity, footstep::StateVector *state){
-//     float radius = position.x, theta = position.y;
-//     float v_r = velocity.x, v_theta = velocity.y;
-
-// 	state->data[0] = radius * __cosf(theta);
-//     state->data[1] = radius * __sinf(theta);
-//     state->data[2] = v_r * __cosf(theta) - radius * v_theta * __sinf(theta);
-//     state->data[3] = v_r * __sinf(theta) + radius * v_theta * __cosf(theta);
-//     state->data[4] = theta;
-// }
 
 struct BezierCurveManager {
     BezierCurve *curve_;
