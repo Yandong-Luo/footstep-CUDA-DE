@@ -253,3 +253,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.16] - 2025-2-22
 ### Changed
 - Yandong Luo: Implement Bezier curve to decode the whole trajectory. Still testing velocity of bezier curve. The velocity part stills wrong. But the position is correct.
+
+## [0.3.17] - 2025-2-22
+### Changed
+- Yandong Luo: The Bezier curve in the Cartesian coordinate system has been fully verified. Continous to verify the bezier curve in polar coordinate system.

@@ -9,6 +9,8 @@
 #define BEZIER_SIZE 7
 #define NUM_STEPS 30
 
+#define OUTPUT_DIMS 5
+
 // 初始状态和目标状态
 const float init_state[5] = {0.29357406, 0.29125562, -0.01193462, -0.01774755, 1.58432257};
 const float goal_state[5] = {1.5, 2.8, 0, 0, 0};
@@ -67,16 +69,20 @@ void GenerateImprovedControlPoints(float* params,
 // CUDA 核函数
 __global__ void CUDA_BezierPosition(BezierCurve* d_curve, float* d_params, float* d_results) {
     int t_idx = threadIdx.x;
+
+    // // 使用查表法计算贝塞尔曲线上的点
+    // float result = GetBezierAt(d_curve, d_params, t_idx, 0, BEZIER_SIZE-1);
+    // // 存储结果
+    // d_results[t_idx] = result;
     
-    // 使用查表法计算贝塞尔曲线上的点
-    // float2 pos = GetBezierPositionBasedLookup(d_curve, d_params, t_idx, 0, BEZIER_SIZE-1, 
+    // // 使用查表法计算贝塞尔曲线上的点
+    // float2 pos = GetBezierPosition(d_curve, d_params, t_idx, 0, BEZIER_SIZE-1, 
     //                                          BEZIER_SIZE, 2*BEZIER_SIZE-1, false);
-    
     // // 存储结果
     // d_results[2 * t_idx] = pos.x;
     // d_results[2 * t_idx + 1] = pos.y;
 
-    GetTrajStateFromBezierBasedLookup(d_curve, d_params, t_idx, 0, BEZIER_SIZE-1, 
+    GetTrajStateFromBezier(d_curve, d_params, t_idx, 0, BEZIER_SIZE-1, 
                                                  BEZIER_SIZE, 2*BEZIER_SIZE-1, d_results);
 }
 
@@ -110,7 +116,9 @@ int main() {
     float* d_results;
 
     CHECK_CUDA_ERROR(cudaMalloc(&d_params, sizeof(float) * 2 * BEZIER_SIZE));
-    CHECK_CUDA_ERROR(cudaMalloc(&d_results, sizeof(float) * 5*(NUM_STEPS + 1)));
+    CHECK_CUDA_ERROR(cudaMalloc(&d_results, sizeof(float) * OUTPUT_DIMS*(NUM_STEPS + 1)));
+
+    printf("Finish malloc \n");
 
     std::shared_ptr<BezierCurveManager> bezier_curve_manager_ = std::make_shared<BezierCurveManager>();
     
@@ -126,8 +134,8 @@ int main() {
     CHECK_CUDA_ERROR(cudaDeviceSynchronize());
 
     // 复制结果回主机
-    std::vector<float> cuda_results(5 * (NUM_STEPS + 1));
-    CHECK_CUDA_ERROR(cudaMemcpy(cuda_results.data(), d_results, sizeof(float) * 5 * (NUM_STEPS + 1), cudaMemcpyDeviceToHost));
+    std::vector<float> cuda_results(OUTPUT_DIMS * (NUM_STEPS + 1));
+    CHECK_CUDA_ERROR(cudaMemcpy(cuda_results.data(), d_results, sizeof(float) * OUTPUT_DIMS * (NUM_STEPS + 1), cudaMemcpyDeviceToHost));
 
     // 打印 CUDA 贝塞尔曲线上的点
     printf("\n%-5s %-15s %-15s %-15s %-15s %-15s\n", "t", "X", "Y", "Vx", "Vy", "Theta");
@@ -135,14 +143,36 @@ int main() {
     
     for (int i = 0; i <= NUM_STEPS; ++i) {
         float t = static_cast<float>(i) / NUM_STEPS;
-        printf("%.3f %-15.6f %-15.6f %-15.6f %-15.6f %-15.6f\n", 
-               t, 
-               cuda_results[i * 5],     // x
-               cuda_results[i * 5 + 1], // y
-               cuda_results[i * 5 + 2], // vx
-               cuda_results[i * 5 + 3], // vy
-               cuda_results[i * 5 + 4]  // theta
-        );
+        if(OUTPUT_DIMS == 5){
+            printf("%.3f %-15.6f %-15.6f %-15.6f %-15.6f %-15.6f\n", 
+                t, 
+                cuda_results[i * 5],     // x
+                cuda_results[i * 5 + 1], // y
+                cuda_results[i * 5 + 2], // vx
+                cuda_results[i * 5 + 3], // vy
+                cuda_results[i * 5 + 4]  // theta
+            );
+        }
+        else if(OUTPUT_DIMS == 2){
+            printf("%.3f %-15.6f %-15.6f \n", 
+                t, 
+                cuda_results[i * OUTPUT_DIMS],     // x
+                cuda_results[i * OUTPUT_DIMS + 1] // y
+                // cuda_results[i * OUTPUT_DIMS + 2], // vx
+                // cuda_results[i * OUTPUT_DIMS + 3], // vy
+                // cuda_results[i * OUTPUT_DIMS + 4]  // theta
+            );
+        }
+        else{
+            printf("%.3f %-15.6f \n", 
+                t, 
+                cuda_results[i * OUTPUT_DIMS]     // x
+                // cuda_results[i * OUTPUT_DIMS + 1], // y
+                // cuda_results[i * OUTPUT_DIMS + 2], // vx
+                // cuda_results[i * OUTPUT_DIMS + 3], // vy
+                // cuda_results[i * OUTPUT_DIMS + 4]  // theta
+            );
+        }
     }
 
     // 释放 CUDA 资源
