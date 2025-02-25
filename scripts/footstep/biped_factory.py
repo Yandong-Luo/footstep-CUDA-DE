@@ -184,7 +184,7 @@ solver.init_solver(0)
 
 solve_start = time.time()
 
-solution = solver.Solve()
+# solution = solver.Solve()
 
 solver_time = time.time() - solve_start
 print("solver time:", solver_time)

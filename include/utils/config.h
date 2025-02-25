@@ -7,13 +7,13 @@
 #define DEBUG_PRINT_INIT_SOLVER_FLAG false
 #define DEBUG_PRINT_WARM_START_FLAG false
 #define DEBUG_ENABLE_NVTX false
-#define DEBUG_FOOTSTEP false
+#define DEBUG_FOOTSTEP true
 
 #define HOST_DEVICE __device__ __forceinline__ __host__
-#define CUDA_SOLVER_POP_SIZE 1024
+#define CUDA_SOLVER_POP_SIZE 64
 #define REGENRATE_RANDOM_FREQUENCE 1000
 
-#define CUDA_PARAM_MAX_SIZE 64
+#define CUDA_PARAM_MAX_SIZE 32
 // #define CUDA_SOLVER_POP_SIZE 128
 #define CUDA_MAX_FLOAT 1e30
 #define CUDA_MAX_TASKS 1
@@ -24,5 +24,11 @@
 
 #define INT_VARIABLE 0
 #define CONTINUOUS_VARIABLE 1
+
+
+// **************Bezier Curve***************
+#define BEZIER_SIZE 7   // 6 + 1
+#define CURVE_NUM_STEPS (footstep::N + 1)
+#define NUM_FIXED_CP 4	// the number of fix control point, P_0, P_1, P_{n-1}, P_n
 
 #endif

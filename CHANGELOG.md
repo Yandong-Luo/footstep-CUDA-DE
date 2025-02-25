@@ -258,6 +258,10 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Yandong Luo: The Bezier curve in the Cartesian coordinate system has been fully verified. Continous to verify the bezier curve in polar coordinate system.
 
-## [0.3.17] - 2025-2-23
+## [0.3.18] - 2025-2-23
 ### Changed
 - Yandong Luo: The Bezier curve in the Polar coordinate system has been fully verified. Continous to finish CUDA-DE + Bazier curve
+
+## [0.3.19] - 2025-2-23
+### Changed
+- Yandong Luo: Finish and verify the decode function DecodeParameters2State().

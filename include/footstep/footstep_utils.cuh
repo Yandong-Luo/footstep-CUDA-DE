@@ -18,7 +18,7 @@
 namespace footstep{
 
 // CONSTANT
-constexpr int N = 20;                           // prediction step
+constexpr int N = 30;                           // prediction step
 constexpr float T = 0.4f;           // Delta t
 
 constexpr float legLength = 1.0f;
@@ -35,6 +35,11 @@ constexpr float uy_lb = -0.25;
 constexpr float uy_ub = 0.25;
 const float utheta_lb = -PI / 12.0f;
 const float utheta_ub = PI / 12.0f;
+
+const float x_lb = 0.0f;
+const float x_ub = 3.0f;
+const float y_lb = 0.0f;
+const float y_ub = 3.0f;
 
 // state boundary
 constexpr float speed_x_lb = -0.5;
@@ -55,7 +60,7 @@ constexpr int num_regions = 7;          // n_delta in paper: 7 differents region
 // x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
 extern __constant__ float4 all_region[num_regions];
 
-typedef cudaprocess::CudaVector<float, state_dims> StateVector;
+// typedef cudaprocess::CudaVector<float, state_dims> StateVector;
 
 // constexpr int num_regions = 14;          // n_delta in paper: 7 differents regions (if environment2 we have 14 regions)
 // // Environment2 x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
@@ -80,6 +85,7 @@ constexpr int first_step_num = left_stand_first? 0 : 1;
 
 constexpr int row_init_state = 5, col_init_state = 1;
 extern __constant__ float init_state[5];
+extern __constant__ float goal_state[5];
 
 // circle center
 constexpr int foothold_circle_num = 2;
@@ -189,7 +195,7 @@ constexpr float target_weight = 200.0f;
 
 extern float *d_cluster_N_state;
 
-extern float h_cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims];
+extern float *h_cluster_N_state;
 
 extern float h_cluster_param[CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE];
 }

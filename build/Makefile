@@ -166,6 +166,30 @@ src/cart_pole/cart_pole_utils.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.s
 .PHONY : src/cart_pole/cart_pole_utils.cu.s
 
+src/curve/bezier_curve.o: src/curve/bezier_curve.cu.o
+.PHONY : src/curve/bezier_curve.o
+
+# target to build an object file
+src/curve/bezier_curve.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o
+.PHONY : src/curve/bezier_curve.cu.o
+
+src/curve/bezier_curve.i: src/curve/bezier_curve.cu.i
+.PHONY : src/curve/bezier_curve.i
+
+# target to preprocess a source file
+src/curve/bezier_curve.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.i
+.PHONY : src/curve/bezier_curve.cu.i
+
+src/curve/bezier_curve.s: src/curve/bezier_curve.cu.s
+.PHONY : src/curve/bezier_curve.s
+
+# target to generate assembly for a file
+src/curve/bezier_curve.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.s
+.PHONY : src/curve/bezier_curve.cu.s
+
 src/diff_evolution_solver/random_manager.o: src/diff_evolution_solver/random_manager.cu.o
 .PHONY : src/diff_evolution_solver/random_manager.o
 
@@ -275,6 +299,9 @@ help:
 	@echo "... src/cart_pole/cart_pole_utils.o"
 	@echo "... src/cart_pole/cart_pole_utils.i"
 	@echo "... src/cart_pole/cart_pole_utils.s"
+	@echo "... src/curve/bezier_curve.o"
+	@echo "... src/curve/bezier_curve.i"
+	@echo "... src/curve/bezier_curve.s"
 	@echo "... src/diff_evolution_solver/random_manager.o"
 	@echo "... src/diff_evolution_solver/random_manager.i"
 	@echo "... src/diff_evolution_solver/random_manager.s"

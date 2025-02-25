@@ -20,6 +20,7 @@
 #include "diff_evolution_solver/converter.cuh"
 // #include "diff_evolution_solver/random_center.cuh"
 #include "diff_evolution_solver/random_manager.cuh"
+#include "curve/bezier_curve.cuh"
 
 namespace cudaprocess{
 
@@ -59,6 +60,8 @@ namespace cudaprocess{
             CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>* old_cluster_data_;       // record current sol, delete sol, replaced sol
             CudaParamClusterData<CUDA_SOLVER_POP_SIZE>* host_new_cluster_data_;
             CudaParamClusterData<CUDA_SOLVER_POP_SIZE*3>* host_old_cluster_data_;
+
+            std::shared_ptr<bezier_curve::BezierCurveManager> bezier_curve_manager_;
 
             // CudaRandomManager *random_center_;
             std::shared_ptr<CudaRandomManager> random_center_;

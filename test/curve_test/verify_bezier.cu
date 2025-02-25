@@ -4,7 +4,7 @@
 #include <cuda_runtime.h>
 #include <memory>
 #include <iomanip>
-#include "cuda_bezier.cuh"
+#include "test_cuda_bezier.cuh"
 
 #define BEZIER_SIZE 7
 #define NUM_STEPS 30

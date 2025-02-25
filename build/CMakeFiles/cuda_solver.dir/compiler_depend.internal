@@ -102,6 +102,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o
  /home/chris/anaconda3/envs/lab_env/include/python3.9/unicodeobject.h
  /home/chris/anaconda3/envs/lab_env/include/python3.9/warnings.h
  /home/chris/anaconda3/envs/lab_env/include/python3.9/weakrefobject.h
+ /home/chris/footstep-CUDA-DE/include/curve/bezier_curve.cuh
  /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/converter.cuh
  /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h
  /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh

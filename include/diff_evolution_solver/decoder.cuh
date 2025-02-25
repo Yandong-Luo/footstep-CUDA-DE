@@ -8,6 +8,7 @@
 #include <sys/time.h>
 #include <curand_kernel.h>
 #include "data_type.h"
+#include "curve/bezier_curve.cuh"
 
 namespace cudaprocess{
     template<int T = CUDA_SOLVER_POP_SIZE>
@@ -112,6 +113,59 @@ namespace cudaprocess{
         // old_cluster_data->constraint_score[idx] = CUDA_MAX_FLOAT;
 
         // printf("Finish the initialization of thread id:%d\n", idx);
+    }
+
+    template<int T = CUDA_SOLVER_POP_SIZE>
+    __global__ void DecodeParameters2State(CudaParamClusterData<T>* new_cluster_data, bezier_curve::BezierCurve* curve, float *cluster_state){
+        int step_id = blockIdx.x;
+        int sol_id = threadIdx.x;
+
+        if(step_id >= CURVE_NUM_STEPS)  return;
+        if(sol_id >= CUDA_SOLVER_POP_SIZE) return;
+        
+        // construct the complete bezier curve param 
+        float curve_param[2 * BEZIER_SIZE];
+        // float *curve_param_y;
+        int construct_idx = 0;
+        float *current_sol_param = new_cluster_data->all_param + sol_id * CUDA_PARAM_MAX_SIZE;
+        int bias = new_cluster_data->dims / 2;
+
+        // if (blockIdx.x == 0){
+        //     printf("cluster param: ");
+        //     for(int i = 0; i < new_cluster_data->dims; ++i){
+        //         printf("%f ",current_sol_param[i]);
+        //     }
+        //     printf("\n");
+        // }
+        for(int i = 0, j = 0; i < BEZIER_SIZE; ++i){
+            if(i == curve->fixed_point_idx[j]){
+                curve_param[i] = curve->control_points[i].x;
+                curve_param[i + BEZIER_SIZE] = curve->control_points[i].y;
+                j++;
+                // continue;
+            }
+            else{
+                // curve_param[i] = current_sol_param[i-j];
+                // curve_param[i + BEZIER_SIZE] = current_sol_param[i-j + bias];
+                curve_param[i] = curve->control_points[i].x = current_sol_param[i-j];
+                curve_param[i + BEZIER_SIZE] = curve->control_points[i].y = current_sol_param[i-j + bias];
+            }
+        }
+        __syncthreads();
+        if(blockIdx.x == 0 && threadIdx.x == 0){
+            for(int i = 0; i < BEZIER_SIZE; ++i){
+                printf("Point %d and its' value (%f, %f) pointer form:(%f, %f)\n",i, curve->control_points[i].x, curve->control_points[i].y, curve_param[i], curve_param[i+BEZIER_SIZE]);
+            }
+        }
+        
+        float *current_state = cluster_state + sol_id * footstep::state_dims * CURVE_NUM_STEPS + step_id * footstep::state_dims;
+        // printf("block:%d, start idx:%d\n", blockIdx.x ,sol_id * footstep::state_dims * (footstep::N + 1) + step_id * footstep::state_dims);
+        bezier_curve::GetTrajStateFromBezierBasedLookup(curve, curve_param, step_id, 0, BEZIER_SIZE-1, BEZIER_SIZE, 2*BEZIER_SIZE-1, current_state);
+        // __syncthreads();
+
+        // printf("step %d and its' state (%f, %f, %f, %f, %f)\n",blockIdx.x, current_state[0], current_state[1], current_state[2], current_state[3], current_state[4]);
+
+        // printf("step %d and its' state (%f, %f, %f, %f, %f)\n",blockIdx.x, current_state[0], current_state[1], current_state[2], current_state[3], current_state[4]);
     }
 }
 #endif

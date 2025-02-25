@@ -866,4 +866,5 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: \
  /usr/local/cuda-11.4/targets/x86_64-linux/include/curand_discrete2.h \
  /usr/include/c++/10/random /usr/include/c++/10/bits/random.h \
  /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h \
- /usr/include/c++/10/bits/random.tcc
+ /usr/include/c++/10/bits/random.tcc \
+ /home/chris/footstep-CUDA-DE/include/curve/bezier_curve.cuh

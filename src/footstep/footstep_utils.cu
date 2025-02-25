@@ -1,7 +1,8 @@
 #include "footstep/footstep_utils.cuh"
 namespace footstep{
     __constant__ float init_state[5] = {0.29357406,  0.29125562, -0.01193462, -0.01774755,  1.58432257};
-    // __constant__ float init_state[5] = {0.05,  0.5, -0.01193462, -0.01774755,  1.57};
+    __constant__ float2 target_pos = {1.5f, 2.8f};
+    __constant__ float goal_state[5] = {1.5f,  2.8f, 0.0f, 0.0f, 0.0f};
 
     __constant__ float4 region1 = {0, 1, 0, 3};
     __constant__ float4 region2 = {1, 2, 0, 1};
@@ -148,7 +149,7 @@ namespace footstep{
         PI / 12.0f          // u_theta lower boundary
     };
 
-    __constant__ float2 target_pos = {1.5f, 2.8f};
+    
     // __constant__ float2 target_pos = {2.85f, 0.5f};
     // __constant__ float Inx[16] = {
     //     1.0f, 0.0f, 0.0f, 0.0f,
@@ -157,7 +158,7 @@ namespace footstep{
     //     0.0f, 0.0f, 0.0f, 1.0f
     // };
     // __managed__ float cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims] = {0.0f};
-    float h_cluster_N_state[N * CUDA_SOLVER_POP_SIZE * state_dims] = {0.0f};
+    float *h_cluster_N_state = nullptr;
     float h_cluster_param[CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE] = {0.0f};
     float *d_cluster_N_state = nullptr;
     float *d_E = nullptr;  // Device pointer
