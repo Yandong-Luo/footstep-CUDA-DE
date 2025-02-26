@@ -116,7 +116,7 @@ namespace cudaprocess{
     }
 
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void DecodeParameters2State(CudaParamClusterData<T>* new_cluster_data, bezier_curve::BezierCurve* curve, float *cluster_state){
+    __global__ void DecodeParameters2State(CudaParamClusterData<T>* new_cluster_data, bezier_curve::BezierCurve* curve, float *cluster_state, float *d_D){
         int step_id = blockIdx.x;
         int sol_id = threadIdx.x;
 
@@ -163,6 +163,23 @@ namespace cudaprocess{
         bezier_curve::GetTrajStateFromBezierBasedLookup(curve, curve_param, step_id, 0, BEZIER_SIZE-1, BEZIER_SIZE, 2*BEZIER_SIZE-1, current_state);
         // __syncthreads();
 
+        // record all state except the initial state
+        if(step_id != 0){
+            // int tmp_idx = sol_id * footstep::state_dims * footstep::N + (step_id - 1) * footstep::state_dims;
+            // d_D[tmp_idx] = current_state[0];
+            // d_D[tmp_idx+1] = current_state[1];
+            // d_D[tmp_idx+2] = current_state[2];
+            // d_D[tmp_idx+3] = current_state[3];
+            // d_D[tmp_idx+4] = current_state[4];
+            
+            int row = (step_id - 1) * footstep::state_dims;
+            int col = sol_id;
+            d_D[row * CUDA_SOLVER_POP_SIZE + col] = current_state[0];
+            d_D[(row + 1) * CUDA_SOLVER_POP_SIZE + col] = current_state[1];
+            d_D[(row + 2) * CUDA_SOLVER_POP_SIZE + col] = current_state[2];
+            d_D[(row + 3) * CUDA_SOLVER_POP_SIZE + col] = current_state[3];
+            d_D[(row + 4) * CUDA_SOLVER_POP_SIZE + col] = current_state[4];
+        }
         // printf("step %d and its' state (%f, %f, %f, %f, %f)\n",blockIdx.x, current_state[0], current_state[1], current_state[2], current_state[3], current_state[4]);
 
         // printf("step %d and its' state (%f, %f, %f, %f, %f)\n",blockIdx.x, current_state[0], current_state[1], current_state[2], current_state[3], current_state[4]);

@@ -31,4 +31,6 @@
 #define CURVE_NUM_STEPS (footstep::N + 1)
 #define NUM_FIXED_CP 4	// the number of fix control point, P_0, P_1, P_{n-1}, P_n
 
+
+
 #endif

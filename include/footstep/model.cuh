@@ -17,6 +17,14 @@ namespace footstep{
                         + cublasdx::SM<860>()
                         + cublasdx::Block());
 
+    using Ex_GEMM_col = decltype(cublasdx::Size< row_bigE, 1, col_bigE>()
+                        + cublasdx::Precision<float>()
+                        + cublasdx::Type<cublasdx::type::real>()
+                        + cublasdx::Function<cublasdx::function::MM>()
+                        + cublasdx::Arrangement<cublasdx::col_major, cublasdx::col_major>()
+                        + cublasdx::SM<860>()
+                        + cublasdx::Block());
+
     // For matrix F times u
     using Fu_GEMM = decltype(cublasdx::Size< row_bigF, 1, col_bigF>()
                         + cublasdx::Precision<float>()
@@ -314,6 +322,48 @@ namespace footstep{
                 }
             }
         }
+    }
+
+
+    /************************Version 2*********************** */
+    // Construct matrix D (D = C - HugeE X_0)
+    template<int T = CUDA_SOLVER_POP_SIZE>
+    __global__ void ConstructMatrixD(const float *bigE_column, float *D){
+        if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
+        // ########### 
+        // Update State
+        // ###########
+        // current individual control input (N step)
+        // float *cur_individual_param = cluster_data->all_param + blockIdx.x * CUDA_PARAM_MAX_SIZE;
+
+        // for(int i = 0; i < CUDA_PARAM_MAX_SIZE && blockIdx.x >= CUDA_SOLVER_POP_SIZE-10; i++) {
+        //     printf("blockIdx.x: %d, param[%d]: %f\n", blockIdx.x, i, cur_individual_param[i]);
+        // }
+
+        // if(blockIdx.x == 0 && threadIdx.x == 0){
+        //     printf("update state param:");
+        //     for(int i = 0; i < CUDA_PARAM_MAX_SIZE; ++i){
+        //         printf("%f ", cur_individual_param[i]);
+        //     }
+        //     printf("\n");
+        // }
+
+        // skip the initial state
+        float *N_states = D + blockIdx.x * N * state_dims;
+
+        // D = cluster_state + blockIdx.x * (N + 1) * state_dims + state_dims;
+        
+        extern __shared__ __align__(16) char smem[];
+
+        // matrix bigE times init_states, and record the result at N_states
+        gemm_kernel<Ex_GEMM_col>(-1.0f, bigE_column, init_state, 1.0f, N_states, smem);
+
+        // __syncthreads();
+
+        // // matrix bigE times init_states, and plus the result at F
+        // gemm_kernel<Fu_GEMM>(1.0f, bigF, cur_individual_param, 1.0f, N_states, smem);
+
+        // __syncthreads();
     }
 }
 

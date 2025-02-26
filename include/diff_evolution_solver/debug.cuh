@@ -67,14 +67,25 @@ void PrintMatrixByRow(float *mat, int row, int col, std::string output_msg){
 }
 
 void PrintMatrixByCol(float *obj_mat, int row, int size, std::string output_msg) {
-    std::cout << output_msg << std::endl;
+    // std::cout << output_msg << std::endl;
     
-    for(int i = 0; i < row; ++i) {
-        for(int j = 0; j < size; ++j) {
-            printf("matrix[%d,%d]=%f ", i, j, obj_mat[j * row + i]);
+    // for(int i = 0; i < row; ++i) {
+    //     for(int j = 0; j < size; ++j) {
+    //         printf("matrix[%d,%d]=%f ", i, j, obj_mat[j * row + i]);
+    //     }
+    //     printf("\n");
+    // }
+
+    std::cout<<output_msg<<std::endl;
+    printf("[");
+    for(int i = 0; i < row; ++i){
+        for(int j = 0; j < size; ++j){
+            // printf("matrix[%d,%d]=%f ", i, j, mat[i * col + j]);
+            printf("%f ", obj_mat[j * row + i]);
         }
         printf("\n");
     }
+    printf("]\n");
 }
 
 void PrintFitnesssWithParam(float *obj_mat, float *param_mat, int row, int obj_mat_col, int dims, std::string output_msg){

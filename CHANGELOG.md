@@ -262,6 +262,10 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Yandong Luo: The Bezier curve in the Polar coordinate system has been fully verified. Continous to finish CUDA-DE + Bazier curve
 
-## [0.3.19] - 2025-2-23
+## [0.3.19] - 2025-2-24
 ### Changed
 - Yandong Luo: Finish and verify the decode function DecodeParameters2State().
+
+## [0.3.20] - 2025-2-25
+### Changed
+- Yandong Luo: Use Eigen to create column layout bigE and bigF for future batch cudss. Based on cublas_dx to finish matrix.

@@ -167,6 +167,21 @@ namespace footstep{
     float *bigF = nullptr;
     float *h_bigE = nullptr;
     float *h_bigF = nullptr;
+    float *d_hugeE = nullptr;
+    float *h_hugeE = nullptr;
+    float *d_hugeF = nullptr;
+    float *h_hugeF = nullptr;
+
+    float *bigE_column = nullptr;
+    float *h_bigE_column = nullptr;
+    float *bigF_column = nullptr;
+    float *h_bigF_column = nullptr;
+
+    float *d_U = nullptr;
+    float *h_U = nullptr;
+
+    float *d_D = nullptr;
+    float *h_D = nullptr;
 
     float *d_sol_state = nullptr;
     float *h_sol_state = nullptr;
@@ -174,126 +189,193 @@ namespace footstep{
     float *d_sol_score = nullptr;
     float *h_sol_score = nullptr;
 
-    void ConstructEandF(cudaStream_t stream){
+    // void ConstructEandF(cudaStream_t stream){
 
-        CHECK_CUDA(cudaMemcpy(d_F, h_F, row_F * col_F * sizeof(float), cudaMemcpyHostToDevice));
-        CHECK_CUDA(cudaMemcpy(d_E, h_E, row_E * col_E * sizeof(float), cudaMemcpyHostToDevice));
-        // CHECK_CUDA(cudaMemcpyToSymbol(d_F, h_F, row_F * col_F * sizeof(float)));
-        // CHECK_CUDA(cudaMemcpyToSymbol(d_E, h_E, row_E * col_E * sizeof(float)));
+    //     CHECK_CUDA(cudaMemcpy(d_F, h_F, row_F * col_F * sizeof(float), cudaMemcpyHostToDevice));
+    //     CHECK_CUDA(cudaMemcpy(d_E, h_E, row_E * col_E * sizeof(float), cudaMemcpyHostToDevice));
+    //     // CHECK_CUDA(cudaMemcpyToSymbol(d_F, h_F, row_F * col_F * sizeof(float)));
+    //     // CHECK_CUDA(cudaMemcpyToSymbol(d_E, h_E, row_E * col_E * sizeof(float)));
 
-        // float h_F2[15]; 
-        // CHECK_CUDA(cudaMemcpy(h_F2, d_F, row_F * col_F * sizeof(float), cudaMemcpyDeviceToHost));
-        // printf("F matrix:\n");
-        // for (int i = 0; i < row_F; i++) {
-        //     for (int j = 0; j < col_F; j++) {
-        //         printf("%f ", h_F2[i * col_F + j]);
-        //     }
-        //     printf("\n");
-        // }
+    //     // float h_F2[15]; 
+    //     // CHECK_CUDA(cudaMemcpy(h_F2, d_F, row_F * col_F * sizeof(float), cudaMemcpyDeviceToHost));
+    //     // printf("F matrix:\n");
+    //     // for (int i = 0; i < row_F; i++) {
+    //     //     for (int j = 0; j < col_F; j++) {
+    //     //         printf("%f ", h_F2[i * col_F + j]);
+    //     //     }
+    //     //     printf("\n");
+    //     // }
 
-        // float h_E2[25]; 
-        // CHECK_CUDA(cudaMemcpy(h_E2, d_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToHost));
-        // printf("E matrix:\n");
-        // for (int i = 0; i < row_E; i++) {
-        //     for (int j = 0; j < col_E; j++) {
-        //         printf("%f ", h_E2[i * col_E + j]);
-        //     }
-        //     printf("\n");
-        // }
-    }
+    //     // float h_E2[25]; 
+    //     // CHECK_CUDA(cudaMemcpy(h_E2, d_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToHost));
+    //     // printf("E matrix:\n");
+    //     // for (int i = 0; i < row_E; i++) {
+    //     //     for (int j = 0; j < col_E; j++) {
+    //     //         printf("%f ", h_E2[i * col_E + j]);
+    //     //     }
+    //     //     printf("\n");
+    //     // }
+    // }
 
-    __global__ void storeResult(float* bigF, float* result_block, int k, int j, int state_dims, int control_dims, int N) {
-        int r = threadIdx.x;
-        int c = threadIdx.y;
-        if (r < state_dims && c < control_dims) {
-            int index = (k * state_dims + r) * (control_dims * N) + j * control_dims + c;
-            bigF[index] = result_block[r * control_dims + c];
-        }
-    }
+    // __global__ void storeResult(float* bigF, float* result_block, int k, int j, int state_dims, int control_dims, int N) {
+    //     int r = threadIdx.x;
+    //     int c = threadIdx.y;
+    //     if (r < state_dims && c < control_dims) {
+    //         int index = (k * state_dims + r) * (control_dims * N) + j * control_dims + c;
+    //         bigF[index] = result_block[r * control_dims + c];
+    //     }
+    // }
 
 
-    void ConstructBigEAndF(float *bigE, float *bigF, cublasHandle_t handle, cudaStream_t stream){
-        float alpha = 1.0f, beta = 0.0f;
-        // float Ek[25] = {0.0f};
-        // float Ek_record[N][25] = {0.0f};
+    // void ConstructBigEAndF(float *bigE, float *bigF, cublasHandle_t handle, cudaStream_t stream){
+    //     float alpha = 1.0f, beta = 0.0f;
+    //     // float Ek[25] = {0.0f};
+    //     // float Ek_record[N][25] = {0.0f};
 
-        float* d_Ek;
-        CHECK_CUDA(cudaMalloc(&d_Ek, row_E * col_E * sizeof(float)));
+    //     float* d_Ek;
+    //     CHECK_CUDA(cudaMalloc(&d_Ek, row_E * col_E * sizeof(float)));
 
-        float* d_E_power;
-        CHECK_CUDA(cudaMalloc(&d_E_power, row_E * col_E * sizeof(float)));
+    //     float* d_E_power;
+    //     CHECK_CUDA(cudaMalloc(&d_E_power, row_E * col_E * sizeof(float)));
 
-        float *result_block;
-        CHECK_CUDA(cudaMalloc(&result_block, row_E * col_F * sizeof(float)));
+    //     float *result_block;
+    //     CHECK_CUDA(cudaMalloc(&result_block, row_E * col_F * sizeof(float)));
 
-        // CHECK_CUDA(cudaMemcpyFromSymbol(d_Ek, d_E, sizeof(d_E)));
-        CHECK_CUDA(cudaMemcpy(d_Ek, d_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToDevice));
+    //     // CHECK_CUDA(cudaMemcpyFromSymbol(d_Ek, d_E, sizeof(d_E)));
+    //     CHECK_CUDA(cudaMemcpy(d_Ek, d_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToDevice));
+        
+    //     for (int k = 0; k < N; k++) {
+    //         // 复制当前 Ek 到 big_E
+    //         CHECK_CUDA(cudaMemcpy(bigE + k * row_E * col_E, d_Ek, row_E * col_E * sizeof(float), cudaMemcpyDeviceToDevice));
+
+    //         // 计算 Ek+1 = E * Ek
+    //         cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
+    //                     row_E, col_E, col_E,
+    //                     &alpha, d_E, col_E, d_Ek, col_E,
+    //                     &beta, d_Ek, col_E);
+
+    //         for(int j = 0; j <= k; ++j){
+    //             // power 是公式中E的次方，对应到bigE中进行查找还需要-1
+    //             int power = k - j;
+    //             if(power == 0){
+    //                 CHECK_CUDA(cudaMemcpy(result_block, d_F, row_F * col_F * sizeof(float), cudaMemcpyDeviceToDevice));
+    //                 // CHECK_CUDA(cudaMemcpyFromSymbol(result_block, F, sizeof(F)));
+
+    //                 // float h_F2[15]; 
+    //                 // CHECK_CUDA(cudaMemcpy(h_F2, result_block, row_F * col_F * sizeof(float), cudaMemcpyDeviceToHost));
+    //                 // printf("F matrix:\n");
+    //                 // for (int i = 0; i < row_F; i++) {
+    //                 //     for (int j = 0; j < col_F; j++) {
+    //                 //         printf("%f ", h_F2[i * col_F + j]);
+    //                 //     }
+    //                 //     printf("\n");
+    //                 // }
+
+    //                 // float h_E2[25]; 
+    //                 // CHECK_CUDA(cudaMemcpy(h_E2, d_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToHost));
+    //                 // printf("E matrix:\n");
+    //                 // for (int i = 0; i < row_E; i++) {
+    //                 //     for (int j = 0; j < col_E; j++) {
+    //                 //         printf("%f ", h_E2[i * col_E + j]);
+    //                 //     }
+    //                 //     printf("\n");
+    //                 // }
+    //             }
+    //             else{
+    //                 CHECK_CUDA(cudaMemcpy(d_E_power, bigE + (power - 1) * row_E * col_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToDevice));
+    //                 cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
+    //                         col_F, row_E, col_E,
+    //                         &alpha, d_F, col_F, d_E_power, col_E,
+    //                         &beta, result_block, col_F);
+    //             }
+    //             // float *h_result_block;
+    //             // CHECK_CUDA(cudaHostAlloc(&h_result_block, row_E * col_F * sizeof(float), cudaHostAllocDefault));
+    //             // // cudaMemcpy(h_result_block, result_block, row_E * col_F * sizeof(float), cudaMemcpyDeviceToHost);
+    //             // CHECK_CUDA(cudaMemcpy(h_result_block, result_block, row_F * col_F * sizeof(float), cudaMemcpyDeviceToHost));
+    //             // printf("result_block at k=%d, j=%d:\n", k, j);
+    //             // for (int r = 0; r < state_dims; r++) {
+    //             //     for (int c = 0; c < control_dims; c++) {
+    //             //         printf("%f ", h_result_block[r * control_dims + c]);
+    //             //     }
+    //             //     printf("\n");
+    //             // }
+    //             // cudaFreeHost(h_result_block);
+
+    //             dim3 threads(state_dims, control_dims);
+    //             storeResult<<<1, threads, 0, stream>>>(bigF, result_block, k, j, state_dims, control_dims, N);
+
+    //             CHECK_CUDA(cudaStreamSynchronize(stream));
+    //         }
+    //     }
+    //     cudaFree(d_Ek);
+    //     cudaFree(d_E_power);
+    //     cudaFree(result_block);
+    // }
+
+    void ComputeBigEAndF_RowMajor(
+        const Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& E,
+        const Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& F,
+        Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& bigE,
+        Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& bigF) {
+        
+        using RowMatrix = Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+
+        // 计算并存储E的幂
+        // 直接从E^1 = E开始
+        RowMatrix E_power = E;  
         
         for (int k = 0; k < N; k++) {
-            // 复制当前 Ek 到 big_E
-            CHECK_CUDA(cudaMemcpy(bigE + k * row_E * col_E, d_Ek, row_E * col_E * sizeof(float), cudaMemcpyDeviceToDevice));
-
-            // 计算 Ek+1 = E * Ek
-            cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                        row_E, col_E, col_E,
-                        &alpha, d_E, col_E, d_Ek, col_E,
-                        &beta, d_Ek, col_E);
-
-            for(int j = 0; j <= k; ++j){
-                // power 是公式中E的次方，对应到bigE中进行查找还需要-1
-                int power = k - j;
-                if(power == 0){
-                    CHECK_CUDA(cudaMemcpy(result_block, d_F, row_F * col_F * sizeof(float), cudaMemcpyDeviceToDevice));
-                    // CHECK_CUDA(cudaMemcpyFromSymbol(result_block, F, sizeof(F)));
-
-                    // float h_F2[15]; 
-                    // CHECK_CUDA(cudaMemcpy(h_F2, result_block, row_F * col_F * sizeof(float), cudaMemcpyDeviceToHost));
-                    // printf("F matrix:\n");
-                    // for (int i = 0; i < row_F; i++) {
-                    //     for (int j = 0; j < col_F; j++) {
-                    //         printf("%f ", h_F2[i * col_F + j]);
-                    //     }
-                    //     printf("\n");
-                    // }
-
-                    // float h_E2[25]; 
-                    // CHECK_CUDA(cudaMemcpy(h_E2, d_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToHost));
-                    // printf("E matrix:\n");
-                    // for (int i = 0; i < row_E; i++) {
-                    //     for (int j = 0; j < col_E; j++) {
-                    //         printf("%f ", h_E2[i * col_E + j]);
-                    //     }
-                    //     printf("\n");
-                    // }
-                }
-                else{
-                    CHECK_CUDA(cudaMemcpy(d_E_power, bigE + (power - 1) * row_E * col_E, row_E * col_E * sizeof(float), cudaMemcpyDeviceToDevice));
-                    cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                            col_F, row_E, col_E,
-                            &alpha, d_F, col_F, d_E_power, col_E,
-                            &beta, result_block, col_F);
-                }
-                // float *h_result_block;
-                // CHECK_CUDA(cudaHostAlloc(&h_result_block, row_E * col_F * sizeof(float), cudaHostAllocDefault));
-                // // cudaMemcpy(h_result_block, result_block, row_E * col_F * sizeof(float), cudaMemcpyDeviceToHost);
-                // CHECK_CUDA(cudaMemcpy(h_result_block, result_block, row_F * col_F * sizeof(float), cudaMemcpyDeviceToHost));
-                // printf("result_block at k=%d, j=%d:\n", k, j);
-                // for (int r = 0; r < state_dims; r++) {
-                //     for (int c = 0; c < control_dims; c++) {
-                //         printf("%f ", h_result_block[r * control_dims + c]);
-                //     }
-                //     printf("\n");
-                // }
-                // cudaFreeHost(h_result_block);
-
-                dim3 threads(state_dims, control_dims);
-                storeResult<<<1, threads, 0, stream>>>(bigF, result_block, k, j, state_dims, control_dims, N);
-
-                CHECK_CUDA(cudaStreamSynchronize(stream));
+            // 将E的当前幂存入bigE (E^(k+1))
+            bigE.block(k * row_E, 0, row_E, col_E) = E_power;
+            
+            // 下一次循环需要计算E^(k+2)
+            if (k < N-1) {
+                E_power = E * E_power;
             }
         }
-        cudaFree(d_Ek);
-        cudaFree(d_E_power);
-        cudaFree(result_block);
+        
+        // 填充bigF矩阵
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j <= i; j++) {
+                if (i == j) {
+                    // 对角线元素为F
+                    bigF.block(i * state_dims, j * control_dims, state_dims, control_dims) = F;
+                } else {
+                    // 计算E^(i-j)F
+                    int power = i - j;
+                    if (power == 1) {
+                        bigF.block(i * state_dims, j * control_dims, state_dims, control_dims) = E * F;
+                    } else {
+                        // 从bigE中获取已计算的E^power
+                        RowMatrix temp_E_power = bigE.block((power-1) * row_E, 0, row_E, col_E);
+                        bigF.block(i * state_dims, j * control_dims, state_dims, control_dims) = temp_E_power * F;
+                    }
+                }
+            }
+        }
+    }
+
+    void ConstructBigEAndFBasedEigen(){
+        using RowMatrix = Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+        using ColMatrix = Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>; // 默认列优先
+
+        Eigen::Map<RowMatrix> E(h_E, row_E, col_E);
+        Eigen::Map<RowMatrix> F(h_F, row_F, col_F);
+        
+        // 创建bigE和bigF矩阵
+        RowMatrix bigE_row(N * row_E, col_E);
+        RowMatrix bigF_row(N * state_dims, N * control_dims);
+        bigE_row.setZero();
+        bigF_row.setZero();
+        
+        // 构建行优先格式的bigE和bigF
+        ComputeBigEAndF_RowMajor(E, F, bigE_row, bigF_row);
+        
+        // 创建列优先格式的bigE和bigF（通过简单赋值转换存储方式）
+        ColMatrix bigE_col = bigE_row;
+        ColMatrix bigF_col = bigF_row;
+
+        h_bigE_column = bigE_col.data();
+        h_bigF_column = bigF_col.data();
     }
 }

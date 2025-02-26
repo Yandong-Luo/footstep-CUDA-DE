@@ -13,6 +13,10 @@ find_package(mathdx REQUIRED COMPONENTS cublasdx CONFIG PATHS "/usr/local/mathdx
 
 find_package(yaml-cpp REQUIRED)
 
+find_package(cudss QUIET)
+
+find_package(Eigen3 REQUIRED)
+
 # NVTX配置保持不变
 add_library(nvtx3-cpp INTERFACE)
 target_include_directories(nvtx3-cpp INTERFACE 
@@ -46,10 +50,20 @@ pybind11_add_module(cuda_solver
 
 add_library(cuda_DE STATIC ${ALL_CUDA})
 
+# 专门禁用 20012-D 警告
+if(CMAKE_CUDA_COMPILER_ID MATCHES "NVIDIA")
+  set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} --diag-suppress 20012")
+endif()
+
+target_include_directories(cuda_DE SYSTEM PUBLIC
+    ${EIGEN3_INCLUDE_DIR}
+)
+
 # 为cuda_DE添加包含目录
 target_include_directories(cuda_DE PUBLIC
     ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/thirdparty/nvtx/c/include
+    # ${EIGEN3_INCLUDE_DIR}
     "/usr/local/mathdx/24.08/include"
     "/usr/local/mathdx/24.08/include/cublasdx/include"
     "/usr/local/mathdx/24.08/external/cutlass/include"
@@ -86,6 +100,8 @@ target_link_libraries(cuda_solver PRIVATE
     nvtx3-cpp
     yaml-cpp::yaml-cpp
     mathdx::cublasdx
+    cudss
+    Eigen3::Eigen
 )
 
 # 保持这个属性不变

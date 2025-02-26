@@ -1,6 +1,7 @@
 #ifndef CUDAPROCESS_FOOTSTEP_UTILS_H
 #define CUDAPROCESS_FOOTSTEP_UTILS_H
 
+#include <Eigen/Dense>
 #include <thrust/host_vector.h>
 #include <thrust/device_vector.h>
 #include <cublas_v2.h>
@@ -18,7 +19,7 @@
 namespace footstep{
 
 // CONSTANT
-constexpr int N = 30;                           // prediction step
+constexpr int N = 10;                           // prediction step
 constexpr float T = 0.4f;           // Delta t
 
 constexpr float legLength = 1.0f;
@@ -160,9 +161,27 @@ const int row_bigE = N * state_dims, col_bigE = state_dims;
 extern float *bigE;
 extern float *h_bigE;
 
-void ConstructEandF(cudaStream_t stream);
+const int row_hugeE = CUDA_SOLVER_POP_SIZE * row_bigE, col_hugeE = CUDA_SOLVER_POP_SIZE * col_bigE;
+extern float *d_hugeE;
+extern float *h_hugeE;
 
-void ConstructBigEAndF(float *bigE, float *bigF, cublasHandle_t handle, cudaStream_t stream);
+extern float *bigE_column;
+extern float *h_bigE_column;
+
+// void **batch_bigF;
+// void **batch_u;
+
+// void ConstructEandF(cudaStream_t stream);
+
+// void ConstructBigEAndF(float *bigE, float *bigF, cublasHandle_t handle, cudaStream_t stream);
+
+void ComputeBigEAndF_RowMajor(
+    const Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& E,
+    const Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& F,
+    Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& bigE,
+    Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>& bigF);
+
+void ConstructBigEAndFBasedEigen();
 
 // bigF Matrix ()
 const int row_bigF = N * state_dims, col_bigF = N * control_dims;
@@ -170,6 +189,25 @@ const int row_bigF = N * state_dims, col_bigF = N * control_dims;
 
 extern float *bigF;
 extern float *h_bigF;
+
+extern float *bigF_column;
+extern float *h_bigF_column;
+
+// hugeF Matrix ()
+const int row_hugeF = CUDA_SOLVER_POP_SIZE * row_bigF, col_hugeF = CUDA_SOLVER_POP_SIZE * col_bigF;
+// extern float h_bigF[13500];
+
+extern float *d_hugeF;
+extern float *h_hugeF;
+
+// D matrix record N_state - hugeE * X_0
+const int row_D = CUDA_SOLVER_POP_SIZE * row_bigF, col_D = 1;
+extern float *d_D;
+extern float *h_D;
+
+const int row_U = CUDA_SOLVER_POP_SIZE * N * control_dims, col_U = 1;
+extern float *d_U;
+extern float *h_U;
 
 extern float *d_sol_state;
 extern float *h_sol_state;

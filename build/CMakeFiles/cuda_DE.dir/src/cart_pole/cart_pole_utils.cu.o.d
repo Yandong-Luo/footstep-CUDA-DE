@@ -1,18 +1,27 @@
 CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o : /home/chris/footstep-CUDA-DE/src/cart_pole/cart_pole_utils.cu \
     /usr/include/stdc-predef.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_runtime.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/host_config.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/cuda_runtime.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/host_config.h \
     /usr/include/features.h \
     /usr/include/x86_64-linux-gnu/sys/cdefs.h \
     /usr/include/x86_64-linux-gnu/bits/wordsize.h \
     /usr/include/x86_64-linux-gnu/bits/long-double.h \
     /usr/include/x86_64-linux-gnu/gnu/stubs.h \
     /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/builtin_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/device_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/host_defines.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/driver_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/vector_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/builtin_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/device_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/host_defines.h \
+    /usr/include/ctype.h \
+    /usr/include/x86_64-linux-gnu/bits/types.h \
+    /usr/include/x86_64-linux-gnu/bits/timesize.h \
+    /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+    /usr/include/x86_64-linux-gnu/bits/time64.h \
+    /usr/include/x86_64-linux-gnu/bits/endian.h \
+    /usr/include/x86_64-linux-gnu/bits/endianness.h \
+    /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/driver_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/vector_types.h \
     /usr/lib/gcc/x86_64-linux-gnu/10/include/limits.h \
     /usr/lib/gcc/x86_64-linux-gnu/10/include/syslimits.h \
     /usr/include/limits.h \
@@ -24,42 +33,58 @@ CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o : /home/chris/footstep
     /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
     /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
     /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/surface_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/texture_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/library_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/channel_descriptor.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_runtime_api.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_device_runtime_api.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/driver_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/vector_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/vector_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/common_functions.h \
-    /usr/include/string.h \
-    /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
-    /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
-    /usr/include/strings.h \
-    /usr/include/time.h \
-    /usr/include/x86_64-linux-gnu/bits/time.h \
-    /usr/include/x86_64-linux-gnu/bits/types.h \
-    /usr/include/x86_64-linux-gnu/bits/timesize.h \
-    /usr/include/x86_64-linux-gnu/bits/typesizes.h \
-    /usr/include/x86_64-linux-gnu/bits/time64.h \
-    /usr/include/x86_64-linux-gnu/bits/timex.h \
-    /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
-    /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
-    /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
-    /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
-    /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
-    /usr/include/x86_64-linux-gnu/bits/endian.h \
-    /usr/include/x86_64-linux-gnu/bits/endianness.h \
-    /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
-    /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
-    /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
-    /usr/include/c++/10/new \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/surface_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/texture_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/library_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/channel_descriptor.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/cuda_runtime_api.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/cuda_device_runtime_api.h \
+    /usr/include/c++/10/stdlib.h \
+    /usr/include/c++/10/cstdlib \
     /usr/include/x86_64-linux-gnu/c++/10/bits/c++config.h \
     /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
     /usr/include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h \
     /usr/include/c++/10/pstl/pstl_config.h \
+    /usr/include/stdlib.h \
+    /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+    /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+    /usr/include/x86_64-linux-gnu/bits/floatn.h \
+    /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+    /usr/include/x86_64-linux-gnu/sys/types.h \
+    /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+    /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+    /usr/include/endian.h \
+    /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+    /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+    /usr/include/x86_64-linux-gnu/sys/select.h \
+    /usr/include/x86_64-linux-gnu/bits/select.h \
+    /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+    /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+    /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+    /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+    /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+    /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+    /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+    /usr/include/alloca.h \
+    /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+    /usr/include/c++/10/bits/std_abs.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/driver_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/vector_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/vector_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/common_functions.h \
+    /usr/include/string.h \
+    /usr/include/strings.h \
+    /usr/include/time.h \
+    /usr/include/x86_64-linux-gnu/bits/time.h \
+    /usr/include/x86_64-linux-gnu/bits/timex.h \
+    /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+    /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+    /usr/include/c++/10/new \
     /usr/include/c++/10/exception \
     /usr/include/c++/10/bits/exception.h \
     /usr/include/c++/10/bits/exception_ptr.h \
@@ -81,32 +106,8 @@ CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o : /home/chris/footstep
     /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
     /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
     /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
-    /usr/include/c++/10/stdlib.h \
-    /usr/include/c++/10/cstdlib \
-    /usr/include/stdlib.h \
-    /usr/include/x86_64-linux-gnu/bits/waitflags.h \
-    /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
-    /usr/include/x86_64-linux-gnu/bits/floatn.h \
-    /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
-    /usr/include/x86_64-linux-gnu/sys/types.h \
-    /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
-    /usr/include/endian.h \
-    /usr/include/x86_64-linux-gnu/bits/byteswap.h \
-    /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
-    /usr/include/x86_64-linux-gnu/sys/select.h \
-    /usr/include/x86_64-linux-gnu/bits/select.h \
-    /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
-    /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
-    /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-    /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
-    /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
-    /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
-    /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
-    /usr/include/alloca.h \
-    /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-    /usr/include/c++/10/bits/std_abs.h \
     /usr/include/assert.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/math_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/math_functions.h \
     /usr/include/c++/10/math.h \
     /usr/include/c++/10/cmath \
     /usr/include/c++/10/bits/cpp_type_traits.h \
@@ -147,38 +148,40 @@ CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o : /home/chris/footstep
     /usr/include/c++/10/tr1/poly_hermite.tcc \
     /usr/include/c++/10/tr1/poly_laguerre.tcc \
     /usr/include/c++/10/tr1/riemann_zeta.tcc \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/math_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_surface_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/cuda_texture_types.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/device_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/device_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/device_atomic_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/device_atomic_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/device_double_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/device_double_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_20_atomic_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_20_atomic_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_32_atomic_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_32_atomic_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_35_atomic_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_60_atomic_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_60_atomic_functions.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_20_intrinsics.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_20_intrinsics.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_30_intrinsics.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_30_intrinsics.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_32_intrinsics.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_32_intrinsics.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_35_intrinsics.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_61_intrinsics.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/sm_61_intrinsics.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/sm_70_rt.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/sm_70_rt.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/sm_80_rt.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/crt/sm_80_rt.hpp \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/surface_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/texture_fetch_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/texture_indirect_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/surface_indirect_functions.h \
-    /usr/local/cuda-11.4/bin/../targets/x86_64-linux/include/device_launch_parameters.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/math_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/device_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/device_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/device_atomic_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/device_atomic_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/device_double_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/device_double_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_20_atomic_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_20_atomic_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_32_atomic_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_32_atomic_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_35_atomic_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_60_atomic_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_60_atomic_functions.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_20_intrinsics.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_20_intrinsics.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_30_intrinsics.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_30_intrinsics.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_32_intrinsics.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_32_intrinsics.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_35_intrinsics.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_61_intrinsics.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/sm_61_intrinsics.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/sm_70_rt.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/sm_70_rt.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/sm_80_rt.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/sm_80_rt.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/sm_90_rt.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/sm_90_rt.hpp \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/texture_indirect_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/surface_indirect_functions.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/cudacc_ext.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/device_launch_parameters.h \
+    /usr/include/c++/10/utility \
+    /usr/include/c++/10/bits/stl_relops.h \
+    /usr/include/c++/10/initializer_list \
     /home/chris/footstep-CUDA-DE/include/cart_pole/cart_pole_utils.cuh

@@ -77,7 +77,7 @@ CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o: CMakeFiles/cuda_DE.di
 CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o: /home/chris/footstep-CUDA-DE/src/cart_pole/cart_pole_utils.cu
 CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o: CMakeFiles/cuda_DE.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/chris/footstep-CUDA-DE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CUDA object CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o"
-	/usr/local/cuda-11.4/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o -MF CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/cart_pole/cart_pole_utils.cu -o CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o -MF CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/cart_pole/cart_pole_utils.cu -o CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o
 
 CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CUDA source to CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.i"
@@ -92,7 +92,7 @@ CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o: CMakeFiles/cuda_DE.dir/inclu
 CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o: /home/chris/footstep-CUDA-DE/src/curve/bezier_curve.cu
 CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o: CMakeFiles/cuda_DE.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/chris/footstep-CUDA-DE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CUDA object CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o"
-	/usr/local/cuda-11.4/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o -MF CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/curve/bezier_curve.cu -o CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o -MF CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/curve/bezier_curve.cu -o CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o
 
 CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CUDA source to CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.i"
@@ -107,7 +107,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: CMakeFiles
 CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: /home/chris/footstep-CUDA-DE/src/diff_evolution_solver/random_manager.cu
 CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o: CMakeFiles/cuda_DE.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/chris/footstep-CUDA-DE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CUDA object CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o"
-	/usr/local/cuda-11.4/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o -MF CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/diff_evolution_solver/random_manager.cu -o CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o -MF CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/diff_evolution_solver/random_manager.cu -o CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o
 
 CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CUDA source to CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.i"
@@ -122,7 +122,7 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: CMakeFiles/cuda_DE
 CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu
 CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: CMakeFiles/cuda_DE.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/chris/footstep-CUDA-DE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CUDA object CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o"
-	/usr/local/cuda-11.4/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o -MF CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu -o CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o -MF CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/diff_evolution_solver/solver.cu -o CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o
 
 CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CUDA source to CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.i"
@@ -137,7 +137,7 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: CMakeFiles/cuda_DE.dir/
 CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu
 CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: CMakeFiles/cuda_DE.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/chris/footstep-CUDA-DE/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CUDA object CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o"
-	/usr/local/cuda-11.4/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o -MF CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu -o CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o -MF CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o.d -x cu -rdc=true -c /home/chris/footstep-CUDA-DE/src/footstep/footstep_utils.cu -o CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o
 
 CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CUDA source to CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.i"

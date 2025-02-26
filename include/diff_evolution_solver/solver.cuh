@@ -15,6 +15,8 @@
 #include <thrust/device_vector.h>
 #include <thrust/execution_policy.h>
 
+#include <cudss.h>
+
 #include "diff_evolution_solver/data_type.h"
 #include "utils/utils.cuh"
 #include "diff_evolution_solver/converter.cuh"
