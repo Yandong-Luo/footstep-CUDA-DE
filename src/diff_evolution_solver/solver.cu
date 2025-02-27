@@ -78,12 +78,14 @@ void CudaDiffEvolveSolver::MallocSetup(){
     CHECK_CUDA(cudaMalloc(&footstep::bigE_column, footstep::row_bigE * footstep::col_bigE * sizeof(float)));
     CHECK_CUDA(cudaMalloc(&footstep::bigF_column, footstep::row_bigF * footstep::col_bigF * sizeof(float)));
 
+    CHECK_CUDA(cudaHostAlloc(&footstep::h_bigE_column, footstep::row_bigE * footstep::col_bigE * sizeof(float), cudaHostAllocDefault));  
+    CHECK_CUDA(cudaHostAlloc(&footstep::h_bigF_column, footstep::row_bigF * footstep::col_bigF * sizeof(float), cudaHostAllocDefault)); 
+
     // CHECK_CUDA(cudaMalloc(&footstep::d_hugeE, footstep::row_hugeE * footstep::col_hugeE * sizeof(float)));
     // CHECK_CUDA(cudaMalloc(&footstep::d_hugeF, footstep::row_hugeF * footstep::col_hugeF * sizeof(float)));
 
-    CHECK_CUDA(cudaMalloc(&footstep::d_D, footstep::row_D * footstep::col_D * sizeof(float)));
-
-    CHECK_CUDA(cudaMalloc(&footstep::d_U, footstep::row_U * footstep::col_U * sizeof(float)));
+    // CHECK_CUDA(cudaMalloc((void **)&footstep::d_D, footstep::row_D * footstep::col_D * sizeof(float)));
+    // CHECK_CUDA(cudaMalloc(&footstep::d_U, footstep::row_U * footstep::col_U * sizeof(float)));
 
     CHECK_CUDA(cudaMalloc(&footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float)));
 
@@ -107,11 +109,8 @@ void CudaDiffEvolveSolver::MallocSetup(){
         printf("bigE size:%d\n", footstep::row_bigE * footstep::col_bigE);
         printf("bigF size:%d\n", footstep::row_bigF * footstep::col_bigF);
         
-        CHECK_CUDA(cudaHostAlloc(&footstep::h_bigE, footstep::row_bigE * footstep::col_bigE * sizeof(float), cudaHostAllocDefault));  
-        CHECK_CUDA(cudaHostAlloc(&footstep::h_bigF, footstep::row_bigF * footstep::col_bigF * sizeof(float), cudaHostAllocDefault)); 
-        
-        CHECK_CUDA(cudaHostAlloc(&footstep::h_hugeE, footstep::row_hugeE * footstep::col_hugeE * sizeof(float), cudaHostAllocDefault));  
-        CHECK_CUDA(cudaHostAlloc(&footstep::h_hugeF, footstep::row_hugeF * footstep::col_hugeF * sizeof(float), cudaHostAllocDefault));
+        // CHECK_CUDA(cudaHostAlloc(&footstep::h_hugeE, footstep::row_hugeE * footstep::col_hugeE * sizeof(float), cudaHostAllocDefault));  
+        // CHECK_CUDA(cudaHostAlloc(&footstep::h_hugeF, footstep::row_hugeF * footstep::col_hugeF * sizeof(float), cudaHostAllocDefault));
 
         CHECK_CUDA(cudaHostAlloc(&footstep::h_D, footstep::row_D * footstep::col_D * sizeof(float), cudaHostAllocDefault));
 
@@ -409,18 +408,43 @@ auto max_dim3 = [](const dim3& a, const dim3& b) {
 void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
 
     CHECK_CUDA(cudaMemset(footstep::d_cluster_N_state, 0, sizeof(footstep::d_cluster_N_state)));
-    DecodeParameters2State<<<CURVE_NUM_STEPS, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, bezier_curve_manager_->curve_, footstep::d_cluster_N_state, footstep::d_D);
+    // CHECK_CUDA(cudaMemset(footstep::d_D, 0, sizeof(footstep::d_D)));
+    DecodeParameters2State<<<CURVE_NUM_STEPS, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, bezier_curve_manager_->curve_, footstep::d_cluster_N_state, footstep::d_batch_D);
 
     if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
         // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, new_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
         CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
-        CHECK_CUDA(cudaMemcpy(footstep::h_D, footstep::d_D, CUDA_SOLVER_POP_SIZE * footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
+        // CHECK_CUDA(cudaMemcpy(footstep::h_batch_D, footstep::d_batch_D, CUDA_SOLVER_POP_SIZE * sizeof(float *), cudaMemcpyDeviceToHost));
+        float** results_h = (float**)malloc(footstep::row_D * sizeof(float*));
+        for (int i = 0; i < footstep::row_D; ++i) {
+            results_h[i] = (float*)malloc(footstep::col_D * sizeof(float));
+            
+            // 将设备内存中的结果复制到主机内存
+            CHECK_CUDA(cudaMemcpy(results_h[i], footstep::h_batch_D[i], 
+                    footstep::col_D * sizeof(float), cudaMemcpyDeviceToHost));
+            
+            // 打印结果
+            printf("Batch %d results:\n", i);
+            printf("[");
+            for (int j = 0; j < footstep::col_D; ++j) {
+                printf("%f ",results_h[i][j]);
+            }
+            printf("]");
+            printf("\n");
+        }
+
+        for (int i = 0; i < footstep::row_D; ++i) {
+            free(results_h[i]);
+        }
+        free(results_h);
+
         // CHECK_CUDA(cudaMemcpy(host_evaluate_score_, evaluate_score_, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
 
         // PrintMatrixByRow(footstep::h_cluster_param, CUDA_SOLVER_POP_SIZE , CUDA_PARAM_MAX_SIZE, "h_cluster_param");
         // PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE , (footstep::N+1) * footstep::state_dims, "cluster_N_state");
         PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE, CURVE_NUM_STEPS * footstep::state_dims, "before cluster_N_state");
-        PrintMatrixByCol(footstep::h_D, CUDA_SOLVER_POP_SIZE, footstep::N * footstep::state_dims, "before cluster_N_state");
+        // PrintMatrixByCol(footstep::h_D, CUDA_SOLVER_POP_SIZE, footstep::N * footstep::state_dims, "before cluster_N_state");
+        // PrintBatchData(footstep::h_batch_D, CUDA_SOLVER_POP_SIZE, footstep::col_D, "print batch D");
         // PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
     }
 
@@ -440,22 +464,81 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
         ));
     }
 
-    footstep::ConstructMatrixD<CUDA_SOLVER_POP_SIZE><<<size, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(footstep::bigE_column, footstep::d_D);
-    // CHECK_CUDA(cudaMemset(footstep::d_U, 0, footstep::row_U * footstep::col_U * sizeof(float)));
-    // for(int i = 0; i < CUDA_SOLVER_POP_SIZE; ++i){
-    //     float *current_u = footstep::d_U + i * footstep::N * footstep::control_dims;
-    // }
+    footstep::ConstructMatrixD<CUDA_SOLVER_POP_SIZE><<<size, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(footstep::bigE_column, footstep::d_batch_D);
+    /* Create matrix objects for the right-hand side b and solution x (as batches of dense matrices). (Ax=b)*/
+    // Construct hugeF * U = D
+    cudssMatrix_t U, D;
 
+    int row_batch_D = footstep::col_D, col_batch_D = 1;
+    int ldb_batch_D = row_batch_D;
+
+    CUDSS_CALL_AND_CHECK(cudssMatrixCreateBatchDn(&D, CUDA_SOLVER_POP_SIZE, &row_batch_D, &col_batch_D, &ldb_batch_D,
+        footstep::d_batch_D, CUDA_R_32I, CUDA_R_32F, CUDSS_LAYOUT_COL_MAJOR), cudss_status_, "cudssMatrixCreateBatchDn for D");
+    
+    int row_batch_U = footstep::col_U, col_batch_U = 1;
+    int ldb_batch_U = row_batch_U;
+    CUDSS_CALL_AND_CHECK(cudssMatrixCreateBatchDn(&U, CUDA_SOLVER_POP_SIZE, &row_batch_U, &col_batch_U, &row_batch_U,
+        footstep::d_batch_u, CUDA_R_32I, CUDA_R_32F, CUDSS_LAYOUT_COL_MAJOR), cudss_status_, "cudssMatrixCreateBatchDn for u");
+
+    /* Create a matrix object for the batch of sparse input matrices. */
+    cudssMatrix_t HugeF;
+    cudssMatrixType_t mtype     = CUDSS_MTYPE_SPD;
+    cudssMatrixViewType_t mview = CUDSS_MVIEW_LOWER;
+    cudssIndexBase_t base       = CUDSS_BASE_ZERO;
+    int row_batch_hugeF = footstep::row_bigF, col_batch_hugeF = footstep::col_bigF;
+    int nnz = footstep::nnz;
+    CUDSS_CALL_AND_CHECK(cudssMatrixCreateBatchCsr(&HugeF, CUDA_SOLVER_POP_SIZE, &row_batch_hugeF, &col_batch_hugeF, &nnz,
+        footstep::d_batch_csr_offsets, NULL, footstep::d_batch_csr_columns, footstep::d_batch_csr_values,
+        CUDA_R_32I, CUDA_R_64F, mtype, mview, base), cudss_status_, "cudssMatrixCreateBatchCsr");
+
+    /* Symbolic factorization */
+    CUDSS_CALL_AND_CHECK(cudssExecute(cudss_handle_, CUDSS_PHASE_ANALYSIS, cudss_solverConfig,
+        cudss_solverData, HugeF, U, D), cudss_status_, "cudssExecute for analysis");
+
+    /* Factorization */
+    CUDSS_CALL_AND_CHECK(cudssExecute(cudss_handle_, CUDSS_PHASE_FACTORIZATION, cudss_solverConfig,
+        cudss_solverData, HugeF, U, D), cudss_status_, "cudssExecute for factor");
+
+    /* Solving */
+    CUDSS_CALL_AND_CHECK(cudssExecute(cudss_handle_, CUDSS_PHASE_SOLVE, cudss_solverConfig,
+            cudss_solverData, HugeF, U, D), cudss_status_, "cudssExecute for solve");
+    
+    // CHECK_CUDA(cudssMatrixCreateBatchCsr(&HugeF, CUDA_SOLVER_POP_SIZE, footstep::row_bigF, footstep::col_bigF, footstep::row_bigF,
+    //     footstep::d_batch_hugeF, NULL, batch_csr_columns_d, batch_csr_values_d,
+    //     CUDA_R_32I, CUDA_R_64F, mtype, mview, base));
+    
     if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
         // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, new_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
         CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
-        CHECK_CUDA(cudaMemcpy(footstep::h_D, footstep::d_D, CUDA_SOLVER_POP_SIZE * footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
+        float** results_h = (float**)malloc(footstep::row_D * sizeof(float*));
+        for (int i = 0; i < footstep::row_D; ++i) {
+            results_h[i] = (float*)malloc(footstep::col_D * sizeof(float));
+            
+            // 将设备内存中的结果复制到主机内存
+            CHECK_CUDA(cudaMemcpy(results_h[i], footstep::h_batch_D[i], 
+                    footstep::col_D * sizeof(float), cudaMemcpyDeviceToHost));
+            
+            // 打印结果
+            printf("Batch %d results:\n", i);
+            printf("[");
+            for (int j = 0; j < footstep::col_D; ++j) {
+                printf("%f ",results_h[i][j]);
+            }
+            printf("]");
+            printf("\n");
+        }
+
+        for (int i = 0; i < footstep::row_D; ++i) {
+            free(results_h[i]);
+        }
+        free(results_h);
+        // CHECK_CUDA(cudaMemcpy(footstep::h_D, footstep::d_D, CUDA_SOLVER_POP_SIZE * footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
         // CHECK_CUDA(cudaMemcpy(host_evaluate_score_, evaluate_score_, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
 
         // PrintMatrixByRow(footstep::h_cluster_param, CUDA_SOLVER_POP_SIZE , CUDA_PARAM_MAX_SIZE, "h_cluster_param");
         // PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE , (footstep::N+1) * footstep::state_dims, "cluster_N_state");
         PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE, CURVE_NUM_STEPS * footstep::state_dims, "cluster_N_state");
-        PrintMatrixByCol(footstep::h_D, CUDA_SOLVER_POP_SIZE, footstep::N * footstep::state_dims, "D");
+        // PrintMatrixByCol(footstep::h_D, CUDA_SOLVER_POP_SIZE, footstep::N * footstep::state_dims, "D");
         // PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
     }
 
@@ -576,13 +659,22 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
     // Initialize cuBLAS handle
     cublasStatus_t status = cublasCreate(&cublas_handle_);
 
-    MallocSetup();
-    // CHECK_CUDA(cudaMemset(footstep::d_hugeF, 0, footstep::row_hugeF * footstep::col_hugeF * sizeof(float)));
+    CUDSS_CALL_AND_CHECK(cudssCreate(&cudss_handle_), cudss_status_, "cudssCreate");
 
+    CUDSS_CALL_AND_CHECK(cudssConfigCreate(&cudss_solverConfig), cudss_status_, "cudssConfigCreate");
+    CUDSS_CALL_AND_CHECK(cudssDataCreate(cudss_handle_, &cudss_solverData), cudss_status_, "cudssDataCreate");
+
+    MallocSetup();
+    
     footstep::ConstructBigEAndFBasedEigen();
 
+    // big E and F
     CHECK_CUDA(cudaMemcpyAsync(footstep::bigE_column, footstep::h_bigE_column, footstep::row_bigE * footstep::col_bigE * sizeof(float), cudaMemcpyHostToDevice, cuda_utils_->streams_[0]));
     CHECK_CUDA(cudaMemcpyAsync(footstep::bigF_column, footstep::h_bigF_column, footstep::row_bigF * footstep::col_bigF * sizeof(float), cudaMemcpyHostToDevice, cuda_utils_->streams_[0]));
+
+    footstep::SetupCUDSSBatch();
+
+    // CHECK_CUDA(cudaMemset(footstep::d_hugeF, 0, footstep::row_hugeF * footstep::col_hugeF * sizeof(float)));
 
     // footstep::ConstructEandF(cuda_utils_->streams_[0]);
     // footstep::ConstructBigEAndF(footstep::bigE, footstep::bigF, cublas_handle_, cuda_utils_->streams_[0]);

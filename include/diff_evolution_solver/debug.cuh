@@ -88,6 +88,41 @@ void PrintMatrixByCol(float *obj_mat, int row, int size, std::string output_msg)
     printf("]\n");
 }
 
+// void PrintBatchResults(void** h_batch_data, int batch_size, int row_batch_data, int col_batch_data) {
+//     // 分配主机内存来存储结果
+//     float** results_h = (float**)malloc(batch_size * sizeof(float*));
+    
+//     for (int i = 0; i < batch_size; ++i) {
+//         // 为每个批次结果分配内存
+//         results_h[i] = (float*)malloc(row_batch_data * col_batch_data * sizeof(float));
+        
+//         // 将设备内存中的结果复制到主机内存
+//         CHECK_CUDA(cudaMemcpy(results_h[i], h_batch_data[i], 
+//             row_batch_data * col_batch_data * sizeof(float), cudaMemcpyDeviceToHost));
+        
+//         // 打印结果
+//         printf("Batch %d results:\n", i);
+//         printf("[");
+//         for (int j = 0; j < row_batch_data; ++j) {
+//             for(int k = 0; k < col_batch_data; ++k){
+//                 printf("%f ", results_h[i][j*col_batch_data + k]);
+//             }
+//             printf("\n");
+//         }
+//         printf("]");
+//         printf("\n");
+        
+//         // 释放为当前批次分配的内存
+//         free(results_h[i]);
+        
+//         // 如果只需要打印第一个批次，则在此处跳出循环
+//         if (i == 0) break;  // 原代码中的 break 语句保留
+//     }
+    
+//     // 释放结果数组
+//     free(results_h);
+// }
+
 void PrintFitnesssWithParam(float *obj_mat, float *param_mat, int row, int obj_mat_col, int dims, std::string output_msg){
     // printf("%s\n",output_msg);
     std::cout<<output_msg<<std::endl;

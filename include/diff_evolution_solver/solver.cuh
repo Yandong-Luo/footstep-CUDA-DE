@@ -91,7 +91,14 @@ namespace cudaprocess{
             float *quadratic_score, *h_quadratic_score;
 
 
-            cublasHandle_t cublas_handle_; 
+            cublasHandle_t cublas_handle_;
+            cudssHandle_t cudss_handle_;
+
+            cudssStatus_t cudss_status_;
+
+            cudssConfig_t cudss_solverConfig;
+            cudssData_t cudss_solverData;
+
             int max_lambda;
             CudaParamIndividual *result;
             CudaParamIndividual *host_result;

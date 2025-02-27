@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <iomanip>
+#include <vector>
 
 // 全局常量
 const int state_dims = 5;
@@ -26,11 +27,65 @@ void PrintMatrix(const Eigen::MatrixXf& matrix, const std::string& name) {
 // 打印内存布局
 void PrintMemoryLayout(const float* data, int size, const std::string& name) {
     std::cout << name << " memory layout: ";
-    for (int i = 0; i < size && i < 20; i++) { // 仅打印前20个元素
+    for (int i = 0; i < size; i++) { // 仅打印前20个元素
         std::cout << data[i] << " ";
     }
-    if (size > 20) std::cout << "...";
+    // if (size > 20) std::cout << "...";
     std::cout << std::endl;
+}
+
+// 打印CSR格式数据 - 完整版
+void PrintCSR(const std::vector<int>& offsets, const std::vector<int>& columns, 
+    const std::vector<float>& values, const std::string& name) {
+    std::cout << "=== CSR Format for " << name << " ===\n";
+
+    std::cout << "Row offsets (" << offsets.size() << " elements): [";
+    for (size_t i = 0; i < offsets.size(); ++i) {
+    std::cout << offsets[i];
+    if (i < offsets.size() - 1) std::cout << ", ";
+    }
+    std::cout << "]\n";
+
+    std::cout << "Column indices (" << columns.size() << " elements): [";
+    for (size_t i = 0; i < columns.size(); ++i) {
+    std::cout << columns[i];
+    if (i < columns.size() - 1) std::cout << ", ";
+    }
+    std::cout << "]\n";
+
+    std::cout << "Values (" << values.size() << " elements): [";
+    for (size_t i = 0; i < values.size(); ++i) {
+    std::cout << std::fixed << std::setprecision(6) << values[i];
+    if (i < values.size() - 1) std::cout << ", ";
+    }
+    std::cout << "]\n";
+}
+
+// 构建CSR格式
+void BuildCSRFromMatrix(const Eigen::MatrixXf& matrix, 
+                        std::vector<int>& row_offsets, 
+                        std::vector<int>& column_indices, 
+                        std::vector<float>& values) {
+    // 清空输入向量
+    row_offsets.clear();
+    column_indices.clear();
+    values.clear();
+    
+    // 为row_offsets预留空间（行数+1）
+    row_offsets.reserve(matrix.rows() + 1);
+    row_offsets.push_back(0); // 第一个元素总是0
+    
+    // 计算非零元素数量和CSR格式
+    for (int i = 0; i < matrix.rows(); ++i) {
+        for (int j = 0; j < matrix.cols(); ++j) {
+            float val = matrix(i, j);
+            if (val != 0.0f) {
+                column_indices.push_back(j);
+                values.push_back(val);
+            }
+        }
+        row_offsets.push_back(values.size()); // 每行结束后的累计非零元素数
+    }
 }
 
 void ConstructBigEAndF(
@@ -126,7 +181,22 @@ int main() {
     PrintMemoryLayout(bigE_row.data(), bigE_row.size(), "bigE_row");
     PrintMemoryLayout(bigE_col.data(), bigE_col.size(), "bigE_col");
     PrintMemoryLayout(bigF_row.data(), bigF_row.size(), "bigF_row");
-    PrintMemoryLayout(bigF_col.data(), bigF_col.size(), "bigF_row");
+    PrintMemoryLayout(bigF_col.data(), bigF_col.size(), "bigF_col");
+    
+    // 为bigF_col构建CSR格式
+    std::vector<int> csr_row_offsets;
+    std::vector<int> csr_column_indices;
+    std::vector<float> csr_values;
+    
+    BuildCSRFromMatrix(bigF_col, csr_row_offsets, csr_column_indices, csr_values);
+    
+    // 打印CSR格式信息
+    PrintCSR(csr_row_offsets, csr_column_indices, csr_values, "bigF_col");
+    
+    // 计算非零元素数量
+    std::cout << "\n总非零元素数量: " << csr_values.size() << std::endl;
+    std::cout << "矩阵维度: " << bigF_col.rows() << " x " << bigF_col.cols() << std::endl;
+    std::cout << "稀疏度: " << 100.0 * (1.0 - static_cast<double>(csr_values.size()) / (bigF_col.rows() * bigF_col.cols())) << "%" << std::endl;
     
     return 0;
 }

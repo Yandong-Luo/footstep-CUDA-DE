@@ -66,6 +66,8 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "core": "cpp",
-        "specialfunctions": "cpp"
+        "specialfunctions": "cpp",
+        "regex": "cpp",
+        "iomanip": "cpp"
     }
 }

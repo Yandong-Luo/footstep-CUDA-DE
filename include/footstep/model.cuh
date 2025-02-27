@@ -328,7 +328,7 @@ namespace footstep{
     /************************Version 2*********************** */
     // Construct matrix D (D = C - HugeE X_0)
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void ConstructMatrixD(const float *bigE_column, float *D){
+    __global__ void ConstructMatrixD(const float *bigE_column, void **d_batch_D){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
         // ########### 
         // Update State
@@ -349,7 +349,8 @@ namespace footstep{
         // }
 
         // skip the initial state
-        float *N_states = D + blockIdx.x * N * state_dims;
+        // float *N_states = D + blockIdx.x * N * state_dims;
+        float *N_states = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
 
         // D = cluster_state + blockIdx.x * (N + 1) * state_dims + state_dims;
         

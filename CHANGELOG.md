@@ -269,3 +269,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.20] - 2025-2-25
 ### Changed
 - Yandong Luo: Use Eigen to create column layout bigE and bigF for future batch cudss. Based on cublas_dx to finish matrix.
+
+## [0.3.21] - 2025-2-25
+### Changed
+- Yandong Luo: The solution part of cudss is completed. But there is an error when running cudss.

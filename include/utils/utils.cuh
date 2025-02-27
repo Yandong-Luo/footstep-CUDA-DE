@@ -43,6 +43,16 @@ namespace cudaprocess {
         }                                                                           \
     } while (0)
 
+    // CUDSS
+    #define CUDSS_CALL_AND_CHECK(call, status, msg) \
+    do { \
+        status = call; \
+        if (status != CUDSS_STATUS_SUCCESS) { \
+            printf("Example FAILED: CUDSS call ended unsuccessfully with status = %d, details: " #msg "\n", status); \
+            exit(-2); \
+        } \
+    } while(0);
+
     constexpr int stream_cnt = 7;
     struct CudaUtil {
     cudaStream_t streams_[stream_cnt];

@@ -183,6 +183,10 @@ void ComputeBigEAndF_RowMajor(
 
 void ConstructBigEAndFBasedEigen();
 
+void BuildCSRFromMatrix();
+
+void SetupCUDSSBatch();
+
 // bigF Matrix ()
 const int row_bigF = N * state_dims, col_bigF = N * control_dims;
 // extern float h_bigF[13500];
@@ -190,30 +194,56 @@ const int row_bigF = N * state_dims, col_bigF = N * control_dims;
 extern float *bigF;
 extern float *h_bigF;
 
+extern float *bigE_column;
+extern float *h_bigE_column;
 extern float *bigF_column;
 extern float *h_bigF_column;
 
 // hugeF Matrix ()
-const int row_hugeF = CUDA_SOLVER_POP_SIZE * row_bigF, col_hugeF = CUDA_SOLVER_POP_SIZE * col_bigF;
+const int row_hugeF = CUDA_SOLVER_POP_SIZE, col_hugeF = row_bigF * col_bigF;
 // extern float h_bigF[13500];
 
-extern float *d_hugeF;
-extern float *h_hugeF;
+extern void **d_batch_hugeF;
+extern void **h_batch_hugeF;
 
 // D matrix record N_state - hugeE * X_0
-const int row_D = CUDA_SOLVER_POP_SIZE * row_bigF, col_D = 1;
-extern float *d_D;
-extern float *h_D;
+const int row_D = CUDA_SOLVER_POP_SIZE, col_D = N * state_dims;
+extern void *d_D;
+extern void *h_D;
 
-const int row_U = CUDA_SOLVER_POP_SIZE * N * control_dims, col_U = 1;
-extern float *d_U;
-extern float *h_U;
+extern void **d_batch_D;
+extern void **h_batch_D;
+
+const int row_U = CUDA_SOLVER_POP_SIZE, col_U = N * control_dims;
+extern void **d_batch_u;
+extern void **h_batch_u;
+
+// const int row_U = CUDA_SOLVER_POP_SIZE * N * control_dims, col_U = 1;
+// extern float *d_U;
+// extern float *h_U;
 
 extern float *d_sol_state;
 extern float *h_sol_state;
 
 extern float *d_sol_score;
 extern float *h_sol_score;
+
+constexpr int batch_size = CUDA_SOLVER_POP_SIZE;
+
+extern std::vector<int> bigF_csr_row_offsets;
+extern std::vector<int> bigF_csr_column_indices;
+extern std::vector<float> bigF_csr_values;
+
+extern int *d_csr_offsets, *d_csr_columns;
+extern float *d_csr_values;
+extern int nnz;         // number of none zero elements in matrix bigF
+
+extern void **d_batch_csr_offsets;
+extern void **d_batch_csr_columns;
+extern void **d_batch_csr_values;
+extern void **h_batch_csr_offsets;
+extern void **h_batch_csr_columns;
+extern void **h_batch_csr_values;
 
 // ################################
 // ########## Penalty #############
