@@ -165,9 +165,6 @@ const int row_hugeE = CUDA_SOLVER_POP_SIZE * row_bigE, col_hugeE = CUDA_SOLVER_P
 extern float *d_hugeE;
 extern float *h_hugeE;
 
-extern float *bigE_column;
-extern float *h_bigE_column;
-
 // void **batch_bigF;
 // void **batch_u;
 
@@ -244,6 +241,16 @@ extern void **d_batch_csr_values;
 extern void **h_batch_csr_offsets;
 extern void **h_batch_csr_columns;
 extern void **h_batch_csr_values;
+
+extern int* row_array_HugeF;
+extern int* col_array_HugeF;
+extern int* nnz_array;
+extern int* row_array_D;
+extern int* col_array_D;
+extern int* ld_array_D;
+extern int* row_array_U;
+extern int* col_array_U;
+extern int* ld_array_U;
 
 // ################################
 // ########## Penalty #############

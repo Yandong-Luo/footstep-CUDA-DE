@@ -215,6 +215,16 @@ namespace footstep{
     void **h_batch_csr_columns = nullptr;
     void **h_batch_csr_values = nullptr;
 
+    int* row_array_HugeF = nullptr;
+    int* col_array_HugeF = nullptr;
+    int* nnz_array = nullptr;
+    int* row_array_D = nullptr;
+    int* col_array_D = nullptr;
+    int* ld_array_D = nullptr;
+    int* row_array_U = nullptr;
+    int* col_array_U = nullptr;
+    int* ld_array_U = nullptr;
+
     // void ConstructEandF(cudaStream_t stream){
 
     //     CHECK_CUDA(cudaMemcpy(d_F, h_F, row_F * col_F * sizeof(float), cudaMemcpyHostToDevice));
@@ -349,6 +359,33 @@ namespace footstep{
         std::cout << "]\n";
     }
 
+    // 打印CSR格式数据 - 完整版
+    void PrintCSR(const std::vector<int>& offsets, const std::vector<int>& columns, 
+        const std::vector<float>& values, const std::string& name) {
+        std::cout << "=== CSR Format for " << name << " ===\n";
+
+        std::cout << "Row offsets (" << offsets.size() << " elements): [";
+        for (size_t i = 0; i < offsets.size(); ++i) {
+            std::cout << offsets[i];
+            if (i < offsets.size() - 1) std::cout << ", ";
+        }
+        std::cout << "]\n";
+
+        std::cout << "Column indices (" << columns.size() << " elements): [";
+        for (size_t i = 0; i < columns.size(); ++i) {
+            std::cout << columns[i];
+            if (i < columns.size() - 1) std::cout << ", ";
+        }
+        std::cout << "]\n";
+
+        std::cout << "Values (" << values.size() << " elements): [";
+        for (size_t i = 0; i < values.size(); ++i) {
+            std::cout << std::fixed << values[i];
+            if (i < values.size() - 1) std::cout << ", ";
+        }
+        std::cout << "]\n";
+    }
+
     // 构建CSR格式
     void BuildCSRFromMatrix(const Eigen::MatrixXf& matrix, 
         std::vector<int>& row_offsets, 
@@ -447,9 +484,21 @@ namespace footstep{
 
         // 为bigF_col构建CSR格式
         BuildCSRFromMatrix(bigF_col, bigF_csr_row_offsets, bigF_csr_column_indices, bigF_csr_values);
+
+        PrintCSR(bigF_csr_row_offsets, bigF_csr_column_indices, bigF_csr_values, "bigF_col");
     }
 
     void SetupCUDSSBatch(){
+        row_array_HugeF = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        col_array_HugeF = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        nnz_array = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        row_array_D = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        col_array_D = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        ld_array_D = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        row_array_U = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        col_array_U = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+        ld_array_U = (int*)malloc(CUDA_SOLVER_POP_SIZE * sizeof(int));
+
         // batch D
         CHECK_CUDA(cudaHostAlloc(&footstep::h_batch_D, batch_size * sizeof(float *), cudaHostAllocDefault));
         CHECK_CUDA(cudaMalloc(&footstep::d_batch_D, batch_size * sizeof(float*)));
@@ -464,18 +513,30 @@ namespace footstep{
 
         nnz = bigF_csr_values.size();
         // csr row offsets
-        CHECK_CUDA(cudaHostAlloc(&footstep::h_batch_csr_offsets, batch_size * sizeof(float *), cudaHostAllocDefault));
-        CHECK_CUDA(cudaMalloc(&footstep::d_batch_csr_offsets, batch_size * sizeof(float*)));
+        CHECK_CUDA(cudaHostAlloc(&footstep::h_batch_csr_offsets, batch_size * sizeof(int *), cudaHostAllocDefault));
+        CHECK_CUDA(cudaMalloc(&footstep::d_batch_csr_offsets, batch_size * sizeof(int*)));
 
         // csr colum indices
-        CHECK_CUDA(cudaHostAlloc(&footstep::h_batch_csr_columns, batch_size * sizeof(float *), cudaHostAllocDefault));
-        CHECK_CUDA(cudaMalloc(&footstep::d_batch_csr_columns, batch_size * sizeof(float*)));
+        CHECK_CUDA(cudaHostAlloc(&footstep::h_batch_csr_columns, batch_size * sizeof(int *), cudaHostAllocDefault));
+        CHECK_CUDA(cudaMalloc(&footstep::d_batch_csr_columns, batch_size * sizeof(int*)));
 
         // csr value
         CHECK_CUDA(cudaHostAlloc(&footstep::h_batch_csr_values, batch_size * sizeof(float *), cudaHostAllocDefault));
         CHECK_CUDA(cudaMalloc(&footstep::d_batch_csr_values, batch_size * sizeof(float*)));
 
         for (int i = 0; i < batch_size; ++i) {
+            row_array_HugeF[i] = footstep::row_bigF;
+            col_array_HugeF[i] = footstep::col_bigF;
+            nnz_array[i] = footstep::nnz;
+            
+            row_array_D[i] = footstep::col_D;
+            col_array_D[i] = 1;
+            ld_array_D[i] = footstep::col_D;
+            
+            row_array_U[i] = footstep::col_U;
+            col_array_U[i] = 1;
+            ld_array_U[i] = footstep::col_U;
+            
             // batch D
             CHECK_CUDA(cudaMalloc((void**)&footstep::h_batch_D[i], footstep::N * footstep::state_dims * sizeof(float)));  // 分配 GPU 内存
 
@@ -487,12 +548,12 @@ namespace footstep{
             CHECK_CUDA(cudaMemcpy(footstep::h_batch_hugeF[i], footstep::h_bigF_column, footstep::row_bigF * footstep::col_bigF * sizeof(float), cudaMemcpyHostToDevice));
 
             // csr row offsets
-            CHECK_CUDA(cudaMalloc((void**)&footstep::h_batch_csr_offsets[i], bigF_csr_row_offsets.size() * sizeof(float)));  // 分配 GPU 内存
-            CHECK_CUDA(cudaMemcpy(footstep::h_batch_csr_offsets[i], bigF_csr_row_offsets.data(), bigF_csr_row_offsets.size() * sizeof(float), cudaMemcpyHostToDevice));
+            CHECK_CUDA(cudaMalloc((void**)&footstep::h_batch_csr_offsets[i], bigF_csr_row_offsets.size() * sizeof(int)));  // 分配 GPU 内存
+            CHECK_CUDA(cudaMemcpy(footstep::h_batch_csr_offsets[i], bigF_csr_row_offsets.data(), bigF_csr_row_offsets.size() * sizeof(int), cudaMemcpyHostToDevice));
 
             // csr colum indices
-            CHECK_CUDA(cudaMalloc((void**)&footstep::h_batch_csr_columns[i], bigF_csr_column_indices.size() * sizeof(float)));  // 分配 GPU 内存
-            CHECK_CUDA(cudaMemcpy(footstep::h_batch_csr_columns[i], bigF_csr_column_indices.data(), bigF_csr_column_indices.size() * sizeof(float), cudaMemcpyHostToDevice));
+            CHECK_CUDA(cudaMalloc((void**)&footstep::h_batch_csr_columns[i], bigF_csr_column_indices.size() * sizeof(int)));  // 分配 GPU 内存
+            CHECK_CUDA(cudaMemcpy(footstep::h_batch_csr_columns[i], bigF_csr_column_indices.data(), bigF_csr_column_indices.size() * sizeof(int), cudaMemcpyHostToDevice));
 
             // csr value
             CHECK_CUDA(cudaMalloc((void**)&footstep::h_batch_csr_values[i], bigF_csr_values.size() * sizeof(float)));  // 分配 GPU 内存
@@ -506,9 +567,9 @@ namespace footstep{
         CHECK_CUDA(cudaMemcpy(footstep::d_batch_hugeF, footstep::h_batch_hugeF, batch_size * sizeof(float*), cudaMemcpyHostToDevice));
 
         // csr row offsets
-        CHECK_CUDA(cudaMemcpy(footstep::d_batch_csr_offsets, footstep::h_batch_csr_offsets, batch_size * sizeof(float*), cudaMemcpyHostToDevice));
+        CHECK_CUDA(cudaMemcpy(footstep::d_batch_csr_offsets, footstep::h_batch_csr_offsets, batch_size * sizeof(int*), cudaMemcpyHostToDevice));
         // csr colum indices
-        CHECK_CUDA(cudaMemcpy(footstep::d_batch_csr_columns, footstep::h_batch_csr_columns, batch_size * sizeof(float*), cudaMemcpyHostToDevice));
+        CHECK_CUDA(cudaMemcpy(footstep::d_batch_csr_columns, footstep::h_batch_csr_columns, batch_size * sizeof(int*), cudaMemcpyHostToDevice));
         // csr value
         CHECK_CUDA(cudaMemcpy(footstep::d_batch_csr_values, footstep::h_batch_csr_values, batch_size * sizeof(float*), cudaMemcpyHostToDevice));
 
@@ -520,20 +581,20 @@ namespace footstep{
         // CHECK_CUDA(cudaMemcpy(&d_csr_columns, bigF_csr_column_indices.data(), bigF_csr_column_indices.size() * sizeof(int), cudaMemcpyHostToDevice));
         // CHECK_CUDA(cudaMemcpy(&d_csr_values, bigF_csr_values.data(), bigF_csr_values.size() * sizeof(float), cudaMemcpyHostToDevice));
 
-        float** results_h = (float**)malloc(batch_size * sizeof(float*));
+        int** results_h = (int**)malloc(batch_size * sizeof(int*));
         for (int i = 0; i < batch_size; ++i) {
-            results_h[i] = (float*)malloc(footstep::row_bigF * footstep::col_bigF * sizeof(float));
+            results_h[i] = (int*)malloc(bigF_csr_column_indices.size() * sizeof(int));
             
             // 将设备内存中的结果复制到主机内存
-            CHECK_CUDA(cudaMemcpy(results_h[i], footstep::h_batch_hugeF[i], 
-                    footstep::row_bigF * footstep::col_bigF * sizeof(float), cudaMemcpyDeviceToHost));
+            CHECK_CUDA(cudaMemcpy(results_h[i], footstep::h_batch_csr_columns[i], 
+                bigF_csr_column_indices.size() * sizeof(int), cudaMemcpyDeviceToHost));
             
             // 打印结果
             printf("Batch %d results:\n", i);
             printf("[");
-            for (int j = 0; j < footstep::row_bigF; ++j) {
-                for(int k = 0; k < footstep::col_bigF;++k){
-                    printf("%f ",results_h[i][k*footstep::row_bigF + j]);
+            for (int j = 0; j < bigF_csr_column_indices.size(); ++j) {
+                for(int k = 0; k < 1;++k){
+                    printf("%d ",results_h[i][k*bigF_csr_column_indices.size() + j]);
                 }
                 printf("\n");
             }

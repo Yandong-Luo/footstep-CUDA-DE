@@ -352,6 +352,13 @@ namespace footstep{
         // float *N_states = D + blockIdx.x * N * state_dims;
         float *N_states = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
 
+        if(blockIdx.x == 0 && threadIdx.x == 0){
+            for(int i = 0; i < footstep::N * footstep::state_dims; ++i){
+                printf("%f ", N_states[i]);
+            }
+            printf("\n");
+        }
+
         // D = cluster_state + blockIdx.x * (N + 1) * state_dims + state_dims;
         
         extern __shared__ __align__(16) char smem[];
