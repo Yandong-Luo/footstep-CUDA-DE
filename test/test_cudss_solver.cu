@@ -6,33 +6,25 @@
 
 #include "cudss.h"
 
-/*
-    This example demonstrates usage of cuDSS APIs for solving
-    a linear least squares problem with a rectangular matrix E:
-                               E^T*E*x = E^T*d,
-    where:
-        E is the rectangular input matrix (50x5),
-        d is the right-hand side vector (50x1),
-        x is the solution vector (5x1).
-*/
-
 #define CUDSS_EXAMPLE_FREE \
     do { \
-        free(csr_offsets_h); \
-        free(csr_columns_h); \
-        free(csr_values_h); \
-        free(x_values_h); \
-        free(d_values_h); \
-        free(E_values_h); \
-        free(ETd_values_h); \
-        free(ETE_values_h); \
-        cudaFree(csr_offsets_d); \
-        cudaFree(csr_columns_d); \
-        cudaFree(csr_values_d); \
-        cudaFree(x_values_d); \
-        cudaFree(d_values_d); \
-        cudaFree(E_values_d); \
-        cudaFree(ETd_values_d); \
+        for (int i = 0; i < batchCount; i++) { \
+            free(csr_offsets_h[i]); \
+            free(csr_columns_h[i]); \
+            free(csr_values_h[i]); \
+            free(x_values_h[i]); \
+            free(b_values_h[i]); \
+            cudaFree(batch_csr_offsets_h[i]); \
+            cudaFree(batch_csr_columns_h[i]); \
+            cudaFree(batch_csr_values_h[i]); \
+            cudaFree(batch_x_values_h[i]); \
+            cudaFree(batch_b_values_h[i]); \
+        } \
+        cudaFree(batch_csr_offsets_d); \
+        cudaFree(batch_csr_columns_d); \
+        cudaFree(batch_csr_values_d); \
+        cudaFree(batch_b_values_d); \
+        cudaFree(batch_x_values_d); \
     } while(0);
 
 #define CUDA_CALL_AND_CHECK(call, msg) \
@@ -56,278 +48,320 @@
         } \
     } while(0);
 
-// Function to compute E^T * E
-void computeETE(const double* E, int rows, int cols, double* ETE) {
-    // Simple CPU implementation to compute E^T * E
-    for (int i = 0; i < cols; i++) {
-        for (int j = 0; j < cols; j++) {
-            double sum = 0.0;
-            for (int k = 0; k < rows; k++) {
-                sum += E[k * cols + i] * E[k * cols + j];
-            }
-            ETE[i * cols + j] = sum;
+    void print_matrix_A(int* csr_offsets, int* csr_columns, float* csr_values, int rows, int cols) {
+        printf("\n----- 矩阵A的完整内容 (%dx%d) -----\n", rows, cols);
+        
+        /* 为完整矩阵分配内存 */
+        float* full_matrix = (float*)calloc(rows * cols, sizeof(float));
+        if (!full_matrix) {
+            printf("为完整矩阵分配内存失败\n");
+            return;
         }
-    }
-}
-
-// Function to compute E^T * d
-void computeETd(const double* E, int rows, int cols, const double* d, double* ETd) {
-    // Simple CPU implementation to compute E^T * d
-    for (int i = 0; i < cols; i++) {
-        double sum = 0.0;
-        for (int k = 0; k < rows; k++) {
-            sum += E[k * cols + i] * d[k];
-        }
-        ETd[i] = sum;
-    }
-}
-
-// Function to convert dense matrix to CSR format
-void denseToCSR(const double* dense, int rows, int cols, int* offsets, int* columns, double* values, int* nnz) {
-    int count = 0;
-    offsets[0] = 0;
-    
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            double val = dense[i * cols + j];
-            if (fabs(val) > 1e-10) {
-                columns[count] = j;
-                values[count] = val;
-                count++;
+        
+        /* 将CSR格式转换为完整矩阵 */
+        for (int i = 0; i < rows; i++) {
+            int start = csr_offsets[i];
+            int end = csr_offsets[i + 1];
+            
+            for (int j = start; j < end; j++) {
+                int col = csr_columns[j];
+                float val = csr_values[j];
+                
+                if (col < cols) {
+                    full_matrix[i * cols + col] = val;
+                }
             }
         }
-        offsets[i + 1] = count;
+        
+        /* 打印完整矩阵 */
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                printf("%9.4f ", full_matrix[i * cols + j]);
+            }
+            printf("\n");
+        }
+        
+        /* 释放完整矩阵内存 */
+        free(full_matrix);
     }
-    *nnz = count;
-}
 
-int main(int argc, char *argv[]) {
-    printf("---------------------------------------------------------\n");
-    printf("Linear least squares solver for a 50x5 rectangular matrix\n");
-    printf("---------------------------------------------------------\n");
+int main (int argc, char *argv[]) {
+    printf("----------------------------------------------------------\n");
+    printf("cuDSS example: solving two real linear systems of size 5x5 and 6x6\n"
+        "with symmetric positive-definite matrices \n");
+    printf("----------------------------------------------------------\n");
     cudaError_t cuda_error = cudaSuccess;
     cudssStatus_t status = CUDSS_STATUS_SUCCESS;
+    int batchCount = 2;
+    int N = 5;
+    int state_dims = 5;
+    int control_dims = 3;
+    int row_bigF = N * state_dims;
+    int col_bigF = N * control_dims;
+    int row_u = N * control_dims;
+    int col_u = 1;
+    int row_D = N * state_dims;
+    int col_D = 1;
 
-    // Matrix dimensions
-    int rows = 50;
-    int cols = 5;
-    int nrhs = 1;
+    // int batch_row_bigF[batchCount] = {row_bigF};
+    // int batch_row_bigF[batchCount] = {row_bigF};
+    int batch_row_bigF[batchCount];
+    int batch_col_bigF[batchCount];
+    int batch_row_u[batchCount];
+    int batch_col_u[batchCount];
+    int batch_row_D[batchCount];
+    int batch_col_D[batchCount];
+
+
+    int csr_offsets[] = {0, 1, 2, 3, 4, 5, 7, 9, 11, 13, 15, 18, 21, 24, 27, 30, 34, 38, 42, 46, 50, 55, 60, 65, 70, 75};
+    int csr_columns[] = {0, 1, 0, 1, 2, 0, 3, 1, 4, 0, 3, 1, 4, 2, 5, 0, 3, 6, 1, 4, 7, 0, 3, 6, 1, 4, 7, 2, 5, 8, 0, 3, 6, 9, 1, 4, 7, 10, 0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11, 0, 3, 6, 9, 12, 1, 4, 7, 10, 13, 0, 3, 6, 9, 12, 1, 4, 7, 10, 13, 2, 5, 8, 11, 14};
+    float csr_values[] = {-0.892976, -0.892976, -5.034157, -5.034157, 1.000000, -3.476333, -0.892976, -3.476333, -0.892976, -9.529538, -5.034157, -9.529538, -5.034157, 1.000000, 1.000000, -8.366567, -3.476333, -0.892976, -8.366567, -3.476333, -0.892976, -18.039185, -9.529538, -5.034157, -18.039185, -9.529538, -5.034157, 1.000000, 1.000000, 1.000000, -17.623661, -8.366567, -3.476333, -0.892976, -17.623661, -8.366567, -3.476333, -0.892976, -34.147739, -18.039185, -9.529538, -5.034157, -34.147739, -18.039185, -9.529538, -5.034157, 1.000000, 1.000000, 1.000000, 1.000000, -35.147114, -17.623661, -8.366567, -3.476333, -0.892976, -35.147114, -17.623661, -8.366567, -3.476333, -0.892976, -64.640846, -34.147739, -18.039185, -9.529538, -5.034157, -64.640846, -34.147739, -18.039185, -9.529538, -5.034157, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000};
     
-    // Initialize matrix E (50x5)
-    double E_data[50][5] = {
-        {1.000000, 0.000000, 0.513166, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 0.513166, 0.000000},
-        {0.000000, 0.000000, 1.892976, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 1.892976, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 1.484576, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 1.484576, 0.000000},
-        {0.000000, 0.000000, 3.583357, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 3.583357, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 3.323433, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 3.323433, 0.000000},
-        {0.000000, 0.000000, 6.783209, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 6.783209, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 6.804344, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 6.804344, 0.000000},
-        {0.000000, 0.000000, 12.840450, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 12.840450, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 13.393624, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 13.393624, 0.000000},
-        {0.000000, 0.000000, 24.306662, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 24.306662, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 25.866974, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 25.866974, 0.000000},
-        {0.000000, 0.000000, 46.011921, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 46.011921, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 49.478722, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 49.478722, 0.000000},
-        {0.000000, 0.000000, 87.099457, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 87.099457, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 94.175186, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 94.175186, 0.000000},
-        {0.000000, 0.000000, 164.877167, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 164.877167, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 178.784515, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 178.784515, 0.000000},
-        {0.000000, 0.000000, 312.108490, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 312.108490, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000},
-        {1.000000, 0.000000, 338.947937, 0.000000, 0.000000},
-        {0.000000, 1.000000, 0.000000, 338.947937, 0.000000},
-        {0.000000, 0.000000, 590.813843, 0.000000, 0.000000},
-        {0.000000, 0.000000, 0.000000, 590.813843, 0.000000},
-        {0.000000, 0.000000, 0.000000, 0.000000, 1.000000}
+    float D[] = {
+        -0.050405, -0.009804, -0.365249, -0.073890, -1.185696, 
+        -0.087216, 0.051210, 0.100456, 0.904777, -1.555607, 
+        0.087744, 0.519485, 1.767516, 3.947194, -1.578014, 
+        0.684432, 1.680078, 3.823951, 6.861454, -1.529942, 
+        1.366274, 2.746448, 1.040091, 0.431384, -1.584323
     };
+    int csr_offsets_len = sizeof(csr_offsets) / sizeof(csr_offsets[0]);
+    int csr_values_len = sizeof(csr_values) / sizeof(csr_values[0]);
+    int csr_columns_len = sizeof(csr_columns) / sizeof(csr_columns[0]);
+    printf("nnz:%d csr_columns_len:%d\n", csr_values_len, csr_columns_len);
 
-    // Initialize vector D (50x1)
-    double d_data[50] = {
-        0.518370, 0.585255, 3.901861, 5.020326, 0.845929, 0.967649, 1.156522,
-        4.637585, 5.882935, 0.874081, 1.375974, 1.688110, 3.280005, 4.520342,
-        0.886917, 1.594215, 2.038698, 1.036706, 2.486008, 0.907142, 1.591695,
-        2.200290, -0.964606, 0.884318, 0.944536, 1.438071, 2.250700, -1.878772,
-        0.318334, 1.002233, 1.264941, 2.300803, -1.345858, 0.837540, 1.068120,
-        1.207192, 2.436567, 0.306157, 1.885578, 1.110797, 1.324073, 2.655854,
-        1.858718, 2.247999, 1.108310, 1.500000, 2.800000, 1.000000, 0.000000,
-        1.078987
-    };
-
-    // Host memory pointers
-    int *csr_offsets_h = NULL;
-    int *csr_columns_h = NULL;
-    double *csr_values_h = NULL;
-    double *x_values_h = NULL;
-    double *d_values_h = NULL;
-    double *E_values_h = NULL;
-    double *ETd_values_h = NULL;
-    double *ETE_values_h = NULL;
-
-    // Device memory pointers
-    int *csr_offsets_d = NULL;
-    int *csr_columns_d = NULL;
-    double *csr_values_d = NULL;
-    double *x_values_d = NULL;
-    double *d_values_d = NULL;
-    double *E_values_d = NULL;
-    double *ETd_values_d = NULL;
-
-    // Allocate host memory
-    E_values_h = (double*)malloc(rows * cols * sizeof(double));
-    d_values_h = (double*)malloc(rows * sizeof(double));
-    ETd_values_h = (double*)malloc(cols * sizeof(double));
-    ETE_values_h = (double*)malloc(cols * cols * sizeof(double));
-    x_values_h = (double*)malloc(cols * sizeof(double));
     
-    // Maximum number of non-zeros for a 5x5 matrix is 25, but we'll allocate more
-    int max_nnz = cols * cols;
-    csr_offsets_h = (int*)malloc((cols + 1) * sizeof(int));
-    csr_columns_h = (int*)malloc(max_nnz * sizeof(int));
-    csr_values_h = (double*)malloc(max_nnz * sizeof(double));
+    int n[2]    = {5, 6};
+    int nnz[2]  = {csr_values_len, csr_values_len};
+    int nrhs[2] = {1, 1};
 
-    if (!E_values_h || !d_values_h || !ETd_values_h || !ETE_values_h || 
-        !x_values_h || !csr_offsets_h || !csr_columns_h || !csr_values_h) {
-        printf("Error: host memory allocation failed\n");
-        return -1;
-    }
+    int *csr_offsets_h[2] = { NULL };
+    int *csr_columns_h[2] = { NULL };
+    float *csr_values_h[2] = { NULL };
+    float *x_values_h[2] = { NULL }, *b_values_h[2] = { NULL };
 
-    // Copy matrix E and vector d data to flattened arrays
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            E_values_h[i * cols + j] = E_data[i][j];
+    // (intermediate) host arrays with device pointers for the batch
+    int *batch_csr_offsets_h[2] = { NULL };
+    int *batch_csr_columns_h[2] = { NULL };
+    float *batch_csr_values_h[2] = { NULL };
+    float *batch_x_values_h[2] = { NULL }, *batch_b_values_h[2] = { NULL };
+
+    // int *batch_row
+
+    void **batch_csr_offsets_d = NULL;
+    void **batch_csr_columns_d = NULL;
+    void **batch_csr_values_d = NULL;
+    void **batch_x_values_d = NULL, **batch_b_values_d = NULL;
+
+    /* Allocate host memory for the sparse input matrix A,
+    right-hand side x and solution b*/
+    for (int i = 0; i < batchCount; i++) {
+        csr_offsets_h[i] = (int*)malloc(sizeof(csr_offsets));
+        csr_columns_h[i] = (int*)malloc(sizeof(csr_columns));
+        csr_values_h[i] = (float*)malloc(sizeof(csr_values));
+        x_values_h[i] = (float*)malloc(row_u * col_u * sizeof(float));
+        b_values_h[i] = (float*)malloc(row_D * col_D * sizeof(float));
+
+        memcpy(csr_offsets_h[i], csr_offsets, sizeof(csr_offsets));
+        memcpy(csr_columns_h[i], csr_columns, sizeof(csr_columns));
+        memcpy(csr_values_h[i], csr_values, sizeof(csr_values));
+        memcpy(b_values_h[i], D, sizeof(D));
+        memset(x_values_h[i], 0, col_bigF * sizeof(float)); // 初始化解向量为零
+
+        if (!csr_offsets_h[i] || ! csr_columns_h[i] || !csr_values_h[i] ||
+            !x_values_h[i] || !b_values_h[i]) {
+            printf("Error: host memory allocation failed\n");
+            return -1;
         }
-        d_values_h[i] = d_data[i];
     }
 
-    // Compute E^T * E
-    computeETE(E_values_h, rows, cols, ETE_values_h);
-    
-    // Compute E^T * d
-    computeETd(E_values_h, rows, cols, d_values_h, ETd_values_h);
+    for (int i = 0; i < batchCount; i++) {
+        batch_row_bigF[i] = row_bigF;
+        batch_col_bigF[i] = col_bigF;
+        batch_row_u[i] = row_u;
+        batch_col_u[i] = col_u;
+        batch_row_D[i] = row_D;
+        batch_col_D[i] = col_D;
+    }
 
-    // Convert E^T * E to CSR format
-    int nnz = 0;
-    denseToCSR(ETE_values_h, cols, cols, csr_offsets_h, csr_columns_h, csr_values_h, &nnz);
+    for (int i = 0; i < batchCount; i++) {
+        /* Allocate device memory for A, x and b */
+        CUDA_CALL_AND_CHECK(cudaMalloc(&batch_csr_offsets_h[i], csr_offsets_len * sizeof(int)),
+            "cudaMalloc for csr_offsets");
+        CUDA_CALL_AND_CHECK(cudaMalloc(&batch_csr_columns_h[i], csr_columns_len * sizeof(int)),
+            "cudaMalloc for csr_columns");
+        CUDA_CALL_AND_CHECK(cudaMalloc(&batch_csr_values_h[i], csr_values_len * sizeof(float)),
+            "cudaMalloc for csr_values");
+        CUDA_CALL_AND_CHECK(cudaMalloc(&batch_b_values_h[i], row_D * col_D * sizeof(float)),
+            "cudaMalloc for b_values");
+        CUDA_CALL_AND_CHECK(cudaMalloc(&batch_x_values_h[i], row_u * col_u * sizeof(float)),
+            "cudaMalloc for x_values");
 
-    printf("Matrix E^T * E has %d non-zero elements\n", nnz);
+         /* Copy host memory to device for A and b */
+        CUDA_CALL_AND_CHECK(cudaMemcpy(batch_csr_offsets_h[i], csr_offsets, csr_offsets_len * sizeof(int),
+            cudaMemcpyHostToDevice), "cudaMemcpy for csr_offsets");
+        CUDA_CALL_AND_CHECK(cudaMemcpy(batch_csr_columns_h[i], csr_columns, csr_columns_len * sizeof(int),
+            cudaMemcpyHostToDevice), "cudaMemcpy for csr_columns");
+        CUDA_CALL_AND_CHECK(cudaMemcpy(batch_csr_values_h[i], csr_values, csr_values_len * sizeof(float),
+            cudaMemcpyHostToDevice), "cudaMemcpy for csr_values");
+        CUDA_CALL_AND_CHECK(cudaMemcpy(batch_b_values_h[i], D, row_D * col_D * sizeof(float),
+            cudaMemcpyHostToDevice), "cudaMemcpy for b_values");
+    }
 
-    // Allocate device memory
-    CUDA_CALL_AND_CHECK(cudaMalloc(&csr_offsets_d, (cols + 1) * sizeof(int)),
-                       "cudaMalloc for csr_offsets");
-    CUDA_CALL_AND_CHECK(cudaMalloc(&csr_columns_d, nnz * sizeof(int)),
-                       "cudaMalloc for csr_columns");
-    CUDA_CALL_AND_CHECK(cudaMalloc(&csr_values_d, nnz * sizeof(double)),
-                       "cudaMalloc for csr_values");
-    CUDA_CALL_AND_CHECK(cudaMalloc(&ETd_values_d, cols * sizeof(double)),
-                       "cudaMalloc for ETd_values");
-    CUDA_CALL_AND_CHECK(cudaMalloc(&x_values_d, cols * sizeof(double)),
-                       "cudaMalloc for x_values");
+    /* Allocate device memory for batch pointers of A, x and b */
+    CUDA_CALL_AND_CHECK(cudaMalloc(&batch_csr_offsets_d, batchCount * sizeof(int*)),
+        "cudaMalloc for csr_offsets");
+    CUDA_CALL_AND_CHECK(cudaMalloc(&batch_csr_columns_d, batchCount * sizeof(int*)),
+        "cudaMalloc for csr_columns");
+    CUDA_CALL_AND_CHECK(cudaMalloc(&batch_csr_values_d, batchCount * sizeof(float*)),
+        "cudaMalloc for csr_values");
+    CUDA_CALL_AND_CHECK(cudaMalloc(&batch_b_values_d, batchCount * sizeof(float*)),
+        "cudaMalloc for b_values");
+    CUDA_CALL_AND_CHECK(cudaMalloc(&batch_x_values_d, batchCount * sizeof(float*)),
+        "cudaMalloc for x_values");
 
-    // Copy data from host to device
-    CUDA_CALL_AND_CHECK(cudaMemcpy(csr_offsets_d, csr_offsets_h, (cols + 1) * sizeof(int),
-                       cudaMemcpyHostToDevice), "cudaMemcpy for csr_offsets");
-    CUDA_CALL_AND_CHECK(cudaMemcpy(csr_columns_d, csr_columns_h, nnz * sizeof(int),
-                       cudaMemcpyHostToDevice), "cudaMemcpy for csr_columns");
-    CUDA_CALL_AND_CHECK(cudaMemcpy(csr_values_d, csr_values_h, nnz * sizeof(double),
-                       cudaMemcpyHostToDevice), "cudaMemcpy for csr_values");
-    CUDA_CALL_AND_CHECK(cudaMemcpy(ETd_values_d, ETd_values_h, cols * sizeof(double),
-                       cudaMemcpyHostToDevice), "cudaMemcpy for ETd_values");
+    /* Copy host batch pointers to device */
+    CUDA_CALL_AND_CHECK(cudaMemcpy(batch_csr_offsets_d, batch_csr_offsets_h, batchCount * sizeof(int*),
+        cudaMemcpyHostToDevice), "cudaMemcpy for batch_csr_offsets");
+    CUDA_CALL_AND_CHECK(cudaMemcpy(batch_csr_columns_d, batch_csr_columns_h, batchCount * sizeof(int*),
+        cudaMemcpyHostToDevice), "cudaMemcpy for csr_columns");
+    CUDA_CALL_AND_CHECK(cudaMemcpy(batch_csr_values_d, batch_csr_values_h, batchCount * sizeof(float*),
+        cudaMemcpyHostToDevice), "cudaMemcpy for batch_csr_values");
+    CUDA_CALL_AND_CHECK(cudaMemcpy(batch_b_values_d, batch_b_values_h, batchCount * sizeof(float*),
+        cudaMemcpyHostToDevice), "cudaMemcpy for b_values");
+    CUDA_CALL_AND_CHECK(cudaMemcpy(batch_x_values_d, batch_x_values_h, batchCount * sizeof(float*),
+        cudaMemcpyHostToDevice), "cudaMemcpy for x_values");
 
-    // Create a CUDA stream
+    /* Create a CUDA stream */
     cudaStream_t stream = NULL;
     CUDA_CALL_AND_CHECK(cudaStreamCreate(&stream), "cudaStreamCreate");
 
-    // Create cuDSS library handle
+    /* Creating the cuDSS library handle */
     cudssHandle_t handle;
+
     CUDSS_CALL_AND_CHECK(cudssCreate(&handle), status, "cudssCreate");
+
+    /* (optional) Setting the custom stream for the library handle */
     CUDSS_CALL_AND_CHECK(cudssSetStream(handle, stream), status, "cudssSetStream");
 
-    // Create cuDSS solver configuration and data objects
+    /* Creating cuDSS solver configuration and data objects */
     cudssConfig_t solverConfig;
     cudssData_t solverData;
+
     CUDSS_CALL_AND_CHECK(cudssConfigCreate(&solverConfig), status, "cudssConfigCreate");
     CUDSS_CALL_AND_CHECK(cudssDataCreate(handle, &solverData), status, "cudssDataCreate");
 
-    // Create matrix objects for x and E^T*d
+    /* Create matrix objects for the right-hand side b and solution x (as batches of dense matrices). */
     cudssMatrix_t x, b;
-    int64_t nrows_sys = cols, ncols_sys = cols;
-    int ldb = ncols_sys, ldx = nrows_sys;
-    
-    CUDSS_CALL_AND_CHECK(cudssMatrixCreateDn(&b, ncols_sys, nrhs, ldb, ETd_values_d, CUDA_R_64F,
-                         CUDSS_LAYOUT_COL_MAJOR), status, "cudssMatrixCreateDn for b");
-    CUDSS_CALL_AND_CHECK(cudssMatrixCreateDn(&x, nrows_sys, nrhs, ldx, x_values_d, CUDA_R_64F,
-                         CUDSS_LAYOUT_COL_MAJOR), status, "cudssMatrixCreateDn for x");
 
-    // Create matrix object for E^T*E (which is SPD)
+    int *nrows = n, *ncols = n;
+    int *ldb = ncols, *ldx = nrows;
+    // printf("--------- Debug cudssMatrixCreateBatchDn for b ---------\n");
+    // printf("batchCount: %d\n", batchCount);
+    // for (int i = 0; i < batchCount; i++) {
+    //     printf("Batch[%d]: row_D=%d, col_D=%d, ld=%d\n", 
+    //         i, batch_row_D[i], batch_col_D[i], batch_row_D[i]);
+        
+    //     printf("Matrix b content for batch %d:\n", i);
+    //     for (int j = 0; j < batch_row_D[i]; j++) {
+    //         printf("b[%d] = %f\n", j, b_values_h[i][j]);
+    //     }
+    // }
+    // printf("batch_b_values_d address: %p\n", batch_b_values_d);
+    // printf("Data type: CUDA_R_32I, CUDA_R_32F\n");
+    // printf("Layout: CUDSS_LAYOUT_COL_MAJOR\n");
+    CUDSS_CALL_AND_CHECK(cudssMatrixCreateBatchDn(&b, batchCount, batch_row_D, batch_col_D, batch_row_D,
+        batch_b_values_d, CUDA_R_32I, CUDA_R_32F, CUDSS_LAYOUT_COL_MAJOR),
+        status, "cudssMatrixCreateBatchDn for b");
+
+    // printf("--------- Debug cudssMatrixCreateBatchDn for x ---------\n");
+    // printf("batchCount: %d\n", batchCount);
+    // for (int i = 0; i < batchCount; i++) {
+    //     printf("Batch[%d]: row_u=%d, col_u=%d, ld=%d\n", 
+    //             i, batch_row_u[i], batch_col_u[i], batch_row_u[i]);
+    // }
+    // printf("batch_x_values_d address: %p\n", batch_x_values_d);
+    // printf("Data type: CUDA_R_32I, CUDA_R_32F\n");
+    // printf("Layout: CUDSS_LAYOUT_COL_MAJOR\n");
+    // printf("-----------------------------------------------------\n");
+    CUDSS_CALL_AND_CHECK(cudssMatrixCreateBatchDn(&x, batchCount, batch_row_u, batch_col_u, batch_row_u,
+        batch_x_values_d, CUDA_R_32I, CUDA_R_32F, CUDSS_LAYOUT_COL_MAJOR),
+        status, "cudssMatrixCreateBatchDn for x");
+
+    /* Create a matrix object for the batch of sparse input matrices. */
     cudssMatrix_t A;
-    cudssMatrixType_t mtype = CUDSS_MTYPE_SPD;
-    cudssMatrixViewType_t mview = CUDSS_MVIEW_UPPER;
-    cudssIndexBase_t base = CUDSS_BASE_ZERO;
-    
-    CUDSS_CALL_AND_CHECK(cudssMatrixCreateCsr(&A, nrows_sys, ncols_sys, nnz, csr_offsets_d, NULL,
-                         csr_columns_d, csr_values_d, CUDA_R_32I, CUDA_R_64F, mtype, mview,
-                         base), status, "cudssMatrixCreateCsr");
+    cudssMatrixType_t mtype     = CUDSS_MTYPE_GENERAL;
+    cudssMatrixViewType_t mview = CUDSS_MVIEW_LOWER;
+    cudssIndexBase_t base       = CUDSS_BASE_ZERO;
+    // printf("--------- Debug cudssMatrixCreateBatchCsr for A ---------\n");
+    // printf("batchCount: %d\n", batchCount);
+    // for (int i = 0; i < batchCount; i++) {
+    //     printf("Batch[%d]: row_bigF=%d, col_bigF=%d, ld=%d\n", 
+    //         i, batch_row_bigF[i], batch_col_bigF[i], batch_row_bigF[i]);
+    // }
+    // printf("batch_csr_offsets_d address: %p\n", batch_csr_offsets_d);
+    // printf("batch_csr_columns_d address: %p\n", batch_csr_columns_d);
+    // printf("batch_csr_values_d address: %p\n", batch_csr_values_d);
+    // printf("Matrix type: %d\n", mtype);
+    // printf("Matrix view: %d\n", mview);
+    // printf("Index base: %d\n", base);
+    // printf("Data type: CUDA_R_32I, CUDA_R_32F\n");
 
-    // Symbolic factorization
-    CUDSS_CALL_AND_CHECK(cudssExecute(handle, CUDSS_PHASE_ANALYSIS, solverConfig, solverData,
-                         A, x, b), status, "cudssExecute for analysis");
+    // printf("\n========= 打印矩阵A的内容 =========\n");
+    // for (int i = 0; i < batchCount; i++) {
+    //     printf("\n矩阵A (批次 %d):\n", i);
+    //     print_matrix_A(csr_offsets_h[i], csr_columns_h[i], csr_values_h[i], 
+    //                 batch_row_bigF[i], batch_col_bigF[i]);
+    // }
+    CUDSS_CALL_AND_CHECK(cudssMatrixCreateBatchCsr(&A, batchCount, batch_row_bigF, batch_col_bigF, nnz,
+        batch_csr_offsets_d, NULL, batch_csr_columns_d, batch_csr_values_d,
+        CUDA_R_32I, CUDA_R_32F, mtype, mview, base), status, "cudssMatrixCreateBatchCsr");
 
-    // Factorization
+    /* Symbolic factorization */
+    CUDSS_CALL_AND_CHECK(cudssExecute(handle, CUDSS_PHASE_ANALYSIS, solverConfig,
+                        solverData, A, x, b), status, "cudssExecute for analysis");
+
+    /* Factorization */
     CUDSS_CALL_AND_CHECK(cudssExecute(handle, CUDSS_PHASE_FACTORIZATION, solverConfig,
-                         solverData, A, x, b), status, "cudssExecute for factor");
+                        solverData, A, x, b), status, "cudssExecute for factor");
 
-    // Solving
-    CUDSS_CALL_AND_CHECK(cudssExecute(handle, CUDSS_PHASE_SOLVE, solverConfig, solverData,
-                         A, x, b), status, "cudssExecute for solve");
+    /* Solving */
+    CUDSS_CALL_AND_CHECK(cudssExecute(handle, CUDSS_PHASE_SOLVE, solverConfig,
+                        solverData, A, x, b), status, "cudssExecute for solve");
 
-    // Destroy cuDSS resources
-    CUDSS_CALL_AND_CHECK(cudssMatrixDestroy(A), status, "cudssMatrixDestroy for A");
-    CUDSS_CALL_AND_CHECK(cudssMatrixDestroy(b), status, "cudssMatrixDestroy for b");
-    CUDSS_CALL_AND_CHECK(cudssMatrixDestroy(x), status, "cudssMatrixDestroy for x");
-    CUDSS_CALL_AND_CHECK(cudssDataDestroy(handle, solverData), status, "cudssDataDestroy");
-    CUDSS_CALL_AND_CHECK(cudssConfigDestroy(solverConfig), status, "cudssConfigDestroy");
-    CUDSS_CALL_AND_CHECK(cudssDestroy(handle), status, "cudssDestroy");
+    // /* Destroying opaque objects, matrix wrappers and the cuDSS library handle */
+    // CUDSS_CALL_AND_CHECK(cudssMatrixDestroy(A), status, "cudssMatrixDestroy for A");
+    // CUDSS_CALL_AND_CHECK(cudssMatrixDestroy(b), status, "cudssMatrixDestroy for b");
+    // CUDSS_CALL_AND_CHECK(cudssMatrixDestroy(x), status, "cudssMatrixDestroy for x");
+    // CUDSS_CALL_AND_CHECK(cudssDataDestroy(handle, solverData), status, "cudssDataDestroy");
+    // CUDSS_CALL_AND_CHECK(cudssConfigDestroy(solverConfig), status, "cudssConfigDestroy");
+    // CUDSS_CALL_AND_CHECK(cudssDestroy(handle), status, "cudssHandleDestroy");
 
     CUDA_CALL_AND_CHECK(cudaStreamSynchronize(stream), "cudaStreamSynchronize");
 
-    // Copy solution from device to host
-    CUDA_CALL_AND_CHECK(cudaMemcpy(x_values_h, x_values_d, cols * sizeof(double),
-                       cudaMemcpyDeviceToHost), "cudaMemcpy for x_values");
+    /* Print the solution and compare against the exact solution */
+    int passed = 1;
+    printf("\nSolution Vector x:\n");
+    for (int j = 0; j < batchCount; j++) {
+        CUDA_CALL_AND_CHECK(cudaMemcpy(x_values_h[j], batch_x_values_h[j],
+            nrhs[j] * n[j] * sizeof(float), cudaMemcpyDeviceToHost),
+            "cudaMemcpy for x_values");
 
-    // Print the solution
-    printf("Solution vector x:\n");
-    for (int i = 0; i < cols; i++) {
-        printf("x[%d] = %1.8f\n", i, x_values_h[i]);
+        printf("Batch %d:\n", j);
+        for (int i = 0; i < row_u; i++) {
+            printf("x[%d] = %f\n", i, x_values_h[j][i]);
+        }
+        printf("\n");
     }
 
-    // Free resources
+    /* Release the data allocated on the user side */
+
     CUDSS_EXAMPLE_FREE;
 
-    return 0;
+    if (status == CUDSS_STATUS_SUCCESS && passed) {
+        printf("Example PASSED\n");
+        return 0;
+    } else {
+        printf("Example FAILED\n");
+        return -1;
+    }
 }

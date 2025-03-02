@@ -17,6 +17,10 @@ find_package(cudss QUIET)
 
 find_package(Eigen3 REQUIRED)
 
+find_package(OpenMP REQUIRED)
+find_package(LAPACK REQUIRED)
+find_package(BLAS REQUIRED)
+
 # NVTX配置保持不变
 add_library(nvtx3-cpp INTERFACE)
 target_include_directories(nvtx3-cpp INTERFACE 
@@ -28,9 +32,18 @@ endif()
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/thirdparty/pybind11)
 
-# 删除这两行，不再需要全局包含
-# include_directories(${CUDA_INCLUDE_DIRS})
-# link_directories(${CUDA_LIBRARIES})
+# MAGMA
+# 添加MAGMA配置
+set(MAGMA_ROOT "/usr/local/magma" CACHE PATH "Path to MAGMA installation")
+set(MAGMA_INCLUDE_DIRS "${MAGMA_ROOT}/include")
+set(MAGMA_LIBRARY_DIRS "${MAGMA_ROOT}/lib")
+# Use full path to MAGMA library instead of just the name
+find_library(MAGMA_LIBRARY 
+    NAMES magma
+    PATHS ${MAGMA_LIBRARY_DIRS}
+    REQUIRED
+)
+message(STATUS "Found MAGMA library: ${MAGMA_LIBRARY}")
 
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 17)
@@ -57,6 +70,7 @@ endif()
 
 target_include_directories(cuda_DE SYSTEM PUBLIC
     ${EIGEN3_INCLUDE_DIR}
+    ${MAGMA_INCLUDE_DIRS}
 )
 
 # 为cuda_DE添加包含目录
@@ -102,6 +116,12 @@ target_link_libraries(cuda_solver PRIVATE
     mathdx::cublasdx
     cudss
     Eigen3::Eigen
+
+    ${MAGMA_LIBRARY}
+    LAPACK::LAPACK
+    BLAS::BLAS
+    CUDA::cusparse
+    OpenMP::OpenMP_CXX
 )
 
 # 保持这个属性不变

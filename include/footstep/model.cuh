@@ -328,51 +328,51 @@ namespace footstep{
     /************************Version 2*********************** */
     // Construct matrix D (D = C - HugeE X_0)
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void ConstructMatrixD(const float *bigE_column, void **d_batch_D){
+    __global__ void ConstructMatrixD(const float *bigEx0_column, void **d_batch_D, float *cluster_N_state){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
         // ########### 
         // Update State
         // ###########
-        // current individual control input (N step)
-        // float *cur_individual_param = cluster_data->all_param + blockIdx.x * CUDA_PARAM_MAX_SIZE;
+        // float *N_states = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
 
-        // for(int i = 0; i < CUDA_PARAM_MAX_SIZE && blockIdx.x >= CUDA_SOLVER_POP_SIZE-10; i++) {
-        //     printf("blockIdx.x: %d, param[%d]: %f\n", blockIdx.x, i, cur_individual_param[i]);
-        // }
-
-        // if(blockIdx.x == 0 && threadIdx.x == 0){
-        //     printf("update state param:");
-        //     for(int i = 0; i < CUDA_PARAM_MAX_SIZE; ++i){
-        //         printf("%f ", cur_individual_param[i]);
-        //     }
-        //     printf("\n");
-        // }
-
-        // skip the initial state
-        // float *N_states = D + blockIdx.x * N * state_dims;
-        float *N_states = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
-
-        if(blockIdx.x == 0 && threadIdx.x == 0){
-            for(int i = 0; i < footstep::N * footstep::state_dims; ++i){
-                printf("%f ", N_states[i]);
-            }
-            printf("\n");
-        }
-
-        // D = cluster_state + blockIdx.x * (N + 1) * state_dims + state_dims;
+        // // if(blockIdx.x == 0 && threadIdx.x == 0){
+        // //     for(int i = 0; i < footstep::N * footstep::state_dims; ++i){
+        // //         printf("%f ", N_states[i]);
+        // //     }
+        // //     printf("\n");
+        // // }
         
-        extern __shared__ __align__(16) char smem[];
+        // extern __shared__ __align__(16) char smem[];
 
-        // matrix bigE times init_states, and record the result at N_states
-        gemm_kernel<Ex_GEMM_col>(-1.0f, bigE_column, init_state, 1.0f, N_states, smem);
-
-        // __syncthreads();
-
-        // // matrix bigE times init_states, and plus the result at F
-        // gemm_kernel<Fu_GEMM>(1.0f, bigF, cur_individual_param, 1.0f, N_states, smem);
-
-        // __syncthreads();
+        // // matrix bigE times init_states, and record the result at N_states
+        // gemm_kernel<Ex_GEMM_col>(-1.0f, bigE_column, init_state, 1.0f, N_states, smem);
+        
+        float *N_states = cluster_N_state + (footstep::N + 1) * blockIdx.x + footstep::state_dims;
+        float *D = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
+        D[threadIdx.x] = N_states[threadIdx.x] - bigEx0_column[threadIdx.x];
     }
+
+    // // Construct matrix D (D = C - HugeE X_0)
+    // template<int T = CUDA_SOLVER_POP_SIZE>
+    // __global__ void ConstructMatrixD(const float *bigE_column, void **d_batch_D){
+    //     if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
+    //     // ########### 
+    //     // Update State
+    //     // ###########
+    //     float *N_states = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
+
+    //     // if(blockIdx.x == 0 && threadIdx.x == 0){
+    //     //     for(int i = 0; i < footstep::N * footstep::state_dims; ++i){
+    //     //         printf("%f ", N_states[i]);
+    //     //     }
+    //     //     printf("\n");
+    //     // }
+        
+    //     extern __shared__ __align__(16) char smem[];
+
+    //     // matrix bigE times init_states, and record the result at N_states
+    //     gemm_kernel<Ex_GEMM_col>(-1.0f, bigE_column, init_state, 1.0f, N_states, smem);
+    // }
 }
 
 #endif

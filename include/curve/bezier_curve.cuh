@@ -14,8 +14,9 @@ struct BezierCurve {
           binomial_deriv_coeff_[BEZIER_SIZE-1],
           bernstein_weights_[CURVE_NUM_STEPS][BEZIER_SIZE + 1],
           bernstein_deriv_weights_[CURVE_NUM_STEPS][BEZIER_SIZE];
-	float2 control_points[BEZIER_SIZE];
-    float fixed_point_idx[NUM_FIXED_CP];
+	float3 control_points[BEZIER_SIZE];
+    bool is_point_xy_fixed[BEZIER_SIZE] = {0};
+	bool is_theta_point_fixed[BEZIER_SIZE] = {0};
 };
 
 // ---- Declaration of utility functions ----
@@ -30,16 +31,18 @@ __device__ __forceinline__ float2 GetBezierPosition(BezierCurve *curve, float *p
 __device__ __forceinline__ float2 GetBezierPositionVelocity(BezierCurve *curve, float *params, int step_idx, int l, int r, int ll, int rr, bool convert = false);
 __device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float *params, int step_idx, int l, int r, int ll, int rr, float *state, bool convert = false);
 // __device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *curve, float *params, int t, int l, int r, int ll, int rr, float *state, bool convert = false);
-__device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *curve, float *params, int t, int l, int r, int ll, int rr, float *state, bool convert = false){
+__device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *curve, float *params, int t, int l, int r, int ll, int rr, int lll, int rrr, float *state, bool convert = false){
 
     float2 position{0.0f, 0.0f};
 	float2 velocity{0.0f, 0.0f};
+	float theta = 0.0f;
 	const int n = BEZIER_SIZE - 1;
 
     for (int i = 0; i < BEZIER_SIZE; ++i) {
         float bernstein_t = curve->bernstein_weights_[t][i];
 		position.x += bernstein_t * params[i + l];
 		position.y += bernstein_t * params[i + ll];
+		theta += bernstein_t * params[i + lll];
 		
 		if(i < n){
 			float deriv_ctrl_x = n * (params[i + 1 + l] - params[i + l]);
@@ -65,7 +68,7 @@ __device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *c
         state[1] = position.y;
         state[2] = velocity.x;
         state[3] = velocity.y;
-        state[4] = atan2f(position.y, position.x);  // theta
+        state[4] = theta;  // theta
 
 		// state[idx + 5] = 0.0;		// radius for polar coordinate system
         // printf("Writing state at t=%d to indices: %d through %d\n", 

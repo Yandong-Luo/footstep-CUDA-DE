@@ -19,7 +19,7 @@
 namespace footstep{
 
 // CONSTANT
-constexpr int N = 10;                           // prediction step
+constexpr int N = 30;                           // prediction step
 constexpr float T = 0.4f;           // Delta t
 
 constexpr float legLength = 1.0f;
@@ -67,6 +67,8 @@ extern __constant__ float4 all_region[num_regions];
 // // Environment2 x: x lower boundary, y: x upper boundary, z: y lower boundary, w: y upper boundary
 // extern __constant__ float4 all_region2[num_regions];
 
+constexpr int param_seg[3] = {0, (BEZIER_SIZE - NUM_XYFIXED_CP), 2*(BEZIER_SIZE - NUM_XYFIXED_CP)};
+
 extern __constant__ float4 region1;
 extern __constant__ float4 region2;
 extern __constant__ float4 region3;
@@ -108,7 +110,6 @@ extern __constant__ float2 target_pos;
 
 // __constant__ float2 center1 = {0, 1};
 // __constant__ float2 center2 = {0, -0.44};
-
 
 // E Matrix (5x5), Row priority
 const int row_E = state_dims, col_E = state_dims;
@@ -165,6 +166,8 @@ const int row_hugeE = CUDA_SOLVER_POP_SIZE * row_bigE, col_hugeE = CUDA_SOLVER_P
 extern float *d_hugeE;
 extern float *h_hugeE;
 
+constexpr float h_init_state[5] = {0.29357406, 0.29125562, -0.01193462, -0.01774755, 1.58432257};
+
 // void **batch_bigF;
 // void **batch_u;
 
@@ -196,6 +199,10 @@ extern float *h_bigE_column;
 extern float *bigF_column;
 extern float *h_bigF_column;
 
+const int row_bigEx0 = N * state_dims, col_bigEx0 = 1;
+extern float *bigEx0_col;
+extern float *h_bigEx0_col;
+
 // hugeF Matrix ()
 const int row_hugeF = CUDA_SOLVER_POP_SIZE, col_hugeF = row_bigF * col_bigF;
 // extern float h_bigF[13500];
@@ -207,6 +214,9 @@ extern void **h_batch_hugeF;
 const int row_D = CUDA_SOLVER_POP_SIZE, col_D = N * state_dims;
 extern void *d_D;
 extern void *h_D;
+
+extern float *d_B;
+extern float *h_B;
 
 extern void **d_batch_D;
 extern void **h_batch_D;

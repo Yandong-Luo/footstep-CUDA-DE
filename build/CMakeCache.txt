@@ -14,6 +14,84 @@
 # EXTERNAL cache entries
 ########################
 
+//Path to a library.
+BLAS_Accelerate_LIBRARY:FILEPATH=BLAS_Accelerate_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_acml_LIBRARY:FILEPATH=BLAS_acml_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_acml_mp_LIBRARY:FILEPATH=BLAS_acml_mp_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_armpl_lp64_LIBRARY:FILEPATH=BLAS_armpl_lp64_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_blas_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libblas.so
+
+//Path to a library.
+BLAS_blis_LIBRARY:FILEPATH=BLAS_blis_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_complib_sgimath_LIBRARY:FILEPATH=BLAS_complib_sgimath_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_cxml_LIBRARY:FILEPATH=BLAS_cxml_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_dxml_LIBRARY:FILEPATH=BLAS_dxml_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_eml_LIBRARY:FILEPATH=BLAS_eml_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_essl_LIBRARY:FILEPATH=BLAS_essl_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_f77blas_LIBRARY:FILEPATH=BLAS_f77blas_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_fjlapack_LIBRARY:FILEPATH=BLAS_fjlapack_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_flexiblas_LIBRARY:FILEPATH=BLAS_flexiblas_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_goto2_LIBRARY:FILEPATH=BLAS_goto2_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_mkl_LIBRARY:FILEPATH=BLAS_mkl_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_mkl_em64t_LIBRARY:FILEPATH=BLAS_mkl_em64t_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_mkl_ia32_LIBRARY:FILEPATH=BLAS_mkl_ia32_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_mkl_intel_LIBRARY:FILEPATH=BLAS_mkl_intel_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_mkl_intel_lp64_LIBRARY:FILEPATH=BLAS_mkl_intel_lp64_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_mkl_rt_LIBRARY:FILEPATH=BLAS_mkl_rt_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_openblas_LIBRARY:FILEPATH=BLAS_openblas_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_scs_LIBRARY:FILEPATH=BLAS_scs_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_sgemm_LIBRARY:FILEPATH=BLAS_sgemm_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_sunperf_LIBRARY:FILEPATH=BLAS_sunperf_LIBRARY-NOTFOUND
+
+//Path to a library.
+BLAS_vecLib_LIBRARY:FILEPATH=BLAS_vecLib_LIBRARY-NOTFOUND
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -504,8 +582,62 @@ CUDA_pcsamplingutil_LIBRARY:FILEPATH=/usr/local/cuda/bin/../extras/CUPTI/lib64/l
 //The directory containing a CMake configuration file for Eigen3.
 Eigen3_DIR:PATH=/usr/lib/cmake/eigen3
 
+//Path to a library.
+LAPACK_Accelerate_LIBRARY:FILEPATH=LAPACK_Accelerate_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_armpl_lp64_LIBRARY:FILEPATH=LAPACK_armpl_lp64_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_flame_LIBRARY:FILEPATH=LAPACK_flame_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_flexiblas_LIBRARY:FILEPATH=LAPACK_flexiblas_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_goto2_LIBRARY:FILEPATH=LAPACK_goto2_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_lapack_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/liblapack.so
+
+//Path to a library.
+LAPACK_mkl_lapack_LIBRARY:FILEPATH=LAPACK_mkl_lapack_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_openblas_LIBRARY:FILEPATH=LAPACK_openblas_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_scs_LIBRARY:FILEPATH=LAPACK_scs_LIBRARY-NOTFOUND
+
+//Path to a library.
+LAPACK_vecLib_LIBRARY:FILEPATH=LAPACK_vecLib_LIBRARY-NOTFOUND
+
+//Path to a library.
+MAGMA_LIBRARY:FILEPATH=/usr/local/magma/lib/libmagma.so
+
+//Path to MAGMA installation
+MAGMA_ROOT:PATH=/usr/local/magma
+
 //The directory containing a CMake configuration file for NvidiaCutlass.
 NvidiaCutlass_DIR:PATH=NvidiaCutlass_DIR-NOTFOUND
+
+//CUDA compiler flags for OpenMP parallelization
+OpenMP_CUDA_FLAGS:STRING=-fopenmp
+
+//CUDA compiler libraries for OpenMP parallelization
+OpenMP_CUDA_LIB_NAMES:STRING=gomp;pthread
+
+//CXX compiler flags for OpenMP parallelization
+OpenMP_CXX_FLAGS:STRING=-fopenmp
+
+//CXX compiler libraries for OpenMP parallelization
+OpenMP_CXX_LIB_NAMES:STRING=gomp;pthread
+
+//Path to the gomp library for OpenMP
+OpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/10/libgomp.so
+
+//Path to the pthread library for OpenMP
+OpenMP_pthread_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.so
 
 //To enforce that a handle_type_name<> specialization exists
 PYBIND11_DISABLE_HANDLE_TYPE_NAME_DEFAULT_IMPLEMENTATION:BOOL=OFF
@@ -590,6 +722,62 @@ yaml-cpp_DIR:PATH=/usr/local/lib/cmake/yaml-cpp
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: BLAS_Accelerate_LIBRARY
+BLAS_Accelerate_LIBRARY-ADVANCED:INTERNAL=1
+//Have function sgemm_
+BLAS_WORKS:INTERNAL=
+//ADVANCED property for variable: BLAS_acml_LIBRARY
+BLAS_acml_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_acml_mp_LIBRARY
+BLAS_acml_mp_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_armpl_lp64_LIBRARY
+BLAS_armpl_lp64_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_blas_LIBRARY
+BLAS_blas_LIBRARY-ADVANCED:INTERNAL=1
+//Have function sgemm_
+BLAS_blas_WORKS:INTERNAL=1
+//ADVANCED property for variable: BLAS_blis_LIBRARY
+BLAS_blis_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_complib_sgimath_LIBRARY
+BLAS_complib_sgimath_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_cxml_LIBRARY
+BLAS_cxml_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_dxml_LIBRARY
+BLAS_dxml_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_eml_LIBRARY
+BLAS_eml_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_essl_LIBRARY
+BLAS_essl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_f77blas_LIBRARY
+BLAS_f77blas_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_fjlapack_LIBRARY
+BLAS_fjlapack_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_flexiblas_LIBRARY
+BLAS_flexiblas_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_goto2_LIBRARY
+BLAS_goto2_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_mkl_LIBRARY
+BLAS_mkl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_mkl_em64t_LIBRARY
+BLAS_mkl_em64t_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_mkl_ia32_LIBRARY
+BLAS_mkl_ia32_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_mkl_intel_LIBRARY
+BLAS_mkl_intel_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_mkl_intel_lp64_LIBRARY
+BLAS_mkl_intel_lp64_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_mkl_rt_LIBRARY
+BLAS_mkl_rt_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_openblas_LIBRARY
+BLAS_openblas_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_scs_LIBRARY
+BLAS_scs_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_sgemm_LIBRARY
+BLAS_sgemm_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_sunperf_LIBRARY
+BLAS_sunperf_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: BLAS_vecLib_LIBRARY
+BLAS_vecLib_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
@@ -923,8 +1111,18 @@ CUDA_nvrtc_builtins_static_LIBRARY-ADVANCED:INTERNAL=1
 CUDA_nvrtc_static_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_pcsamplingutil_LIBRARY
 CUDA_pcsamplingutil_LIBRARY-ADVANCED:INTERNAL=1
+//Details about finding BLAS
+FIND_PACKAGE_MESSAGE_DETAILS_BLAS:INTERNAL=[/usr/lib/x86_64-linux-gnu/libblas.so][v()]
 //Details about finding CUDAToolkit
 FIND_PACKAGE_MESSAGE_DETAILS_CUDAToolkit:INTERNAL=[/usr/local/cuda/targets/x86_64-linux/include][/usr/local/cuda/lib64/libcudart.so][/usr/local/cuda/bin][v12.6.85()]
+//Details about finding LAPACK
+FIND_PACKAGE_MESSAGE_DETAILS_LAPACK:INTERNAL=[/usr/lib/x86_64-linux-gnu/liblapack.so;/usr/lib/x86_64-linux-gnu/libblas.so][v()]
+//Details about finding OpenMP
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][c ][v4.5()]
+//Details about finding OpenMP_CUDA
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CUDA:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/10/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.so][v4.5()]
+//Details about finding OpenMP_CXX
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/10/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.so][v4.5()]
 //Details about finding PYTHON
 FIND_PACKAGE_MESSAGE_DETAILS_PYTHON:INTERNAL=/home/chris/anaconda3/envs/lab_env/bin/python3.9.20
 //Details about finding PythonInterp
@@ -933,6 +1131,54 @@ FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/home/chris/anaconda3/envs/l
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Test HAS_FLTO
 HAS_FLTO:INTERNAL=1
+//ADVANCED property for variable: LAPACK_Accelerate_LIBRARY
+LAPACK_Accelerate_LIBRARY-ADVANCED:INTERNAL=1
+//Have function cheev_
+LAPACK_WORKS:INTERNAL=
+//ADVANCED property for variable: LAPACK_armpl_lp64_LIBRARY
+LAPACK_armpl_lp64_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: LAPACK_flame_LIBRARY
+LAPACK_flame_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: LAPACK_flexiblas_LIBRARY
+LAPACK_flexiblas_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: LAPACK_goto2_LIBRARY
+LAPACK_goto2_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: LAPACK_lapack_LIBRARY
+LAPACK_lapack_LIBRARY-ADVANCED:INTERNAL=1
+//Have function cheev_
+LAPACK_lapack_WORKS:INTERNAL=1
+//ADVANCED property for variable: LAPACK_mkl_lapack_LIBRARY
+LAPACK_mkl_lapack_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: LAPACK_openblas_LIBRARY
+LAPACK_openblas_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: LAPACK_scs_LIBRARY
+LAPACK_scs_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: LAPACK_vecLib_LIBRARY
+LAPACK_vecLib_LIBRARY-ADVANCED:INTERNAL=1
+//Result of TRY_COMPILE
+OpenMP_COMPILE_RESULT_CUDA_fopenmp:INTERNAL=TRUE
+//Result of TRY_COMPILE
+OpenMP_COMPILE_RESULT_CXX_fopenmp:INTERNAL=TRUE
+//ADVANCED property for variable: OpenMP_CUDA_FLAGS
+OpenMP_CUDA_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_CUDA_LIB_NAMES
+OpenMP_CUDA_LIB_NAMES-ADVANCED:INTERNAL=1
+//CUDA compiler's OpenMP specification date
+OpenMP_CUDA_SPEC_DATE:INTERNAL=201511
+//ADVANCED property for variable: OpenMP_CXX_FLAGS
+OpenMP_CXX_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_CXX_LIB_NAMES
+OpenMP_CXX_LIB_NAMES-ADVANCED:INTERNAL=1
+//CXX compiler's OpenMP specification date
+OpenMP_CXX_SPEC_DATE:INTERNAL=201511
+//Result of TRY_COMPILE
+OpenMP_SPECTEST_CUDA_:INTERNAL=TRUE
+//Result of TRY_COMPILE
+OpenMP_SPECTEST_CXX_:INTERNAL=TRUE
+//ADVANCED property for variable: OpenMP_gomp_LIBRARY
+OpenMP_gomp_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_pthread_LIBRARY
+OpenMP_pthread_LIBRARY-ADVANCED:INTERNAL=1
 PYBIND11_INCLUDE_DIR:INTERNAL=/home/chris/footstep-CUDA-DE/thirdparty/pybind11/include
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1

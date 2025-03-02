@@ -17,6 +17,9 @@
 
 #include <cudss.h>
 
+#include <magma_v2.h>
+#include <magma_operators.h>
+
 #include "diff_evolution_solver/data_type.h"
 #include "utils/utils.cuh"
 #include "diff_evolution_solver/converter.cuh"
@@ -96,6 +99,11 @@ namespace cudaprocess{
 
             cudssStatus_t cudss_status_;
 
+            magma_queue_t magma_queue_;
+            magma_int_t magma_info_;
+            magma_int_t magma_lwork = -1;  // 查询最佳大小的标志
+            float *h_work;
+
             cudssConfig_t cudss_solverConfig;
             cudssData_t cudss_solverData;
 
@@ -164,6 +172,8 @@ namespace cudaprocess{
             float *control_score, *h_control_score;
 
             float *score, *h_score;
+
+            int param_seg[3] = {0}; //param_seg[0] for the start index of x, param_seg[1] for the start index of y, param_seg[3] for the theta
     };
 }
 

@@ -277,3 +277,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.22] - 2025-2-27
 ### Changed
 - Yandong Luo: cudss can successfully solve HugeF * U = D
+
+## [0.3.22] - 2025-3-2
+### Changed
+- Yandong Luo: cudss can successfully solve HugeF * U = D

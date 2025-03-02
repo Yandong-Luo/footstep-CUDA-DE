@@ -1233,6 +1233,49 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o : /home/chris/foots
     /usr/include/cudss.h \
     /usr/include/cudss_distributed_interface.h \
     /usr/include/cudss_threading_interface.h \
+    /usr/local/magma/include/magma_v2.h \
+    /usr/local/magma/include/magma_config.h \
+    /usr/local/magma/include/magmablas.h \
+    /usr/local/magma/include/magma_copy.h \
+    /usr/local/magma/include/magma_types.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/cusparse_v2.h \
+    /usr/local/cuda/bin/../targets/x86_64-linux/include/cusparse.h \
+    /usr/local/magma/include/magmablas_z.h \
+    /usr/local/magma/include/magmablas_c.h \
+    /usr/local/magma/include/magmablas_d.h \
+    /usr/local/magma/include/magmablas_s.h \
+    /usr/local/magma/include/magmablas_zc.h \
+    /usr/local/magma/include/magmablas_ds.h \
+    /usr/local/magma/include/magmablas_h.h \
+    /usr/local/magma/include/magma_batched.h \
+    /usr/local/magma/include/magma_zbatched.h \
+    /usr/local/magma/include/magma_cbatched.h \
+    /usr/local/magma/include/magma_dbatched.h \
+    /usr/local/magma/include/magma_sbatched.h \
+    /usr/local/magma/include/magma_hbatched.h \
+    /usr/local/magma/include/magma_vbatched.h \
+    /usr/local/magma/include/magma_zvbatched.h \
+    /usr/local/magma/include/magma_cvbatched.h \
+    /usr/local/magma/include/magma_dvbatched.h \
+    /usr/local/magma/include/magma_svbatched.h \
+    /usr/local/magma/include/magma_bulge.h \
+    /usr/local/magma/include/magma_zbulge.h \
+    /usr/local/magma/include/magma_cbulge.h \
+    /usr/local/magma/include/magma_dbulge.h \
+    /usr/local/magma/include/magma_sbulge.h \
+    /usr/local/magma/include/magma_z.h \
+    /usr/local/magma/include/magma_zgehrd_m.h \
+    /usr/local/magma/include/magma_c.h \
+    /usr/local/magma/include/magma_cgehrd_m.h \
+    /usr/local/magma/include/magma_d.h \
+    /usr/local/magma/include/magma_dgehrd_m.h \
+    /usr/local/magma/include/magma_s.h \
+    /usr/local/magma/include/magma_sgehrd_m.h \
+    /usr/local/magma/include/magma_zc.h \
+    /usr/local/magma/include/magma_ds.h \
+    /usr/local/magma/include/magma_auxiliary.h \
+    /usr/local/magma/include/magma_htc.h \
+    /usr/local/magma/include/magma_operators.h \
     /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
     /home/chris/footstep-CUDA-DE/include/utils/config.h \
     /home/chris/footstep-CUDA-DE/include/footstep/footstep_utils.cuh \

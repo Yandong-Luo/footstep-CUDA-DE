@@ -646,6 +646,7 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/lib/gcc/x86_64-linux-gnu/10/include/limits.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/mm_malloc.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/10/include/omp.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h \
@@ -990,6 +991,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda/targets/x86_64-linux/include/curand_poisson.h \
   /usr/local/cuda/targets/x86_64-linux/include/curand_precalc.h \
   /usr/local/cuda/targets/x86_64-linux/include/curand_uniform.h \
+  /usr/local/cuda/targets/x86_64-linux/include/cusparse.h \
+  /usr/local/cuda/targets/x86_64-linux/include/cusparse_v2.h \
   /usr/local/cuda/targets/x86_64-linux/include/device_types.h \
   /usr/local/cuda/targets/x86_64-linux/include/driver_functions.h \
   /usr/local/cuda/targets/x86_64-linux/include/driver_types.h \
@@ -1398,8 +1401,85 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /usr/local/cuda/targets/x86_64-linux/include/thrust/version.h \
   /usr/local/cuda/targets/x86_64-linux/include/vector_functions.h \
   /usr/local/cuda/targets/x86_64-linux/include/vector_functions.hpp \
-  /usr/local/cuda/targets/x86_64-linux/include/vector_types.h
+  /usr/local/cuda/targets/x86_64-linux/include/vector_types.h \
+  /usr/local/magma/include/magma_auxiliary.h \
+  /usr/local/magma/include/magma_batched.h \
+  /usr/local/magma/include/magma_bulge.h \
+  /usr/local/magma/include/magma_c.h \
+  /usr/local/magma/include/magma_cbatched.h \
+  /usr/local/magma/include/magma_cbulge.h \
+  /usr/local/magma/include/magma_cgehrd_m.h \
+  /usr/local/magma/include/magma_config.h \
+  /usr/local/magma/include/magma_copy.h \
+  /usr/local/magma/include/magma_cvbatched.h \
+  /usr/local/magma/include/magma_d.h \
+  /usr/local/magma/include/magma_dbatched.h \
+  /usr/local/magma/include/magma_dbulge.h \
+  /usr/local/magma/include/magma_dgehrd_m.h \
+  /usr/local/magma/include/magma_ds.h \
+  /usr/local/magma/include/magma_dvbatched.h \
+  /usr/local/magma/include/magma_hbatched.h \
+  /usr/local/magma/include/magma_htc.h \
+  /usr/local/magma/include/magma_operators.h \
+  /usr/local/magma/include/magma_s.h \
+  /usr/local/magma/include/magma_sbatched.h \
+  /usr/local/magma/include/magma_sbulge.h \
+  /usr/local/magma/include/magma_sgehrd_m.h \
+  /usr/local/magma/include/magma_svbatched.h \
+  /usr/local/magma/include/magma_types.h \
+  /usr/local/magma/include/magma_v2.h \
+  /usr/local/magma/include/magma_vbatched.h \
+  /usr/local/magma/include/magma_z.h \
+  /usr/local/magma/include/magma_zbatched.h \
+  /usr/local/magma/include/magma_zbulge.h \
+  /usr/local/magma/include/magma_zc.h \
+  /usr/local/magma/include/magma_zgehrd_m.h \
+  /usr/local/magma/include/magma_zvbatched.h \
+  /usr/local/magma/include/magmablas.h \
+  /usr/local/magma/include/magmablas_c.h \
+  /usr/local/magma/include/magmablas_d.h \
+  /usr/local/magma/include/magmablas_ds.h \
+  /usr/local/magma/include/magmablas_h.h \
+  /usr/local/magma/include/magmablas_s.h \
+  /usr/local/magma/include/magmablas_z.h \
+  /usr/local/magma/include/magmablas_zc.h
 
+
+/usr/local/magma/include/magmablas_zc.h:
+
+/usr/local/magma/include/magmablas_s.h:
+
+/usr/local/magma/include/magmablas_h.h:
+
+/usr/local/magma/include/magmablas_c.h:
+
+/usr/local/magma/include/magmablas.h:
+
+/usr/local/magma/include/magma_zvbatched.h:
+
+/usr/local/magma/include/magma_zbulge.h:
+
+/usr/local/magma/include/magma_zbatched.h:
+
+/usr/local/magma/include/magma_z.h:
+
+/usr/local/magma/include/magma_vbatched.h:
+
+/usr/local/magma/include/magma_sgehrd_m.h:
+
+/usr/local/magma/include/magma_s.h:
+
+/usr/local/magma/include/magma_htc.h:
+
+/usr/local/magma/include/magma_ds.h:
+
+/usr/local/magma/include/magma_d.h:
+
+/usr/local/magma/include/magma_copy.h:
+
+/usr/local/magma/include/magma_cgehrd_m.h:
+
+/usr/local/magma/include/magma_cbulge.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/vector_functions.hpp:
 
@@ -1473,6 +1553,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/reduce_by_key.inl:
 
+/usr/local/magma/include/magma_batched.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/mismatch.inl:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/merge.inl:
@@ -1520,6 +1602,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/iter_swap.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/generate.h:
+
+/usr/local/magma/include/magma_dbatched.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/for_each.h:
 
@@ -1781,6 +1865,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/tagged_allocator.inl:
 
+/usr/local/magma/include/magmablas_ds.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/detail/mismatch.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/no_throw_allocator.h:
@@ -1812,6 +1898,12 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/nv/detail/__preprocessor:
 
 /usr/local/cuda/targets/x86_64-linux/include/library_types.h:
+
+/usr/local/magma/include/magma_svbatched.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cusparse_v2.h:
+
+/usr/local/magma/include/magma_dgehrd_m.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/composite.h:
 
@@ -1923,6 +2015,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/type_identity.h:
 
+/usr/local/magma/include/magma_sbulge.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/remove_volatile.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/binary_search.h:
@@ -1930,8 +2024,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/remove_reference.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/remove_const_ref.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/remove_const.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/remove_all_extents.h:
 
@@ -1958,6 +2050,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/error_code.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_trivially_move_constructible.h:
+
+/usr/local/magma/include/magma_bulge.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_trivially_move_assignable.h:
 
@@ -2012,6 +2106,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/replace.inl:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_nothrow_assignable.h:
+
+/usr/local/magma/include/magma_zgehrd_m.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_move_constructible.h:
 
@@ -2072,6 +2168,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/dependent_type.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/decay.h:
+
+/usr/local/magma/include/magma_zc.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/copy_cvref.h:
 
@@ -2217,6 +2315,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__functional/bind_back.h:
 
+/usr/local/magma/include/magma_sbatched.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cpp/detail/adjacent_difference.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__functional/binary_function.h:
@@ -2248,6 +2348,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/copy_construct_range.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/predicate.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/equality_comparable.h:
 
 /usr/include/eigen3/Eigen/Cholesky:
 
@@ -2521,6 +2623,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
+/usr/local/magma/include/magma_hbatched.h:
+
 /usr/include/c++/10/bits/parse_numbers.h:
 
 /usr/include/c++/10/stdexcept:
@@ -2571,6 +2675,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/cstdint:
 
+/usr/local/magma/include/magma_auxiliary.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_bounded_array.h:
 
 /usr/include/eigen3/Eigen/src/Core/CwiseTernaryOp.h:
@@ -2584,6 +2690,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/bits/vector.tcc:
 
 /usr/include/eigen3/Eigen/src/Geometry/Scaling.h:
+
+/usr/local/magma/include/magmablas_d.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/void_t.h:
 
@@ -2640,8 +2748,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/eigen3/Eigen/src/SVD/JacobiSVD.h:
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/c++allocator.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/equality_comparable.h:
 
 /usr/include/c++/10/typeindex:
 
@@ -2712,6 +2818,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/bits/stl_relops.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/patchlevel.h:
+
+/usr/local/magma/include/magma_config.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pylifecycle.h:
 
@@ -2828,6 +2936,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h:
 
 /usr/include/c++/10/bits/char_traits.h:
+
+/usr/local/magma/include/magma_operators.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/actor.inl:
 
@@ -3113,9 +3223,13 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/detail/common.h:
 
+/usr/local/magma/include/magma_types.h:
+
 /home/chris/anaconda3/envs/lab_env/include/python3.9/object.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/abstract.h:
+
+/usr/local/magma/include/magma_cvbatched.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/genobject.h:
 
@@ -3166,6 +3280,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_nothrow_constructible.h:
 
 /usr/include/asm-generic/errno.h:
+
+/usr/local/magma/include/magma_v2.h:
 
 /usr/include/eigen3/Eigen/src/Core/Inverse.h:
 
@@ -3238,6 +3354,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/pointer.inl:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pyerrors.h:
+
+/usr/local/magma/include/magma_cbatched.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/execution_policy.h:
 
@@ -3463,11 +3581,15 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/eigen3/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h:
 
+/usr/local/cuda/targets/x86_64-linux/include/cusparse.h:
+
 /usr/include/eigen3/Eigen/src/Core/Assign.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/add_lvalue_reference.h:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/local/magma/include/magma_c.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/copy.h:
 
@@ -3656,6 +3778,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/tr1/legendre_function.tcc:
 
 /usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrix.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/remove_const.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/10/include/omp.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/malloc_and_free.h:
 
@@ -3915,6 +4041,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/linux/stat.h:
 
+/usr/local/magma/include/magma_dvbatched.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__utility/pair.h:
@@ -3938,6 +4066,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/all_of.h:
 
 /usr/include/stdint.h:
+
+/usr/local/magma/include/magma_dbulge.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/access.h:
 
@@ -4004,6 +4134,8 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/copy_if.h:
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
+
+/usr/local/magma/include/magmablas_z.h:
 
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 

@@ -3795,6 +3795,8 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/local/cuda/targets/x86_64-linux/include/curand_poisson.h \
   /usr/local/cuda/targets/x86_64-linux/include/curand_precalc.h \
   /usr/local/cuda/targets/x86_64-linux/include/curand_uniform.h \
+  /usr/local/cuda/targets/x86_64-linux/include/cusparse.h \
+  /usr/local/cuda/targets/x86_64-linux/include/cusparse_v2.h \
   /usr/local/cuda/targets/x86_64-linux/include/device_atomic_functions.h \
   /usr/local/cuda/targets/x86_64-linux/include/device_atomic_functions.hpp \
   /usr/local/cuda/targets/x86_64-linux/include/device_launch_parameters.h \
@@ -4264,6 +4266,47 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o: /home/chris/footst
   /usr/local/cuda/targets/x86_64-linux/include/vector_functions.h \
   /usr/local/cuda/targets/x86_64-linux/include/vector_functions.hpp \
   /usr/local/cuda/targets/x86_64-linux/include/vector_types.h \
+  /usr/local/magma/include/magma_auxiliary.h \
+  /usr/local/magma/include/magma_batched.h \
+  /usr/local/magma/include/magma_bulge.h \
+  /usr/local/magma/include/magma_c.h \
+  /usr/local/magma/include/magma_cbatched.h \
+  /usr/local/magma/include/magma_cbulge.h \
+  /usr/local/magma/include/magma_cgehrd_m.h \
+  /usr/local/magma/include/magma_config.h \
+  /usr/local/magma/include/magma_copy.h \
+  /usr/local/magma/include/magma_cvbatched.h \
+  /usr/local/magma/include/magma_d.h \
+  /usr/local/magma/include/magma_dbatched.h \
+  /usr/local/magma/include/magma_dbulge.h \
+  /usr/local/magma/include/magma_dgehrd_m.h \
+  /usr/local/magma/include/magma_ds.h \
+  /usr/local/magma/include/magma_dvbatched.h \
+  /usr/local/magma/include/magma_hbatched.h \
+  /usr/local/magma/include/magma_htc.h \
+  /usr/local/magma/include/magma_operators.h \
+  /usr/local/magma/include/magma_s.h \
+  /usr/local/magma/include/magma_sbatched.h \
+  /usr/local/magma/include/magma_sbulge.h \
+  /usr/local/magma/include/magma_sgehrd_m.h \
+  /usr/local/magma/include/magma_svbatched.h \
+  /usr/local/magma/include/magma_types.h \
+  /usr/local/magma/include/magma_v2.h \
+  /usr/local/magma/include/magma_vbatched.h \
+  /usr/local/magma/include/magma_z.h \
+  /usr/local/magma/include/magma_zbatched.h \
+  /usr/local/magma/include/magma_zbulge.h \
+  /usr/local/magma/include/magma_zc.h \
+  /usr/local/magma/include/magma_zgehrd_m.h \
+  /usr/local/magma/include/magma_zvbatched.h \
+  /usr/local/magma/include/magmablas.h \
+  /usr/local/magma/include/magmablas_c.h \
+  /usr/local/magma/include/magmablas_d.h \
+  /usr/local/magma/include/magmablas_ds.h \
+  /usr/local/magma/include/magmablas_h.h \
+  /usr/local/magma/include/magmablas_s.h \
+  /usr/local/magma/include/magmablas_z.h \
+  /usr/local/magma/include/magmablas_zc.h \
   /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/axpby.hpp \
   /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/clear.hpp \
   /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp \
@@ -5871,8 +5914,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/ctf32_ctf32_cfp32_tn.hpp.inc:
 
-/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp16_cfp16_cfp32_tn.hpp.inc:
-
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp16_cfp16_cfp16_tn.hpp.inc:
 
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/ce5m2_ce5m2_cfp32_tn.hpp.inc:
@@ -5900,8 +5941,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp64_cfp64_cfp64_tn.hpp.inc:
 
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp32_cfp32_cfp32_tn.hpp.inc:
-
-/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp16_cfp16_cfp32_tn.hpp.inc:
 
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp16_cfp16_cfp16_tn.hpp.inc:
 
@@ -6021,8 +6060,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/mathdx/24.08/external/cutlass/include/cute/container/alignment.hpp:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm90_gmma.hpp:
-
 /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm80.hpp:
 
 /usr/local/mathdx/24.08/include/commondx/traits/detail/get.hpp:
@@ -6039,6 +6076,62 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits_sm75.hpp:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_atom.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90_desc.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm80.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm75.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm70.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm61.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_tma.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_desc.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm80.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tensor_algorithms.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefer.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/gemm.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/functional.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/fill.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/copy.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/clear.hpp:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/axpby.hpp:
+
+/usr/local/magma/include/magmablas_z.h:
+
+/usr/local/magma/include/magmablas_h.h:
+
+/usr/local/magma/include/magmablas_d.h:
+
+/usr/local/magma/include/magmablas.h:
+
+/usr/local/magma/include/magma_zgehrd_m.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/mma_traits_sm90_gmma.hpp:
+
+/usr/local/magma/include/magma_zbulge.h:
+
+/usr/local/magma/include/magma_zbatched.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/copy.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/front_insert_iterator.h:
@@ -6050,8 +6143,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/type_traits/result_of_adaptable_function.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/data.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90_desc.hpp:
 
 /usr/include/stdio.h:
 
@@ -6106,6 +6197,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__fwd/pair.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/constructible.h:
+
+/usr/local/magma/include/magmablas_zc.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/boolean_testable.h:
 
@@ -6217,6 +6310,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/device/dispatch/dispatch_reduce.cuh:
 
+/usr/local/magma/include/magma_zc.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/cub/device/device_scan.cuh:
 
 /usr/include/eigen3/Eigen/src/Jacobi/Jacobi.h:
@@ -6263,6 +6358,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/block/block_store.cuh:
 
+/usr/local/magma/include/magma_htc.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/cub/block/block_scan.cuh:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
@@ -6301,9 +6398,11 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
+/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits.hpp:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm70.hpp:
+/usr/local/cuda/targets/x86_64-linux/include/cub/thread/thread_reduce.cuh:
+
+/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
@@ -6349,8 +6448,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/x86_64-linux-gnu/c++/10/bits/error_constants.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy.hpp:
-
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
@@ -6360,6 +6457,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__utility/pair.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/detail/par_to_seq.h:
+
+/usr/local/magma/include/magma_dvbatched.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/version.cuh:
 
@@ -6376,6 +6475,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/eigen3/Eigen/src/plugins/BlockMethods.h:
 
 /usr/include/eigen3/Eigen/src/plugins/ArrayCwiseUnaryOps.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/util.hpp:
+
+/usr/include/eigen3/Eigen/src/plugins/ArrayCwiseBinaryOps.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/reduce.h:
 
@@ -6525,6 +6628,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/detail/choose_offset.cuh:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/functors/AssignmentFunctors.h:
+
 /usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp32_cfp32_cfp32_tn.hpp.inc:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__exception/terminate.h:
@@ -6538,6 +6645,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/memory_resource.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/malloc_and_free.h:
+
+/usr/local/magma/include/magmablas_s.h:
 
 /usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrix.h:
 
@@ -6574,6 +6683,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/cub/device/dispatch/tuning/tuning_reduce_by_key.cuh:
 
 /usr/include/eigen3/Eigen/src/Core/functors/StlFunctors.h:
+
+/usr/local/magma/include/magma_dbulge.h:
 
 /usr/include/c++/10/bits/shared_ptr_base.h:
 
@@ -6665,10 +6776,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/eigen3/Eigen/src/Eigenvalues/HessenbergDecomposition.h:
 
-/usr/include/eigen3/Eigen/src/Core/functors/AssignmentFunctors.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90.hpp:
-
 /usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h:
 
 /usr/include/eigen3/Eigen/src/Core/Fuzzy.h:
@@ -6711,6 +6818,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/copy.h:
 
+/usr/local/magma/include/magma_sbatched.h:
+
+/usr/local/magma/include/magma_c.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/driver_types.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/driver_functions.h:
@@ -6732,6 +6843,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/eigen3/Eigen/src/Core/Assign.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/agent/agent_radix_sort_histogram.cuh:
+
+/usr/local/cuda/targets/x86_64-linux/include/cusparse.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/crt/cudacc_ext.h:
 
@@ -6770,6 +6883,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
+
+/usr/local/magma/include/magma_config.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__memory/compressed_pair.h:
 
@@ -6895,6 +7010,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/ptr_traits.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_gemm.hpp:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_reference.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.inl:
 
 /usr/local/cuda/targets/x86_64-linux/include/sm_32_intrinsics.hpp:
@@ -6904,8 +7023,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 
 /usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm75.hpp:
 
 /usr/include/eigen3/Eigen/Householder:
 
@@ -7079,6 +7196,12 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/string.h:
 
+/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tuple_algorithms.hpp:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/assignable.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/bounded_iter.h:
+
 /usr/include/c++/10/shared_mutex:
 
 /usr/include/c++/10/iostream:
@@ -7181,10 +7304,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/cstdlib:
 
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_reference.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_gemm.hpp:
-
 /usr/local/cuda/targets/x86_64-linux/include/cuda_runtime_api.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__utility/forward.h:
@@ -7196,6 +7315,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/texture_indirect_functions.h:
 
 /usr/include/eigen3/Eigen/src/Core/CwiseTernaryOp.h:
+
+/usr/local/magma/include/magma_auxiliary.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/iterator/iterator_categories.h:
 
@@ -7319,12 +7440,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/include/c++/10/bits/locale_facets.tcc:
 
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/assignable.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/bounded_iter.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tuple_algorithms.hpp:
-
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/iter_move.h:
 
 /usr/include/eigen3/Eigen/Eigenvalues:
@@ -7352,6 +7467,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/limits.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__memory/voidify.h:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma.hpp:
+
+/usr/include/c++/10/pstl/glue_numeric_defs.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/sm_30_intrinsics.h:
 
@@ -7519,8 +7638,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/sm_60_atomic_functions.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_tma.hpp:
-
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/invocable.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/detail/device_synchronize.cuh:
@@ -7530,6 +7647,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/c++/10/bits/erase_if.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/texture_types.h:
+
+/usr/local/magma/include/magmablas_c.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/vector_functions.h:
 
@@ -7588,6 +7707,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda-12.6/targets/x86_64-linux/include/cuda/std/__type_traits/is_same.h:
 
 /usr/include/eigen3/Eigen/src/Core/Inverse.h:
+
+/usr/local/magma/include/magma_v2.h:
 
 /usr/include/asm-generic/errno.h:
 
@@ -7805,8 +7926,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/distance.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/clear.hpp:
-
 /usr/include/memory.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__cuda/cstddef_prelude.h:
@@ -7822,8 +7941,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/eigen3/Eigen/src/Core/CoreEvaluators.h:
 
 /usr/include/c++/10/istream:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm90_desc.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
@@ -7907,8 +8024,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/reverse_iterator.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/tensor_algorithms.hpp:
-
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/unreachable_sentinel.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/wrap_iter.h:
@@ -7989,7 +8104,9 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__tuple_dir/tuple_size.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_atom.hpp:
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm75.hpp:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__tuple_dir/vector_types.h:
 
 /usr/include/eigen3/Eigen/src/Core/products/SelfadjointProduct.h:
 
@@ -8012,10 +8129,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/aligned_union.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/can_extract_key.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_base_of.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/common_reference.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/common_type.h:
 
@@ -8119,8 +8232,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/agent/agent_radix_sort_onesweep.cuh:
 
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_reference_wrapper.h:
-
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_referenceable.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/block/block_radix_sort.cuh:
@@ -8168,6 +8279,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_empty.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_trivially_move_assignable.h:
+
+/usr/local/magma/include/magma_bulge.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_trivially_move_constructible.h:
 
@@ -8218,6 +8331,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/execute_with_dependencies.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/remove_volatile.h:
+
+/usr/local/magma/include/magma_sbulge.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/type_identity.h:
 
@@ -8357,6 +8472,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/nv/detail/__target_macros:
 
+/usr/local/magma/include/magmablas_ds.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/advance.inl:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/alignment.h:
@@ -8366,8 +8483,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/copy_construct_range.inl:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/cooperative_copy.hpp:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/default_construct_range.inl:
 
@@ -8381,9 +8496,9 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/fill_construct_range.h:
 
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__utility/to_underlying.h:
-
 /usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefetch.hpp:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__utility/to_underlying.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/allocator/no_throw_allocator.h:
 
@@ -8443,8 +8558,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/curand_normal.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/copy.hpp:
-
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/config/namespace.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/config/simple_defines.h:
@@ -8469,6 +8582,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/actor.inl:
 
+/usr/local/magma/include/magma_operators.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/sequence.inl:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/vector_base.inl:
@@ -8476,6 +8591,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/argument.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/composite.h:
+
+/usr/local/magma/include/magma_dgehrd_m.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/operators/arithmetic_operators.h:
 
@@ -8540,16 +8657,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/reference.h:
 
 /usr/include/c++/10/bits/quoted_string.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cutlass/integer_subbyte.h:
-
-/usr/include/c++/10/bits/charconv.h:
-
-/usr/include/c++/10/debug/assertions.h:
-
-/usr/include/c++/10/bits/stl_uninitialized.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/thrust/detail/scatter.inl:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/detail/swap.h:
 
@@ -8649,10 +8756,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/iterator/detail/minimum_category.h:
 
-/usr/local/cuda/targets/x86_64-linux/include/cub/thread/thread_reduce.cuh:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/atom/copy_traits.hpp:
-
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__iterator/erase_if_container.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/iterator/detail/permutation_iterator_base.h:
@@ -8692,8 +8795,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/pair.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/scan.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm80.hpp:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cpp/detail/copy.h:
 
@@ -8781,6 +8882,10 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/for_each.h:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm80/cfp16_cfp16_cfp32_tn.hpp.inc:
+
+/usr/local/magma/include/magma_dbatched.h:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/generate.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/iter_swap.h:
@@ -8790,8 +8895,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/include/math.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/mismatch.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/functional.hpp:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/reduce.h:
 
@@ -8804,8 +8907,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/mathdx/24.08/include/cublasdx/include/database/cute_db.hpp:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/scatter.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/prefer.hpp:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/swap_ranges.h:
 
@@ -8824,6 +8925,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/distance.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/maybe_const.h:
+
+/usr/local/magma/include/magma_hbatched.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/equal.inl:
 
@@ -8860,6 +8963,18 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/reduce_by_key.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/mismatch.inl:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cutlass/integer_subbyte.h:
+
+/usr/include/c++/10/bits/charconv.h:
+
+/usr/include/c++/10/debug/assertions.h:
+
+/usr/include/c++/10/bits/stl_uninitialized.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/thrust/detail/scatter.inl:
+
+/usr/local/magma/include/magma_batched.h:
 
 /usr/include/c++/10/cstddef:
 
@@ -8902,8 +9017,6 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__utility/rel_ops.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/uninitialized_fill.h:
-
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm61.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
@@ -9033,6 +9146,12 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/device/device_radix_sort.cuh:
 
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp64_cfp64_cfp64_tn.hpp.inc:
+
+/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm50.hpp:
+
+/usr/local/cuda/targets/x86_64-linux/include/cub/device/device_select.cuh:
+
 /usr/local/cuda/targets/x86_64-linux/include/cub/device/dispatch/tuning/tuning_select_if.cuh:
 
 /usr/local/cuda/targets/x86_64-linux/include/cub/device/dispatch/tuning/tuning_unique_by_key.cuh:
@@ -9042,6 +9161,14 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/add_lvalue_reference.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/discard_memory:
+
+/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp16_cfp16_cfp32_tn.hpp.inc:
+
+/usr/local/cuda/targets/x86_64-linux/include/cusparse_v2.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_reduce.h:
+
+/usr/local/magma/include/magma_svbatched.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/execution_policy.h:
 
@@ -9089,9 +9216,9 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cpp/detail/unique.h:
 
-/usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/detail/transform_reduce.h:
-
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/execution_policy.h:
+
+/usr/local/magma/include/magma_cbatched.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/copy_if.h:
 
@@ -9118,6 +9245,8 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/merge.inl:
 
 /usr/local/mathdx/24.08/external/cutlass/include/cutlass/tfloat32.h:
+
+/usr/local/magma/include/magma_zvbatched.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/reverse.h:
 
@@ -9159,30 +9288,30 @@ CMakeFiles/cuda_DE.dir/src/footstep/footstep_utils.cu.o: /home/chris/footstep-CU
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/transform_reduce.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/axpby.hpp:
+/usr/local/magma/include/magma_cbulge.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/fill.hpp:
+/usr/local/magma/include/magma_cgehrd_m.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/algorithm/gemm.hpp:
+/usr/local/magma/include/magma_copy.h:
 
-/usr/local/mathdx/24.08/include/cublasdx/include/database/sm89/cfp64_cfp64_cfp64_tn.hpp.inc:
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_base_of.h:
 
-/usr/local/cuda/targets/x86_64-linux/include/cub/device/device_select.cuh:
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/common_reference.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm50.hpp:
+/usr/local/magma/include/magma_cvbatched.h:
 
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__tuple_dir/vector_types.h:
+/usr/local/magma/include/magma_d.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm75.hpp:
+/usr/local/magma/include/magma_ds.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/copy_sm80.hpp:
+/usr/local/magma/include/magma_s.h:
 
-/usr/include/c++/10/pstl/glue_numeric_defs.h:
+/usr/local/magma/include/magma_sgehrd_m.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma.hpp:
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_reference_wrapper.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/mma_sm90.hpp:
+/usr/local/magma/include/magma_types.h:
 
-/usr/include/eigen3/Eigen/src/plugins/ArrayCwiseBinaryOps.h:
+/usr/local/magma/include/magma_vbatched.h:
 
-/usr/local/mathdx/24.08/external/cutlass/include/cute/arch/util.hpp:
+/usr/local/magma/include/magma_z.h:
