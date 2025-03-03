@@ -102,6 +102,7 @@ template<int T = CUDA_SOLVER_POP_SIZE>
 __global__ void UpdateFitnessBasedMatrix(CudaParamClusterData<T> *cluster_data, float *evaluate_score){
     if (threadIdx.x >= T) return;
     cluster_data->fitness[threadIdx.x] = evaluate_score[threadIdx.x];
+    printf("individual %d fitness:%f\n", threadIdx.x, evaluate_score[threadIdx.x]);
 }
 
 __device__ __forceinline__ float Interpolation(float x0, float x1, float x, float y0, float y1) {

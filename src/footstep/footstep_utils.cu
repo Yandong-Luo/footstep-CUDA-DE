@@ -181,8 +181,8 @@ namespace footstep{
     float *d_U = nullptr;
     float *h_U = nullptr;
 
-    void *d_D = nullptr;
-    void *h_D = nullptr;
+    float *d_D = nullptr;
+    float *h_D = nullptr;
 
     void **d_batch_D = nullptr;
     void **h_batch_D = nullptr;
@@ -230,6 +230,9 @@ namespace footstep{
 
     float *d_B = nullptr;
     float *h_B = nullptr;
+
+    float *d_cluster_N_control = nullptr;
+    float *h_cluster_N_control = nullptr;
 
     // void ConstructEandF(cudaStream_t stream){
 

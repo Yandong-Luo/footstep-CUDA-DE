@@ -41,6 +41,8 @@ const float x_lb = 0.0f;
 const float x_ub = 3.0f;
 const float y_lb = 0.0f;
 const float y_ub = 3.0f;
+// const float theta_lb = 0.0f;
+// const float theta_ub = 6.28f;
 
 // state boundary
 constexpr float speed_x_lb = -0.5;
@@ -212,8 +214,8 @@ extern void **h_batch_hugeF;
 
 // D matrix record N_state - hugeE * X_0
 const int row_D = CUDA_SOLVER_POP_SIZE, col_D = N * state_dims;
-extern void *d_D;
-extern void *h_D;
+extern float *d_D;
+extern float *h_D;
 
 extern float *d_B;
 extern float *h_B;
@@ -228,6 +230,8 @@ extern void **h_batch_u;
 // const int row_U = CUDA_SOLVER_POP_SIZE * N * control_dims, col_U = 1;
 // extern float *d_U;
 // extern float *h_U;
+extern float *d_cluster_N_control;
+extern float *h_cluster_N_control;
 
 extern float *d_sol_state;
 extern float *h_sol_state;

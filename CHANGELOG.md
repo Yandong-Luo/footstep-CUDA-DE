@@ -278,6 +278,10 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Yandong Luo: cudss can successfully solve HugeF * U = D
 
-## [0.3.22] - 2025-3-2
+## [0.3.23] - 2025-3-2
 ### Changed
-- Yandong Luo: cudss can successfully solve HugeF * U = D
+- Yandong Luo: Using MAGMA solve bigF * u = D. I found that CUDSS requires that the A matrix must be a square matrix, so I gave up using CUDSS.
+
+## [0.3.24] - 2025-3-3
+### Changed
+- Yandong Luo: Fixed serious errors in the magma batch solver, including errors in boundary conditions.
