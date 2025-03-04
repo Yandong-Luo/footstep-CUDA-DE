@@ -266,6 +266,21 @@ extern int* row_array_U;
 extern int* col_array_U;
 extern int* ld_array_U;
 
+constexpr int row_F_inv = col_F, col_F_inv = row_F;
+extern float *h_F_inv_column;
+extern float *d_F_inv_column;
+
+constexpr int row_DiagF_inv = N * row_F_inv, col_DiagF_inv = N * col_F_inv;
+extern float *h_DiagF_inv_column;
+extern float *d_DiagF_inv_column;
+
+constexpr int row_DiagE = N * row_E, col_DiagE = N * col_E;
+extern float *h_DiagE_column;
+extern float *d_DiagE_column;
+
+extern float *d_sol_control;
+extern float *h_sol_control;
+
 // ################################
 // ########## Penalty #############
 // ################################

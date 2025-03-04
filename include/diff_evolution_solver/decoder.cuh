@@ -116,9 +116,13 @@ namespace cudaprocess{
     }
 
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void DecodeParameters2State(CudaParamClusterData<T>* new_cluster_data, bezier_curve::BezierCurve* curve, float *cluster_state, void **d_batch_D){
+    __global__ void DecodeParameters2State(CudaParamClusterData<T>* new_cluster_data, bezier_curve::BezierCurve* curve, float *cluster_state, void **d_batch_D, bool record_best=false){
         int step_id = blockIdx.x;
         int sol_id = threadIdx.x;
+        if(record_best){
+            sol_id = blockIdx.x;
+            step_id = threadIdx.x;
+        }
 
         if(step_id >= CURVE_NUM_STEPS)  return;
         if(sol_id >= CUDA_SOLVER_POP_SIZE) return;

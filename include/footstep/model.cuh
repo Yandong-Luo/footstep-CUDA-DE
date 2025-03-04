@@ -34,6 +34,23 @@ namespace footstep{
                         + cublasdx::SM<860>()
                         + cublasdx::Block());
 
+    // the invert F * D
+    using F_invD_col = decltype(cublasdx::Size< row_DiagF_inv, 1, col_DiagF_inv>()
+                        + cublasdx::Precision<float>()
+                        + cublasdx::Type<cublasdx::type::real>()
+                        + cublasdx::Function<cublasdx::function::MM>()
+                        + cublasdx::Arrangement<cublasdx::col_major, cublasdx::col_major>()
+                        + cublasdx::SM<860>()
+                        + cublasdx::Block());
+    
+    using D_GEMM = decltype(cublasdx::Size< row_DiagE, 1, col_DiagE>()
+                        + cublasdx::Precision<float>()
+                        + cublasdx::Type<cublasdx::type::real>()
+                        + cublasdx::Function<cublasdx::function::MM>()
+                        + cublasdx::Arrangement<cublasdx::col_major, cublasdx::col_major>()
+                        + cublasdx::SM<860>()
+                        + cublasdx::Block());
+
     template<class GEMM>
     __device__ __forceinline__ void gemm_kernel(const float  alpha,
                                 const float* a,
@@ -327,30 +344,53 @@ namespace footstep{
 
     /************************Version 2*********************** */
     // Construct matrix D (D = C - HugeE X_0)
-    template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void ConstructMatrixD(const float *bigEx0_column, float *d_D, float *cluster_N_state){
+    __global__ void ConstructMatrixD(const float *DiagE_col, float *d_D, float *cluster_N_state){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
-        // ########### 
-        // Update State
-        // ###########
-        // float *N_states = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
-
-        // // if(blockIdx.x == 0 && threadIdx.x == 0){
-        // //     for(int i = 0; i < footstep::N * footstep::state_dims; ++i){
-        // //         printf("%f ", N_states[i]);
-        // //     }
-        // //     printf("\n");
-        // // }
+        float *current_state = cluster_N_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims;
+        float *next_states = cluster_N_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims + footstep::state_dims;
         
-        // extern __shared__ __align__(16) char smem[];
+        extern __shared__ __align__(16) char smem[];
 
-        // // matrix bigE times init_states, and record the result at N_states
-        // gemm_kernel<Ex_GEMM_col>(-1.0f, bigE_column, init_state, 1.0f, N_states, smem);
+        gemm_kernel<D_GEMM>(-1.0f, DiagE_col, current_state, 0.0f, d_D, smem);
+
+        __syncthreads();
+        if(threadIdx.x < footstep::state_dims * footstep::N) {
+            d_D[blockIdx.x * footstep::N * footstep::state_dims + threadIdx.x] += next_states[threadIdx.x];
+        }
+    }
+
+    // Generative N step state
+    template<int T = CUDA_SOLVER_POP_SIZE>
+    __global__ void CalculateControlInput(const float *DiagF_inv_col, float *D, float *cluster_u){
+        if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
+
+        float *current_D = D + N * state_dims * blockIdx.x;
+
+        // if(blockIdx.x == 0 && threadIdx.x == 0){
+        //     printf("block id=0 D:\n");
+        //     for(int i = 0; i < N * state_dims; ++i){
+        //         printf("%f ", current_D[i]);
+        //     }
+
+        //     // printf("block id=0 D:\n");
+        //     // for(int i = 0; i < N * state_dims; ++i){
+        //     //     printf("%f ", current_D[i]);
+        //     // }
+        // }
+
+        float *current_u = cluster_u + blockIdx.x * N * control_dims; 
         
-        float *N_states = cluster_N_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims + footstep::state_dims;
-        // float *D = reinterpret_cast<float*>(d_batch_D[blockIdx.x]);
-        float *current_D = d_D + footstep::N * blockIdx.x * footstep::state_dims;
-        current_D[threadIdx.x] = N_states[threadIdx.x] - bigEx0_column[threadIdx.x];
+        extern __shared__ __align__(16) char smem[];
+
+        // matrix bigE times init_states, and record the result at N_states
+        gemm_kernel<F_invD_col>(1.0f, DiagF_inv_col, current_D, 0.0f, current_u, smem);
+
+        __syncthreads();
+
+        // matrix bigE times init_states, and plus the result at F
+        // gemm_kernel<Fu_GEMM>(1.0f, bigF, cur_individual_param, 1.0f, N_states, smem);
+
+        // __syncthreads();
     }
 
     // // Construct matrix D (D = C - HugeE X_0)
@@ -376,7 +416,7 @@ namespace footstep{
     // }
 
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void EvaluateModel2(void **cluster_u, float *cluster_state, float *score, float *sol_score = nullptr){
+    __global__ void EvaluateModel2(float *cluster_u, float *cluster_state, float *score, float *sol_score = nullptr){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
         if(threadIdx.x >= 32)    return;
 
@@ -411,7 +451,7 @@ namespace footstep{
         if(threadIdx.x < N){
             // float *current_state = nullptr;
 
-            float *current_u = reinterpret_cast<float*>(cluster_u[blockIdx.x]);
+            float *current_u = cluster_u + blockIdx.x * N * control_dims + threadIdx.x * control_dims;
 
             float *current_state = cluster_state + blockIdx.x * (N + 1) * state_dims + threadIdx.x * state_dims;
 
@@ -443,9 +483,9 @@ namespace footstep{
 
             if(current_region == -1)    cs_constraint_score += pos_penalty;
 
-            if(sol_score != nullptr && cs_constraint_score != 0){
-                printf("current step: %d constraint from region:%f\n", threadIdx.x, cs_constraint_score);
-            }
+            // if(sol_score != nullptr && cs_constraint_score != 0){
+            //     printf("current step: %d constraint from region:%f\n", threadIdx.x, cs_constraint_score);
+            // }
 
             // ##########################
             // speed and theta constraint
@@ -471,9 +511,9 @@ namespace footstep{
             cs_constraint_score += fabsf(current_u[1]) > uy_ub ? control_penalty : 0.0f;
             cs_constraint_score += fabsf(current_u[2]) > utheta_ub ? control_penalty : 0.0f;
 
-            if(fabsf(current_u[0]) > ux_ub || fabsf(current_u[1]) > uy_ub || fabsf(current_u[2]) > utheta_ub){
-                printf("current param exceed the range:%f %f %f\n", current_u[0], current_u[1], current_u[2]);
-            }
+            // if(fabsf(current_u[0]) > ux_ub || fabsf(current_u[1]) > uy_ub || fabsf(current_u[2]) > utheta_ub){
+            //     printf("current param exceed the range:%f %f %f\n", current_u[0], current_u[1], current_u[2]);
+            // }
             
             // ##########################
             // velocity constraint
@@ -519,9 +559,9 @@ namespace footstep{
 
             cs_constraint_score += (foothold_lb_constraint > 0.0f) ? foothold_penalty * foothold_lb_constraint : 0.0f;
 
-            if(sol_score != nullptr && (cs_constraint_score - before_foothold) != 0){
-                printf("current step: %d constraint from foothold:%f\n", threadIdx.x, cs_constraint_score - before_foothold);
-            }
+            // if(sol_score != nullptr && (cs_constraint_score - before_foothold) != 0){
+            //     printf("current step: %d constraint from foothold:%f\n", threadIdx.x, cs_constraint_score - before_foothold);
+            // }
 
             // ##########################
             // objective function

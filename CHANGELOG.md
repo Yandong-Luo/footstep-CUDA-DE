@@ -285,3 +285,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.24] - 2025-3-3
 ### Changed
 - Yandong Luo: Fixed serious errors in the magma batch solver, including errors in boundary conditions.
+
+## [0.3.25] - 2025-3-4
+### Changed
+- Yandong Luo: The solution of D matrix and u is completed through the diagonal matrix E and F_inv. It is also necessary to verify the D matrix in the future.

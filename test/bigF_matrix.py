@@ -42,6 +42,13 @@ F = np.array([
     [0, 0, 1]
 ])
 
+F_pseudo_inverse = np.linalg.pinv(F)
+
+print("F 矩阵:")
+print(F)
+print("\nF 矩阵的伪逆:")
+print(F_pseudo_inverse)
+
 N = 10  # 计算前 10 步
 big_F_python = construct_big_F(E, F, N)
 

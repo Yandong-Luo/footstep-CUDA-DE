@@ -173,6 +173,15 @@ namespace footstep{
     // float *d_hugeF = nullptr;
     // float *h_hugeF = nullptr;
 
+    float *h_F_inv_column = nullptr;
+    float *d_F_inv_column = nullptr;
+
+    float *h_DiagF_inv_column = nullptr;
+    float *d_DiagF_inv_column = nullptr;
+
+    float *h_DiagE_column = nullptr;
+    float *d_DiagE_column = nullptr;
+
     float *bigE_column = nullptr;
     float *h_bigE_column = nullptr;
     float *bigF_column = nullptr;
@@ -195,6 +204,9 @@ namespace footstep{
 
     float *d_sol_state = nullptr;
     float *h_sol_state = nullptr;
+
+    float *d_sol_control = nullptr;
+    float *h_sol_control = nullptr;
 
     float *d_sol_score = nullptr;
     float *h_sol_score = nullptr;
@@ -472,6 +484,33 @@ namespace footstep{
 
         Eigen::Map<RowMatrix> E(h_E, row_E, col_E);
         Eigen::Map<RowMatrix> F(h_F, row_F, col_F);
+
+        // 计算F矩阵的逆矩阵（列优先存储）
+        ColMatrix F_col = F; // 将F从行优先转换为列优先
+        ColMatrix F_inv = F_col.completeOrthogonalDecomposition().pseudoInverse();
+        ColMatrix E_col = E;
+
+        // Create a large matrix to hold the block diagonal structure
+        ColMatrix DiagF_inv(F_inv.rows() * footstep::N, F_inv.cols() * footstep::N);
+        ColMatrix DiagE(E_col.rows() * footstep::N, E_col.cols() * footstep::N);
+        DiagF_inv.setZero();
+
+        // Fill the diagonal blocks with F_inv
+        for (int i = 0; i < footstep::N; i++) {
+            // Set the block at position (i*rows, i*cols) with size (rows, cols)
+            DiagF_inv.block(i * F_inv.rows(), i * F_inv.cols(), F_inv.rows(), F_inv.cols()) = F_inv;
+            DiagE.block(i * E_col.rows(), i * E_col.cols(), E_col.rows(), E_col.cols()) = E_col;
+        }
+
+        // Print the block diagonal matrix for debugging
+        PrintMatrix(DiagF_inv, "DiagF_inverse");
+        
+        // 打印F的逆矩阵用于调试
+        PrintMatrix(F_inv, "F_inverse");
+        
+        std::memcpy(h_F_inv_column, F_inv.data(), row_F_inv * col_F_inv * sizeof(float));
+        std::memcpy(h_DiagF_inv_column, DiagF_inv.data(), row_DiagF_inv * col_DiagF_inv * sizeof(float));
+        std::memcpy(h_DiagE_column, DiagE.data(), row_DiagE * col_DiagE * sizeof(float));  
         
         // 创建bigE和bigF矩阵
         RowMatrix bigE_row(N * row_E, col_E);
@@ -485,13 +524,6 @@ namespace footstep{
         // 创建列优先格式的bigE和bigF（通过简单赋值转换存储方式）
         ColMatrix bigE_col = bigE_row;
         ColMatrix bigF_col = bigF_row;
-
-        // ColMatrix bigF_transpose_bigF = bigF_col.transpose() * bigF_col;
-        // ColMatrix bigF_T = bigF_col.transpose();
-
-        // PrintMatrix(bigF_T, "bigF_transpose");
-        // PrintMatrix(bigF_transpose_bigF, "bigF_transpose_bigF");
-        // PrintMatrix(bigF_col, "bigF_col");
 
         // CHECK_CUDA(cudaMemcpy(h_bigE_column, bigE_col.data(), bigE_col))
         std::memcpy(h_bigE_column, bigE_col.data(), row_bigE * col_bigE * sizeof(float));

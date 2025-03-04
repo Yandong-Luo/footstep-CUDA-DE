@@ -42,22 +42,22 @@ PYBIND11_MODULE(DE_cuda_solver, m) {
             // 创建返回字典
             py::dict solution;
             solution["fitness"] = result.fitness;
-            solution["objective_score"] = result.objective_score;
-            solution["constraint_score"] = result.constraint_score;
+            // solution["objective_score"] = result.objective_score;
+            // solution["constraint_score"] = result.constraint_score;
             
             // control input (u)转换参数到numpy数组
             auto param_array = py::array_t<float>(footstep::N * footstep::control_dims);
             auto buf = param_array.request();
             float* ptr = static_cast<float*>(buf.ptr);
-            std::memcpy(ptr, result.param, footstep::N * footstep::control_dims * sizeof(float));
+            std::memcpy(ptr, result.N_control, footstep::N * footstep::control_dims * sizeof(float));
             
             solution["param"] = param_array;
 
             // state转换参数到numpy数组
-            auto state_array = py::array_t<float>(footstep::N * footstep::state_dims);
+            auto state_array = py::array_t<float>((footstep::N + 1)* footstep::state_dims);
             auto state_buf = state_array.request();
             float* state_ptr = static_cast<float*>(state_buf.ptr);
-            std::memcpy(state_ptr, result.N_states, footstep::N * footstep::state_dims * sizeof(float));
+            std::memcpy(state_ptr, result.N_states, (footstep::N + 1)* footstep::state_dims * sizeof(float));
             
             solution["state"] = state_array;
             return solution;

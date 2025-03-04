@@ -51,7 +51,7 @@ nx = 5
 nz = num_patch
 
 nc = 4*num_patch+6+6+4+2*3
-N = 20
+N = 30
 
 h = np.zeros([nc, 1])
 h_d_theta = np.zeros([nx, 1])
@@ -184,7 +184,7 @@ solver.init_solver(0)
 
 solve_start = time.time()
 
-# solution = solver.Solve()
+solution = solver.Solve()
 
 solver_time = time.time() - solve_start
 print("solver time:", solver_time)
@@ -204,20 +204,20 @@ print("solver time:", solver_time)
 # # sol_u = np.array([sol['control_x'], sol['control_y']])
 
 fitness = solution["fitness"]
-objective_score = solution["objective_score"]
-constraint_score = solution["constraint_score"]
+# objective_score = solution["objective_score"]
+# constraint_score = solution["constraint_score"]
 sol_x = solution["state"]
 sol_u = solution["param"]
 
 print("fitness:",fitness)
-print("objective_score:",objective_score)
-print("constraint_score:",constraint_score)
+# print("objective_score:",objective_score)
+# print("constraint_score:",constraint_score)
 
 # sol_x = sol_x.reshape
 print(len(sol_x))
 print(len(sol_u))
-sol_x = np.reshape(sol_x, (N, 5))
-sol_x = np.vstack([x0_MLD, sol_x])
+sol_x = np.reshape(sol_x, (N+1, 5))
+# sol_x = np.vstack([x0_MLD, sol_x])
 sol_u = np.reshape(sol_u, (N, 3))
 
 print("solution x",sol_x)
