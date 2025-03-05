@@ -343,26 +343,110 @@ namespace footstep{
 
 
     /************************Version 2*********************** */
-    // Construct matrix D (D = C - HugeE X_0)
-    __global__ void ConstructMatrixD(const float *DiagE_col, float *d_D, float *cluster_N_state){
-        if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
-        float *current_state = cluster_N_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims;
-        float *next_states = cluster_N_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims + footstep::state_dims;
+    // finish E*x[k]
+    __device__ void matrixE_vectorX_multiply_colmajor(const float* E_col, const float* x, float* result) {
+        // // 初始化结果为0
+        // #pragma unroll
+        // for (int i = 0; i < row_E; i++) {
+        //     result[i] = 0.0f;
+        // }
         
-        extern __shared__ __align__(16) char smem[];
+        // // 按列进行计算，适合column-major存储
+        // #pragma unroll
+        // for (int j = 0; j < col_E; j++) {
+        //     float xj = x[j];  // 缓存x[j]
+            
+        //     #pragma unroll
+        //     for (int i = 0; i < row_E; i++) {
+        //         // column-major索引: j*row_A+i
+        //         result[i] += E_col[j * row_E + i] * xj;
+        //     }
+        // }
 
-        gemm_kernel<D_GEMM>(-1.0f, DiagE_col, current_state, 0.0f, d_D, smem);
+        if constexpr (row_E == 5 && col_E == 5) {
+            // 列0
+            result[0] += E_col[0] * x[0];
+            result[1] += E_col[1] * x[0];
+            result[2] += E_col[2] * x[0];
+            result[3] += E_col[3] * x[0];
+            result[4] += E_col[4] * x[0];
+            
+            // 列1
+            result[0] += E_col[5] * x[1];
+            result[1] += E_col[6] * x[1];
+            result[2] += E_col[7] * x[1];
+            result[3] += E_col[8] * x[1];
+            result[4] += E_col[9] * x[1];
+            
+            // 列2
+            result[0] += E_col[10] * x[2];
+            result[1] += E_col[11] * x[2];
+            result[2] += E_col[12] * x[2];
+            result[3] += E_col[13] * x[2];
+            result[4] += E_col[14] * x[2];
+            
+            // 列3
+            result[0] += E_col[15] * x[3];
+            result[1] += E_col[16] * x[3];
+            result[2] += E_col[17] * x[3];
+            result[3] += E_col[18] * x[3];
+            result[4] += E_col[19] * x[3];
+            
+            // 列4
+            result[0] += E_col[20] * x[4];
+            result[1] += E_col[21] * x[4];
+            result[2] += E_col[22] * x[4];
+            result[3] += E_col[23] * x[4];
+            result[4] += E_col[24] * x[4];
+        }
+    }
 
-        __syncthreads();
-        if(threadIdx.x < footstep::state_dims * footstep::N) {
-            d_D[blockIdx.x * footstep::N * footstep::state_dims + threadIdx.x] += next_states[threadIdx.x];
+    // Construct matrix D (D = C - HugeE X_0)
+    __global__ void ConstructMatrixD(const float *E_col, float *d_D, float *cluster_N_state, float *score=nullptr){
+        if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
+        if(threadIdx.x >= footstep::N)   return;
+        if(score != nullptr && score[blockIdx.x] != 0.0f)   return;
+        // x[k]
+        float *current_state = cluster_N_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims + threadIdx.x * footstep::state_dims;
+        // x[k+1]
+        float *next_states = cluster_N_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims + (threadIdx.x + 1) * footstep::state_dims ;
+        float *current_D = d_D + footstep::N * footstep::state_dims * blockIdx.x + threadIdx.x * footstep::state_dims;
+        // extern __shared__ __align__(16) char smem[];
+
+        // gemm_kernel<D_GEMM>(-1.0f, DiagE_col, current_state, 0.0f, d_D, smem);
+
+        matrixE_vectorX_multiply_colmajor(E_col, current_state, current_D);
+
+        // if(blockIdx.x == 7 && threadIdx.x == 0){
+        //     printf("block:%d, score:%f\n", blockIdx.x, score[blockIdx.x]);
+        //     printf("current state:\n");
+        //     for(int i = 0; i < state_dims; ++i){
+        //         printf("%f ", current_state[i]);
+        //     }
+        //     printf("\n");
+        //     printf("next state:\n");
+        //     for(int i = 0; i < state_dims; ++i){
+        //         printf("%f ", next_states[i]);
+        //     }
+        //     printf("\n");
+        //     printf("D:\n");
+        //     for(int i = 0; i < state_dims; ++i){
+        //         printf("%f ", current_D[i]);
+        //     }
+        //     printf("\n");
+        // }
+
+        for(int i = 0; i < state_dims; ++i){
+            current_D[i] = next_states[i] - current_D[i];
         }
     }
 
     // Generative N step state
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void CalculateControlInput(const float *DiagF_inv_col, float *D, float *cluster_u){
+    __global__ void CalculateControlInput(const float *DiagF_inv_col, float *D, float *cluster_u, float *score=nullptr){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
+
+        if(score != nullptr && score[blockIdx.x] != 0.0f)   return;
 
         float *current_D = D + N * state_dims * blockIdx.x;
 
@@ -416,10 +500,33 @@ namespace footstep{
     // }
 
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void EvaluateModel2(float *cluster_u, float *cluster_state, float *score, float *sol_score = nullptr){
+    __global__ void EvaluatePosition(float *cluster_state, float *score){
         if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
         if(threadIdx.x >= 32)    return;
 
+        if(threadIdx.x < N){
+            float *current_state = cluster_state + blockIdx.x * (N + 1) * state_dims + threadIdx.x * state_dims;
+
+            int current_region = -1;
+            for(int i = 0; i < num_regions; ++i){
+                // if(current_state[0] + current_u[0] >= all_region2[i].x && current_state[0] + current_u[0] <= all_region2[i].y && current_state[1] + current_u[1] >= all_region2[i].z && current_state[1] + current_u[1] <= all_region2[i].w){
+                //     current_region = i;
+                //     break;
+                // }
+                if(current_state[0] >= all_region[i].x && current_state[0] <= all_region[i].y && current_state[1] >= all_region[i].z && current_state[1] <= all_region[i].w){
+                    current_region = i;
+                    break;
+                }
+            }
+            if(current_region == -1)    score[blockIdx.x] = CUDA_MAX_FLOAT;
+        }
+    }
+
+    template<int T = CUDA_SOLVER_POP_SIZE>
+    __global__ void EvaluateModel2(float *cluster_u, float *cluster_state, float *score, float *sol_score = nullptr){
+        if(blockIdx.x >= CUDA_SOLVER_POP_SIZE)  return;
+        if(threadIdx.x >= 32)    return;
+        if(score != nullptr && score[blockIdx.x] != 0.0f)   return;
         // 32 threads don't need share memory.
         // __shared__ ALIGN(64) float N_score_sum[32];
         // __shared__ ALIGN(64) float N_obj_score_sum[32];
@@ -469,19 +576,19 @@ namespace footstep{
             // #################
             // if robot doesn't stay at any region will get a huge penalty
             // calculate the region
-            int current_region = -1;
-            for(int i = 0; i < num_regions; ++i){
-                // if(current_state[0] + current_u[0] >= all_region2[i].x && current_state[0] + current_u[0] <= all_region2[i].y && current_state[1] + current_u[1] >= all_region2[i].z && current_state[1] + current_u[1] <= all_region2[i].w){
-                //     current_region = i;
-                //     break;
-                // }
-                if(current_state[0] + current_u[0] >= all_region[i].x && current_state[0] + current_u[0] <= all_region[i].y && current_state[1] + current_u[1] >= all_region[i].z && current_state[1] + current_u[1] <= all_region[i].w){
-                    current_region = i;
-                    break;
-                }
-            }
+            // int current_region = -1;
+            // for(int i = 0; i < num_regions; ++i){
+            //     // if(current_state[0] + current_u[0] >= all_region2[i].x && current_state[0] + current_u[0] <= all_region2[i].y && current_state[1] + current_u[1] >= all_region2[i].z && current_state[1] + current_u[1] <= all_region2[i].w){
+            //     //     current_region = i;
+            //     //     break;
+            //     // }
+            //     if(current_state[0] + current_u[0] >= all_region[i].x && current_state[0] + current_u[0] <= all_region[i].y && current_state[1] + current_u[1] >= all_region[i].z && current_state[1] + current_u[1] <= all_region[i].w){
+            //         current_region = i;
+            //         break;
+            //     }
+            // }
 
-            if(current_region == -1)    cs_constraint_score += pos_penalty;
+            // if(current_region == -1)    cs_constraint_score += pos_penalty;
 
             // if(sol_score != nullptr && cs_constraint_score != 0){
             //     printf("current step: %d constraint from region:%f\n", threadIdx.x, cs_constraint_score);

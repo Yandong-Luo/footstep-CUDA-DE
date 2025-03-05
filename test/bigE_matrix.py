@@ -71,7 +71,9 @@ big_E_python = construct_E_matrix(E, N)
 # print(big_E_python)
 print(big_F_python)
 
-x0_MLD = np.array([ 0.29357406,  0.29125562, -0.01193462, -0.01774755,  1.58432257])
+x0_MLD = np.array([ 0.29357406,  0.29125562, -0.0, -0.0,  1.58432257])
+
+print(np.dot(E, x0_MLD))
 
 # u = np.array([
 #     [-0.05876903, -0.11210947,  0.10821661],

@@ -114,9 +114,9 @@ target_link_libraries(cuda_solver PRIVATE
     nvtx3-cpp
     yaml-cpp::yaml-cpp
     mathdx::cublasdx
-    cudss
     Eigen3::Eigen
 
+    cudss
     ${MAGMA_LIBRARY}
     LAPACK::LAPACK
     BLAS::BLAS

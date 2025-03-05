@@ -172,8 +172,6 @@ namespace cudaprocess{
             float *control_score, *h_control_score;
 
             float *score, *h_score;
-
-            int param_seg[3] = {0}; //param_seg[0] for the start index of x, param_seg[1] for the start index of y, param_seg[3] for the theta
     };
 }
 

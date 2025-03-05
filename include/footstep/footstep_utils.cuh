@@ -115,12 +115,12 @@ extern __constant__ float2 target_pos;
 
 // E Matrix (5x5), Row priority
 const int row_E = state_dims, col_E = state_dims;
-extern float *d_E;
+extern float *d_E_col;
 extern float h_E[25];
 
 // Matrix F (5x3), Row priority
 const int row_F = state_dims, col_F = control_dims;
-extern float *d_F;
+extern float *d_F_col;
 extern float h_F[15];
 
 void InitMatrixEAndF();

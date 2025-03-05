@@ -31,7 +31,6 @@ __device__ __forceinline__ void PolarAllState2Cartesian(float2 position, float2 
 
 // *************** Bezier *****************
 __global__ void PrepareBinomialandFixedPoint(BezierCurve* curve) {
-	printf("Start PrepareBinomialandFixedPoint\n");
 	float t_powers[BEZIER_SIZE], one_minus_t_powers[BEZIER_SIZE];	// record t^j, (1-t)^{n-j}
 
 	float tmp_binomial_coeff[BEZIER_SIZE][BEZIER_SIZE + 1];

@@ -162,8 +162,8 @@ namespace footstep{
     float *h_cluster_N_state = nullptr;
     float h_cluster_param[CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE] = {0.0f};
     float *d_cluster_N_state = nullptr;
-    float *d_E = nullptr;  // Device pointer
-    float *d_F = nullptr;  // Device pointer
+    float *d_E_col = nullptr;  // Device pointer
+    float *d_F_col = nullptr;  // Device pointer
     float *bigE = nullptr;
     float *bigF = nullptr;
     float *h_bigE = nullptr;
@@ -507,10 +507,14 @@ namespace footstep{
         
         // 打印F的逆矩阵用于调试
         PrintMatrix(F_inv, "F_inverse");
+
+        PrintMatrix(DiagE, "DiagE");
         
         std::memcpy(h_F_inv_column, F_inv.data(), row_F_inv * col_F_inv * sizeof(float));
         std::memcpy(h_DiagF_inv_column, DiagF_inv.data(), row_DiagF_inv * col_DiagF_inv * sizeof(float));
         std::memcpy(h_DiagE_column, DiagE.data(), row_DiagE * col_DiagE * sizeof(float));  
+
+        std::memcpy(h_E, E_col.data(), row_E * col_E * sizeof(float));  
         
         // 创建bigE和bigF矩阵
         RowMatrix bigE_row(N * row_E, col_E);
@@ -536,15 +540,11 @@ namespace footstep{
 
         PrintCSR(bigF_csr_row_offsets, bigF_csr_column_indices, bigF_csr_values, "bigF_col");
 
-        // Eigen::Map<ColVector> init_state_vec(h_init_state, row_bigEx0);
-        Eigen::Map<ColVector> init_state_vec(const_cast<float*>(h_init_state), row_bigEx0);
-
-
-        ColVector eigen_bigEx0 = bigE_col * init_state_vec;
-
-        PrintMatrix(eigen_bigEx0, "eigen_bigEx0");
-
-        std::memcpy(h_bigEx0_col, eigen_bigEx0.data(), row_bigEx0 * col_bigEx0 * sizeof(float));
+        // // Eigen::Map<ColVector> init_state_vec(h_init_state, row_bigEx0);
+        // Eigen::Map<ColVector> init_state_vec(const_cast<float*>(h_init_state), row_bigEx0);
+        // ColVector eigen_bigEx0 = bigE_col * init_state_vec;
+        // PrintMatrix(eigen_bigEx0, "eigen_bigEx0");
+        // std::memcpy(h_bigEx0_col, eigen_bigEx0.data(), row_bigEx0 * col_bigEx0 * sizeof(float));
     }
 
     void SetupCUDSSBatch(){
