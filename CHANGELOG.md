@@ -292,4 +292,8 @@ All notable changes to this project will be documented in this file.
 
 ## [0.3.26] - 2025-3-4
 ### Changed
-- Yandong Luo: Fixed the error on ConstructMatrixD
+- Yandong Luo: Fixed the error on ConstructMatrixD and lots of issue.
+
+## [0.3.27] - 2025-3-5
+### Changed
+- Yandong Luo: Start arc-length parametrization for bezier curve. Finished and verify the calculation of arch length. Note: Bezier curves based on lookup cannot be used for arc length calculations because PrepareBinomialandFixedPoint only builds a table for TIMESTEP. However, for arc length, it needs to be built based on ARC_LENGTH_SAMPLES. This can be improved later.

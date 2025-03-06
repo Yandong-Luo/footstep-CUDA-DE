@@ -34,4 +34,7 @@
 #define Y_START (BEZIER_SIZE - NUM_XYFIXED_CP)
 #define THETA_START (2*(BEZIER_SIZE - NUM_XYFIXED_CP))
 
+// **************ARCH LENGTH PARAMETER**************
+#define ARC_LENGTH_SAMPLES 100  // Number of samples for arc-length calculation
+
 #endif

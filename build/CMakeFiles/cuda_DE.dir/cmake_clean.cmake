@@ -2,6 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/cuda_DE.dir/cmake_device_link.o"
   "CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o"
   "CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.o.d"
+  "CMakeFiles/cuda_DE.dir/src/curve/arclength_param.cu.o"
+  "CMakeFiles/cuda_DE.dir/src/curve/arclength_param.cu.o.d"
   "CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o"
   "CMakeFiles/cuda_DE.dir/src/curve/bezier_curve.cu.o.d"
   "CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/random_manager.cu.o"

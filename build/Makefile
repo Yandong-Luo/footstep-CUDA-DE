@@ -166,6 +166,30 @@ src/cart_pole/cart_pole_utils.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/cart_pole/cart_pole_utils.cu.s
 .PHONY : src/cart_pole/cart_pole_utils.cu.s
 
+src/curve/arclength_param.o: src/curve/arclength_param.cu.o
+.PHONY : src/curve/arclength_param.o
+
+# target to build an object file
+src/curve/arclength_param.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/curve/arclength_param.cu.o
+.PHONY : src/curve/arclength_param.cu.o
+
+src/curve/arclength_param.i: src/curve/arclength_param.cu.i
+.PHONY : src/curve/arclength_param.i
+
+# target to preprocess a source file
+src/curve/arclength_param.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/curve/arclength_param.cu.i
+.PHONY : src/curve/arclength_param.cu.i
+
+src/curve/arclength_param.s: src/curve/arclength_param.cu.s
+.PHONY : src/curve/arclength_param.s
+
+# target to generate assembly for a file
+src/curve/arclength_param.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cuda_DE.dir/build.make CMakeFiles/cuda_DE.dir/src/curve/arclength_param.cu.s
+.PHONY : src/curve/arclength_param.cu.s
+
 src/curve/bezier_curve.o: src/curve/bezier_curve.cu.o
 .PHONY : src/curve/bezier_curve.o
 
@@ -299,6 +323,9 @@ help:
 	@echo "... src/cart_pole/cart_pole_utils.o"
 	@echo "... src/cart_pole/cart_pole_utils.i"
 	@echo "... src/cart_pole/cart_pole_utils.s"
+	@echo "... src/curve/arclength_param.o"
+	@echo "... src/curve/arclength_param.i"
+	@echo "... src/curve/arclength_param.s"
 	@echo "... src/curve/bezier_curve.o"
 	@echo "... src/curve/bezier_curve.i"
 	@echo "... src/curve/bezier_curve.s"

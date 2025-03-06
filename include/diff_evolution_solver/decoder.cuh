@@ -116,7 +116,7 @@ namespace cudaprocess{
     }
 
     template<int T = CUDA_SOLVER_POP_SIZE>
-    __global__ void DecodeParameters2State(CudaParamClusterData<T>* new_cluster_data, bezier_curve::BezierCurve* curve, float *cluster_state, bool record_best=false){
+    __global__ void DecodeParameters2State(CudaParamClusterData<T>* new_cluster_data, bezier_curve::BezierCurve* curve, float *cluster_state, float *all_curve_param, bool record_best=false){
         int step_id = blockIdx.x;
         int sol_id = threadIdx.x;
         if(record_best){
@@ -128,7 +128,8 @@ namespace cudaprocess{
         if(sol_id >= CUDA_SOLVER_POP_SIZE) return;
         
         // construct the complete bezier curve param 
-        float curve_param[3 * BEZIER_SIZE];
+        // float curve_param[3 * BEZIER_SIZE];
+        float *curve_param = all_curve_param + sol_id * 3 * BEZIER_SIZE;
         // float *curve_param_y;
         int construct_idx = 0;
         float *current_sol_param = new_cluster_data->all_param + sol_id * CUDA_PARAM_MAX_SIZE;
@@ -183,13 +184,13 @@ namespace cudaprocess{
             // __syncthreads();
         }
         
-        // if(blockIdx.x == 1 && threadIdx.x == 1){
+        if(blockIdx.x == 0 && threadIdx.x == 0){
             
-        //     printf("%d %d\n", xy_param_idx, theta_param_idx);
-        //     for(int i = 0; i < BEZIER_SIZE; ++i){
-        //         printf("Point %d and its' value (%f, %f %f) pointer form:(%f, %f %f)\n",i, curve->control_points[i].x, curve->control_points[i].y, curve->control_points[i].z, curve_param[i], curve_param[i+BEZIER_SIZE], curve_param[i+2*BEZIER_SIZE]);
-        //     }
-        // }
+            printf("%d %d\n", xy_param_idx, theta_param_idx);
+            for(int i = 0; i < BEZIER_SIZE; ++i){
+                printf("Point %d and its' value (%f, %f %f) pointer form:(%f, %f %f)\n",i, curve->control_points[i].x, curve->control_points[i].y, curve->control_points[i].z, curve_param[i], curve_param[i+BEZIER_SIZE], curve_param[i+2*BEZIER_SIZE]);
+            }
+        }
         
         float *current_state = cluster_state + sol_id * footstep::state_dims * CURVE_NUM_STEPS + step_id * footstep::state_dims;
         // printf("block:%d, start idx:%d\n", blockIdx.x ,sol_id * footstep::state_dims * (footstep::N + 1) + step_id * footstep::state_dims);

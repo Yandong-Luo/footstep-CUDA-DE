@@ -26,6 +26,7 @@
 // #include "diff_evolution_solver/random_center.cuh"
 #include "diff_evolution_solver/random_manager.cuh"
 #include "curve/bezier_curve.cuh"
+#include "curve/arclength_param.cuh"
 
 namespace cudaprocess{
 

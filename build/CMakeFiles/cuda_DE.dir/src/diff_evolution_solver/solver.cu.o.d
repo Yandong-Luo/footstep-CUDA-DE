@@ -1480,6 +1480,8 @@ CMakeFiles/cuda_DE.dir/src/diff_evolution_solver/solver.cu.o : /home/chris/foots
     /usr/include/c++/10/bits/stl_numeric.h \
     /usr/include/c++/10/pstl/glue_numeric_defs.h \
     /home/chris/footstep-CUDA-DE/include/curve/bezier_curve.cuh \
+    /home/chris/footstep-CUDA-DE/include/curve/arclength_param.cuh \
+    /home/chris/footstep-CUDA-DE/include/curve/numerical_integration.cuh \
     /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/decoder.cuh \
     /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/debug.cuh \
     /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/evolve.cuh \

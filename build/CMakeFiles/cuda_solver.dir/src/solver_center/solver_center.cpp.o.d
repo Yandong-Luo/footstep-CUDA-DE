@@ -1378,4 +1378,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: \
  /usr/include/c++/10/random /usr/include/c++/10/bits/random.h \
  /usr/include/x86_64-linux-gnu/c++/10/bits/opt_random.h \
  /usr/include/c++/10/bits/random.tcc \
- /home/chris/footstep-CUDA-DE/include/curve/bezier_curve.cuh
+ /home/chris/footstep-CUDA-DE/include/curve/bezier_curve.cuh \
+ /home/chris/footstep-CUDA-DE/include/curve/arclength_param.cuh \
+ /home/chris/footstep-CUDA-DE/include/curve/numerical_integration.cuh

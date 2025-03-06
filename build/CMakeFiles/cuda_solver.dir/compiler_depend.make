@@ -101,7 +101,9 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
   /home/chris/anaconda3/envs/lab_env/include/python3.9/unicodeobject.h \
   /home/chris/anaconda3/envs/lab_env/include/python3.9/warnings.h \
   /home/chris/anaconda3/envs/lab_env/include/python3.9/weakrefobject.h \
+  /home/chris/footstep-CUDA-DE/include/curve/arclength_param.cuh \
   /home/chris/footstep-CUDA-DE/include/curve/bezier_curve.cuh \
+  /home/chris/footstep-CUDA-DE/include/curve/numerical_integration.cuh \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/converter.cuh \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/data_type.h \
   /home/chris/footstep-CUDA-DE/include/diff_evolution_solver/random_manager.cuh \
@@ -2351,6 +2353,14 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/equality_comparable.h:
 
+/usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/unique_by_key.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/uninitialized_fill.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/different_from.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/destructible.h:
+
 /usr/include/eigen3/Eigen/Cholesky:
 
 /usr/include/linux/stddef.h:
@@ -2394,8 +2404,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/tr1/poly_laguerre.tcc:
 
 /usr/include/c++/10/tr1/gamma.tcc:
-
-/usr/include/c++/10/tr1/bessel_function.tcc:
 
 /usr/include/c++/10/stdlib.h:
 
@@ -2809,6 +2817,16 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/bits/cxxabi_forced.h:
 
+/usr/include/c++/10/bits/postypes.h:
+
+/usr/include/c++/10/bits/concept_check.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cub/util_compiler.cuh:
+
+/home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/objimpl.h:
+
+/usr/include/c++/10/typeinfo:
+
 /usr/include/c++/10/pstl/pstl_config.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/picklebufobject.h:
@@ -2860,6 +2878,10 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/include/c++/10/version:
 
 /usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/include/c++/10/tr1/bessel_function.tcc:
+
+/home/chris/footstep-CUDA-DE/include/curve/numerical_integration.cuh:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/generic/scan_by_key.h:
 
@@ -2917,31 +2939,11 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/fileobject.h:
 
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__functional/mem_fn.h:
-
-/usr/include/eigen3/Eigen/Eigenvalues:
-
-/usr/include/c++/10/bits/hashtable_policy.h:
-
 /usr/local/cuda/targets/x86_64-linux/include/driver_types.h:
 
 /usr/include/c++/10/bits/nested_exception.h:
 
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/gil.h:
-
-/usr/include/c++/10/new:
-
-/usr/include/eigen3/Eigen/src/Core/CwiseUnaryOp.h:
-
-/usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h:
-
-/usr/include/c++/10/bits/char_traits.h:
-
-/usr/local/magma/include/magma_operators.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/actor.inl:
-
-/home/chris/anaconda3/envs/lab_env/include/python3.9/pytime.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
 
@@ -2956,6 +2958,12 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_integral.h:
 
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/detail/class.h:
+
+/usr/include/c++/10/sstream:
+
+/usr/include/c++/10/bits/charconv.h:
+
+/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDecls.h:
 
 /usr/include/c++/10/bits/iterator_concepts.h:
 
@@ -2986,12 +2994,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /home/chris/anaconda3/envs/lab_env/include/python3.9/frameobject.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/compile.h:
-
-/usr/include/c++/10/bits/postypes.h:
-
-/usr/include/c++/10/bits/concept_check.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cub/util_compiler.cuh:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pydebug.h:
 
@@ -3059,10 +3061,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/initconfig.h:
 
-/usr/local/cuda-12.6/targets/x86_64-linux/include/cuda/std/__concepts/__concept_macros.h:
-
-/home/chris/anaconda3/envs/lab_env/include/python3.9/pystrcmp.h:
-
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/cuda/pointer.h:
@@ -3120,12 +3118,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /home/chris/anaconda3/envs/lab_env/include/python3.9/bltinmodule.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/pyerrors.h:
-
-/usr/include/eigen3/Eigen/Geometry:
-
-/usr/include/c++/10/forward_list:
-
-/usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/thrust/iterator/counting_iterator.h:
 
@@ -3249,16 +3241,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pymacconfig.h:
 
-/home/chris/anaconda3/envs/lab_env/include/python3.9/cpython/objimpl.h:
-
-/usr/include/c++/10/typeinfo:
-
-/usr/include/c++/10/sstream:
-
-/home/chris/footstep-CUDA-DE/thirdparty/nvtx/c/include/nvtx3/nvtxDetail/nvtxInitDecls.h:
-
-/usr/include/c++/10/bits/charconv.h:
-
 /home/chris/anaconda3/envs/lab_env/include/python3.9/enumobject.h:
 
 /usr/include/eigen3/Eigen/src/Core/MatrixBase.h:
@@ -3307,12 +3289,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/typing.h:
 
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__memory/voidify.h:
-
-/usr/include/limits.h:
-
-/usr/include/c++/10/pstl/glue_numeric_defs.h:
-
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/sort.h:
 
 /usr/include/eigen3/Eigen/src/Core/ArrayWrapper.h:
@@ -3332,6 +3308,18 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__type_traits/is_union.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda.h:
+
+/usr/local/magma/include/magma_operators.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/thrust/detail/functional/actor.inl:
+
+/home/chris/anaconda3/envs/lab_env/include/python3.9/pytime.h:
+
+/usr/include/c++/10/bits/char_traits.h:
+
+/home/chris/anaconda3/envs/lab_env/include/python3.9/pystrcmp.h:
+
+/usr/local/cuda-12.6/targets/x86_64-linux/include/cuda/std/__concepts/__concept_macros.h:
 
 /usr/include/eigen3/Eigen/src/misc/Image.h:
 
@@ -3384,6 +3372,14 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/surface_types.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/unicodeobject.h:
+
+/usr/include/c++/10/new:
+
+/usr/include/eigen3/Eigen/src/Core/CwiseUnaryOp.h:
+
+/usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h:
+
+/home/chris/footstep-CUDA-DE/include/curve/arclength_param.cuh:
 
 /usr/include/c++/10/bits/uniform_int_dist.h:
 
@@ -3454,12 +3450,6 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/attr.h:
 
 /home/chris/footstep-CUDA-DE/thirdparty/pybind11/include/pybind11/buffer_info.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/sequential/unique_by_key.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/uninitialized_fill.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/different_from.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/memoryobject.h:
 
@@ -3547,11 +3537,29 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 
 /usr/include/c++/10/backward/binders.h:
 
+/usr/include/c++/10/bits/hashtable_policy.h:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__functional/mem_fn.h:
+
+/usr/include/eigen3/Eigen/Eigenvalues:
+
 /usr/local/cuda/targets/x86_64-linux/include/thrust/system/detail/adl/swap_ranges.h:
 
 /home/chris/anaconda3/envs/lab_env/include/python3.9/pyarena.h:
 
 /usr/include/c++/10/bits/basic_ios.h:
+
+/usr/include/c++/10/forward_list:
+
+/usr/include/x86_64-linux-gnu/c++/10/bits/gthr-default.h:
+
+/usr/include/eigen3/Eigen/Geometry:
+
+/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__memory/voidify.h:
+
+/usr/include/c++/10/pstl/glue_numeric_defs.h:
+
+/usr/include/limits.h:
 
 /usr/include/c++/10/bits/functional_hash.h:
 
@@ -4326,5 +4334,3 @@ CMakeFiles/cuda_solver.dir/src/solver_center/solver_center.cpp.o: /home/chris/fo
 /usr/local/cuda/targets/x86_64-linux/include/channel_descriptor.h:
 
 /usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/derived_from.h:
-
-/usr/local/cuda/targets/x86_64-linux/include/cuda/std/__concepts/destructible.h:
