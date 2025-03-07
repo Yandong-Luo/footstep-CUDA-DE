@@ -218,5 +218,17 @@ namespace cudaprocess{
 
         // printf("step %d and its' state (%f, %f, %f, %f, %f)\n",blockIdx.x, current_state[0], current_state[1], current_state[2], current_state[3], current_state[4]);
     }
+
+    // template<int T = CUDA_SOLVER_POP_SIZE>
+    // __global__ void DecodeParameters2State(float *cluster_state){
+    //     int step_id = blockIdx.x;
+    //     int sol_id = threadIdx.x;
+        
+    //     float *current_state = cluster_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims + threadIdx.x * footstep::state_dims;
+    //     // x[k+1]
+    //     float *next_states = cluster_state + (footstep::N + 1) * blockIdx.x * footstep::state_dims + (threadIdx.x + 1) * footstep::state_dims ;
+        
+    //     current_state[2] = next_states[0] - current_state[0])
+    // }
 }
 #endif

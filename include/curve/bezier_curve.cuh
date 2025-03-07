@@ -120,9 +120,9 @@ __device__ __forceinline__ float2 GetBezierPositionVelocity(const BezierCurve *c
 }
 
 // __device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float *params, int step_idx, int l, int r, int ll, int rr, float *state, bool convert = false);
-__device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float *params, int step_idx, int l, int r, int ll, int rr, float *state){
-    // 计算实际的 t 值 (0 到 1 之间)
-    float t = step_idx * (1.0f / (CURVE_NUM_STEPS - 1));
+__device__ __forceinline__ void GetTrajStateFromBezier(const BezierCurve *curve, const float *params, float t, int l, int r, int ll, int rr, int lll, int rrr, float *state){
+    // // 计算实际的 t 值 (0 到 1 之间)
+    // float t = step_idx * (1.0f / (CURVE_NUM_STEPS - 1));
     
     float t_powers[BEZIER_SIZE], one_minus_t_powers[BEZIER_SIZE];
     t_powers[0] = one_minus_t_powers[0] = 1;
@@ -140,12 +140,14 @@ __device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float
     // 计算位置
     float2 position{0.0f, 0.0f};
 	float2 velocity{0.0f, 0.0f};
+	float theta = 0.0f;
     for (int i = 0; i < BEZIER_SIZE; ++i) {
         float bernstein_t = curve->binomial_coeff_[i] * 
                            t_powers[i] * 
                            one_minus_t_powers[BEZIER_SIZE - 1 - i];
         position.x += bernstein_t * params[i + l];
         position.y += bernstein_t * params[i + ll];
+		theta += bernstein_t * params[i + lll];
         
 		// for velocity
 		if(i < n){
@@ -162,13 +164,12 @@ __device__ __forceinline__ void GetTrajStateFromBezier(BezierCurve *curve, float
     }
 
 	// 存储状态
-	int idx = step_idx * 6;
-	state[idx] = position.x;
-	state[idx + 1] = position.y;
-	state[idx + 2] = velocity.x;
-	state[idx + 3] = velocity.y;
-	state[idx + 4] = 0.0;		// theta
-	state[idx + 5] = 0.0;		// radius for polar coordinate system
+	// int idx = t * footstep::state_dims;
+	state[0] = position.x;
+	state[1] = position.y;
+	state[2] = velocity.x;
+	state[3] = velocity.y;
+	state[4] = theta;		// theta
 }
 
 // __device__ __forceinline__ void GetTrajStateFromBezierBasedLookup(BezierCurve *curve, float *params, int t, int l, int r, int ll, int rr, float *state, bool convert = false);

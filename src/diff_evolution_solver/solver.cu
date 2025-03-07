@@ -129,10 +129,10 @@ void CudaDiffEvolveSolver::MallocSetup(){
     CHECK_CUDA(cudaHostAlloc(&h_diversity, sizeof(float), cudaHostAllocDefault));
 
     // arc len parameteration
-    CHECK_CUDA(cudaMalloc(&arclength::d_AllTraj_ArcLen, CUDA_SOLVER_POP_SIZE * ARC_LENGTH_SAMPLES * sizeof(float)));
-    CHECK_CUDA(cudaHostAlloc(&arclength::h_AllTraj_ArcLen, CUDA_SOLVER_POP_SIZE * ARC_LENGTH_SAMPLES * sizeof(float), cudaHostAllocDefault));
-    CHECK_CUDA(cudaMalloc(&arclength::d_AllTraj_TotalLen, CUDA_SOLVER_POP_SIZE * 1 * sizeof(float)));
-    CHECK_CUDA(cudaHostAlloc(&arclength::h_AllTraj_TotalLen, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaHostAllocDefault));
+    CHECK_CUDA(cudaMalloc(&arclength::d_allTraj_arcLenTable, CUDA_SOLVER_POP_SIZE * ARC_LENGTH_SAMPLES * sizeof(float)));
+    CHECK_CUDA(cudaHostAlloc(&arclength::h_allTraj_arcLenTable, CUDA_SOLVER_POP_SIZE * ARC_LENGTH_SAMPLES * sizeof(float), cudaHostAllocDefault));
+    CHECK_CUDA(cudaMalloc(&arclength::d_allTraj_totalLen, CUDA_SOLVER_POP_SIZE * 1 * sizeof(float)));
+    CHECK_CUDA(cudaHostAlloc(&arclength::h_allTraj_totalLen, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaHostAllocDefault));
 
     CHECK_CUDA(cudaMalloc(&bezier_curve::d_all_curve_param, CUDA_SOLVER_POP_SIZE * 3 * BEZIER_SIZE * sizeof(float)));
     CHECK_CUDA(cudaHostAlloc(&bezier_curve::h_all_curve_param, CUDA_SOLVER_POP_SIZE * 3 * BEZIER_SIZE * sizeof(float), cudaHostAllocDefault));
@@ -454,6 +454,24 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
     // CHECK_CUDA(cudaMemset(footstep::d_D, 0, sizeof(footstep::d_D)));
     DecodeParameters2State<<<CURVE_NUM_STEPS, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, bezier_curve_manager_->curve_, footstep::d_cluster_N_state, bezier_curve::d_all_curve_param);
 
+    arclength::initAllTrajArcLengthMap<<<size, ARC_LENGTH_SAMPLES, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+                                                                                                 bezier_curve::d_all_curve_param, 
+                                                                                                 arclength::d_allTraj_arcLenTable,
+                                                                                                 arclength::d_allTraj_totalLen);
+
+    // arclength::calculateTotalLength<<<1, size, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+    //                                                                         bezier_curve::d_all_curve_param, 
+    //                                                                         arclength::d_allTraj_totalLen);
+    
+    // CHECK_CUDA(cudaMemcpy(arclength::h_allTraj_totalLen, arclength::d_allTraj_totalLen, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+    // PrintMatrixByRow(arclength::h_allTraj_totalLen, CUDA_SOLVER_POP_SIZE, 1, "all individual Traj length");
+    
+    arclength::DecodeStateBasedArcLength<<<CURVE_NUM_STEPS, size, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+                                                                                                 bezier_curve::d_all_curve_param,
+                                                                                                 footstep::d_cluster_N_state,
+                                                                                                arclength::d_allTraj_arcLenTable,
+                                                                                                arclength::d_allTraj_totalLen);
+    
     if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
         // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, new_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
         CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
@@ -470,20 +488,6 @@ void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
         // PrintBatchData(footstep::h_batch_D, CUDA_SOLVER_POP_SIZE, footstep::col_D, "print batch D");
         // PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
     }
-
-    arclength::initAllTrajArcLengthMap<<<size, ARC_LENGTH_SAMPLES, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
-                                                                                                 bezier_curve::d_all_curve_param, 
-                                                                                                 arclength::d_AllTraj_ArcLen,
-                                                                                                 arclength::d_AllTraj_TotalLen);
-
-    // arclength::calculateTotalLength<<<1, size, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
-    //                                                                         bezier_curve::d_all_curve_param, 
-    //                                                                         arclength::d_AllTraj_TotalLen);
-    
-    CHECK_CUDA(cudaStreamSynchronize(cuda_utils_->streams_[0]));
-    CHECK_CUDA(cudaMemcpy(arclength::h_AllTraj_TotalLen, arclength::d_AllTraj_TotalLen, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
-    PrintMatrixByRow(arclength::h_AllTraj_TotalLen, CUDA_SOLVER_POP_SIZE, 1, "all individual Traj length");
-
     CHECK_CUDA(cudaMemset(evaluate_score_, 0.0f, CUDA_SOLVER_POP_SIZE * sizeof(float)));
     footstep::EvaluatePosition<CUDA_SOLVER_POP_SIZE><<<size, footstep::N, 0, cuda_utils_->streams_[0]>>>(footstep::d_cluster_N_state, evaluate_score_);
 
@@ -810,8 +814,8 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
 
     CHECK_CUDA(cudaMemcpy(footstep::d_E_col, footstep::h_E, footstep::row_E * footstep::col_E * sizeof(float), cudaMemcpyHostToDevice));
 
-    CHECK_CUDA(cudaMemset(arclength::d_AllTraj_ArcLen, 0.0f, CUDA_SOLVER_POP_SIZE * ARC_LENGTH_SAMPLES * sizeof(float)));
-    CHECK_CUDA(cudaMemset(arclength::d_AllTraj_TotalLen, 0.0f, CUDA_SOLVER_POP_SIZE * sizeof(float)));
+    CHECK_CUDA(cudaMemset(arclength::d_allTraj_arcLenTable, 0.0f, CUDA_SOLVER_POP_SIZE * ARC_LENGTH_SAMPLES * sizeof(float)));
+    CHECK_CUDA(cudaMemset(arclength::d_allTraj_totalLen, 0.0f, CUDA_SOLVER_POP_SIZE * sizeof(float)));
 
     // footstep::SetupCUDSSBatch();
     
@@ -872,7 +876,7 @@ void CudaDiffEvolveSolver::InitSolver(int gpu_device){
     host_evolve_data_->problem_param.dims = dims_;
     host_evolve_data_->problem_param.int_var_dims = int_var_dims_;
 
-    host_evolve_data_->problem_param.max_round = 0;
+    host_evolve_data_->problem_param.max_round = 60;
 
     host_evolve_data_->problem_param.accuracy_rng = 0.5;
 
@@ -1048,6 +1052,25 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
     // }
     DecodeParameters2State<CUDA_SOLVER_POP_SIZE*3><<<1, CURVE_NUM_STEPS, 0, cuda_utils_->streams_[0]>>>(old_cluster_data_, bezier_curve_manager_->curve_, footstep::d_sol_state, bezier_curve::d_all_curve_param, true);
     
+    arclength::initAllTrajArcLengthMap<<<1, ARC_LENGTH_SAMPLES, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+                                                                                                bezier_curve::d_all_curve_param, 
+                                                                                                arclength::d_allTraj_arcLenTable,
+                                                                                                arclength::d_allTraj_totalLen);
+
+    // arclength::calculateTotalLength<<<1, size, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+    //                                                                         bezier_curve::d_all_curve_param, 
+    //                                                                         arclength::d_allTraj_totalLen);
+
+    // CHECK_CUDA(cudaMemcpy(arclength::h_allTraj_totalLen, arclength::d_allTraj_totalLen, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+    // PrintMatrixByRow(arclength::h_allTraj_totalLen, CUDA_SOLVER_POP_SIZE, 1, "all individual Traj length");
+
+    arclength::DecodeStateBasedArcLength<<<CURVE_NUM_STEPS, 1, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+                                                                                                    bezier_curve::d_all_curve_param,
+                                                                                                    footstep::d_sol_state,
+                                                                                                arclength::d_allTraj_arcLenTable,
+                                                                                                arclength::d_allTraj_totalLen);
+
+
     const size_t gemm_shared_mem_size = footstep::F_invD_col().shared_memory_size;
     dim3 dim = footstep::F_invD_col().block_dim;
     // const size_t gemm_shared_mem_size = std::max(footstep::F_invD_col().shared_memory_size, footstep::D_GEMM().shared_memory_size);
@@ -1067,7 +1090,7 @@ CudaParamIndividual CudaDiffEvolveSolver::Solver(){
     }
 
     CHECK_CUDA(cudaMemset(footstep::d_D, 0.0f, footstep::N * footstep::state_dims * sizeof(float)));
-    footstep::ConstructMatrixD<<<1, footstep::N, 0, cuda_utils_->streams_[0]>>>(footstep::d_E_col, footstep::d_D, footstep::d_cluster_N_state);
+    footstep::ConstructMatrixD<<<1, footstep::N, 0, cuda_utils_->streams_[0]>>>(footstep::d_E_col, footstep::d_D, footstep::d_sol_state);
 
     footstep::CalculateControlInput<CUDA_SOLVER_POP_SIZE><<<1, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(footstep::d_DiagF_inv_column, footstep::d_D, footstep::d_sol_control);
     // if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
