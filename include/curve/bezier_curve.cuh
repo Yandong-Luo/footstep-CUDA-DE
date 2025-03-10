@@ -167,8 +167,8 @@ __device__ __forceinline__ void GetTrajStateFromBezier(const BezierCurve *curve,
 	// int idx = t * footstep::state_dims;
 	state[0] = position.x;
 	state[1] = position.y;
-	state[2] = velocity.x;
-	state[3] = velocity.y;
+	// state[2] = velocity.x;
+	// state[3] = velocity.y;
 	state[4] = theta;		// theta
 }
 

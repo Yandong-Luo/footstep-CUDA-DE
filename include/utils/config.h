@@ -10,7 +10,7 @@
 #define DEBUG_FOOTSTEP false
 
 #define HOST_DEVICE __device__ __forceinline__ __host__
-#define CUDA_SOLVER_POP_SIZE 64
+#define CUDA_SOLVER_POP_SIZE 1024
 #define REGENRATE_RANDOM_FREQUENCE 1000
 
 #define CUDA_PARAM_MAX_SIZE 32
@@ -27,7 +27,7 @@
 // **************Bezier Curve***************
 #define BEZIER_SIZE 7   // 6 + 1
 #define CURVE_NUM_STEPS (footstep::N + 1)
-#define NUM_XYFIXED_CP 4	// the number of fix control point, P_0, P_1, P_{n-1}, P_n
+#define NUM_XYFIXED_CP 2	// the number of fix control point, P_0, P_1, P_{n-1}, P_n
 #define NUM_THETA_FIXED_CP 2
 
 #define X_START 0

@@ -51,8 +51,8 @@ __device__ static float derivativeNormFunction(float t, const bezier_curve::Bezi
 
 __device__ __forceinline__ float calculateLength(float start, float end, const bezier_curve::BezierCurve* bezier_curve, const float *curve_param){
     // use adaptive Simpson integre to calculate the length of xy trajectory
-    // return integration::adaptive_simpson_3_8_device(derivativeNormFunction, start, end, bezier_curve, curve_param);
-    return integration::iterative_adaptive_simpson(derivativeNormFunction, start, end, bezier_curve, curve_param);
+    return integration::adaptive_simpson_3_8_device(derivativeNormFunction, start, end, bezier_curve, curve_param);
+    // return integration::iterative_adaptive_simpson(derivativeNormFunction, start, end, bezier_curve, curve_param);
 }
 
 // Get parameter t for a given arc-length s

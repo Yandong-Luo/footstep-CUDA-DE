@@ -114,44 +114,44 @@ __global__ void PrepareBinomialandFixedPoint(BezierCurve* curve) {
 	curve->is_point_xy_fixed[0] = 1;
 	curve->is_theta_point_fixed[0] = 1;
     
-    // First control point (P1)
-    // 如果速度不为0，使用速度
-    if (abs(vx_start) > 1e-6 || abs(vy_start) > 1e-6) {
-        // B'(0) = n(P1 - P0) = (vx_start, vy_start)
-        // 所以 P1 = P0 + (vx_start/n, vy_start/n)
-        curve->control_points[1].x = x_start + vx_start / static_cast<float>(n);
-        curve->control_points[1].y = y_start + vy_start / static_cast<float>(n);
-		curve->is_point_xy_fixed[1] = 1;
-    } else {
-        // 如果速度为0，使用角度
-        // B'(0) = n(P1 - P0) = (cos(theta_0), sin(theta_0))
-        // 所以 P1 = P0 + (cos(theta_0)/n, sin(theta_0)/n)
+    // // First control point (P1)
+    // // 如果速度不为0，使用速度
+    // if (abs(vx_start) > 1e-6 || abs(vy_start) > 1e-6) {
+    //     // B'(0) = n(P1 - P0) = (vx_start, vy_start)
+    //     // 所以 P1 = P0 + (vx_start/n, vy_start/n)
+    //     curve->control_points[1].x = x_start + vx_start / static_cast<float>(n);
+    //     curve->control_points[1].y = y_start + vy_start / static_cast<float>(n);
+	// 	curve->is_point_xy_fixed[1] = 1;
+    // } else {
+    //     // 如果速度为0，使用角度
+    //     // B'(0) = n(P1 - P0) = (cos(theta_0), sin(theta_0))
+    //     // 所以 P1 = P0 + (cos(theta_0)/n, sin(theta_0)/n)
 		
-        curve->control_points[1].x = x_start + sum_v * __cosf(theta_start) / static_cast<float>(n);
-        curve->control_points[1].y = y_start + sum_v * __sinf(theta_start) / static_cast<float>(n);
-		curve->is_point_xy_fixed[1] = 1;
-    }
+    //     curve->control_points[1].x = x_start + sum_v * __cosf(theta_start) / static_cast<float>(n);
+    //     curve->control_points[1].y = y_start + sum_v * __sinf(theta_start) / static_cast<float>(n);
+	// 	curve->is_point_xy_fixed[1] = 1;
+    // }
     
-    // Second to last control point (Pn-1)
-    // 如果速度不为0，使用速度
-    if (abs(vx_goal) > 1e-6 || abs(vy_goal) > 1e-6) {
-        // B'(1) = n(Pn - Pn-1) = (vx_end, vy_end)
-        // 所以 Pn-1 = Pn - (vx_end/n, vy_end/n)
-        curve->control_points[n-1].x = x_goal - vx_goal / static_cast<float>(n);
-        curve->control_points[n-1].y = y_goal - vy_goal / static_cast<float>(n);
-		curve->is_point_xy_fixed[n-1] = 1;
-    } else {
-        // 如果速度为0，使用角度
-        // B'(1) = n(Pn - Pn-1) = (cos(theta_n), sin(theta_n))
-        // 所以 Pn-1 = Pn - (cos(theta_n)/n, sin(theta_n)/n)
-        // controlPoints.push_back({
-        //     x_end - cos(theta_end)/n,
-        //     y_end - sin(theta_end)/n
-        // });
-        curve->control_points[n-1].x = x_goal - sum_v * __cosf(theta_goal) / static_cast<float>(n);
-        curve->control_points[n-1].y = y_goal - sum_v * __sinf(theta_goal) / static_cast<float>(n);
-		curve->is_point_xy_fixed[n-1] = 1;
-    }
+    // // Second to last control point (Pn-1)
+    // // 如果速度不为0，使用速度
+    // if (abs(vx_goal) > 1e-6 || abs(vy_goal) > 1e-6) {
+    //     // B'(1) = n(Pn - Pn-1) = (vx_end, vy_end)
+    //     // 所以 Pn-1 = Pn - (vx_end/n, vy_end/n)
+    //     curve->control_points[n-1].x = x_goal - vx_goal / static_cast<float>(n);
+    //     curve->control_points[n-1].y = y_goal - vy_goal / static_cast<float>(n);
+	// 	curve->is_point_xy_fixed[n-1] = 1;
+    // } else {
+    //     // 如果速度为0，使用角度
+    //     // B'(1) = n(Pn - Pn-1) = (cos(theta_n), sin(theta_n))
+    //     // 所以 Pn-1 = Pn - (cos(theta_n)/n, sin(theta_n)/n)
+    //     // controlPoints.push_back({
+    //     //     x_end - cos(theta_end)/n,
+    //     //     y_end - sin(theta_end)/n
+    //     // });
+    //     curve->control_points[n-1].x = x_goal - sum_v * __cosf(theta_goal) / static_cast<float>(n);
+    //     curve->control_points[n-1].y = y_goal - sum_v * __sinf(theta_goal) / static_cast<float>(n);
+	// 	curve->is_point_xy_fixed[n-1] = 1;
+    // }
     
     // End point (Pn)
     curve->control_points[n].x = x_goal;

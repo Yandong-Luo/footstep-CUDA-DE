@@ -417,27 +417,43 @@ namespace footstep{
 
         matrixE_vectorX_multiply_colmajor(E_col, current_state, current_D);
 
-        // if(blockIdx.x == 7 && threadIdx.x == 0){
-        //     printf("block:%d, score:%f\n", blockIdx.x, score[blockIdx.x]);
-        //     printf("current state:\n");
-        //     for(int i = 0; i < state_dims; ++i){
-        //         printf("%f ", current_state[i]);
-        //     }
-        //     printf("\n");
-        //     printf("next state:\n");
-        //     for(int i = 0; i < state_dims; ++i){
-        //         printf("%f ", next_states[i]);
-        //     }
-        //     printf("\n");
-        //     printf("D:\n");
-        //     for(int i = 0; i < state_dims; ++i){
-        //         printf("%f ", current_D[i]);
-        //     }
-        //     printf("\n");
-        // }
-
         for(int i = 0; i < state_dims; ++i){
             current_D[i] = next_states[i] - current_D[i];
+        }
+    }
+
+    // calculate control input
+    __global__ void SolveControlInputAndVelocity(float *cluster_N_state, float *cluster_u){
+        if(blockIdx.x >= 1) return;
+        if(threadIdx.x >= CUDA_SOLVER_POP_SIZE) return;
+
+        float *kplus_state = nullptr;
+        float *k_state = init_state;
+        float *k_u = nullptr;
+        const float omega = sqrtf(g / legLength);
+        const float tmp1 =  sinhf(omega * T)/omega;
+        const float tmp2 = coshf(omega * T);
+        const float tmp3 = 1.0f - coshf(omega * T);
+        const float tmp4 = -omega * sinhf(omega * T);
+        // solve u_k, and v_k+1
+        for(int i = 0; i < footstep::N; ++i){
+            // k+1 state
+            kplus_state = cluster_N_state + threadIdx.x * (footstep::N + 1) * footstep::state_dims + (i + 1) * state_dims;
+            // k state
+            if (i != 0) k_state = cluster_N_state + threadIdx.x * (footstep::N + 1) * footstep::state_dims + i * state_dims;
+
+            // k u
+            k_u = cluster_u + threadIdx.x * N * control_dims + i * control_dims;
+
+            float kplus_x = kplus_state[0], kplus_y = kplus_state[1], kplus_theta = kplus_state[4];
+            float k_x = k_state[0], k_y = k_state[1], k_theta = k_state[4], k_vx = k_state[2], k_vy = k_state[3];
+            
+            k_u[0] = (kplus_x - k_x - tmp1 * k_vx) / tmp3;
+            k_u[1] = (kplus_y - k_y - tmp1 * k_vy) / tmp3;
+            k_u[2] = (kplus_theta - k_theta);
+
+            kplus_state[2] = tmp2 * k_vx + tmp4 * k_u[0];
+            kplus_state[3] = tmp2 * k_vy + tmp4 * k_u[1];
         }
     }
 
@@ -618,9 +634,9 @@ namespace footstep{
             cs_constraint_score += fabsf(current_u[1]) > uy_ub ? control_penalty : 0.0f;
             cs_constraint_score += fabsf(current_u[2]) > utheta_ub ? control_penalty : 0.0f;
 
-            // if(fabsf(current_u[0]) > ux_ub || fabsf(current_u[1]) > uy_ub || fabsf(current_u[2]) > utheta_ub){
-            //     printf("current param exceed the range:%f %f %f\n", current_u[0], current_u[1], current_u[2]);
-            // }
+            if(fabsf(current_u[0]) > ux_ub || fabsf(current_u[1]) > uy_ub || fabsf(current_u[2]) > utheta_ub){
+                printf("current param exceed the range:%f %f %f\n", current_u[0], current_u[1], current_u[2]);
+            }
             
             // ##########################
             // velocity constraint

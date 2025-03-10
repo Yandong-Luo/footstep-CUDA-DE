@@ -184,13 +184,13 @@ namespace cudaprocess{
             // __syncthreads();
         }
         
-        if(blockIdx.x == 0 && threadIdx.x == 0){
+        // if(blockIdx.x == 0 && threadIdx.x == 0){
             
-            printf("%d %d\n", xy_param_idx, theta_param_idx);
-            for(int i = 0; i < BEZIER_SIZE; ++i){
-                printf("Point %d and its' value (%f, %f %f) pointer form:(%f, %f %f)\n",i, curve->control_points[i].x, curve->control_points[i].y, curve->control_points[i].z, curve_param[i], curve_param[i+BEZIER_SIZE], curve_param[i+2*BEZIER_SIZE]);
-            }
-        }
+        //     printf("%d %d\n", xy_param_idx, theta_param_idx);
+        //     for(int i = 0; i < BEZIER_SIZE; ++i){
+        //         printf("Point %d and its' value (%f, %f %f) pointer form:(%f, %f %f)\n",i, curve->control_points[i].x, curve->control_points[i].y, curve->control_points[i].z, curve_param[i], curve_param[i+BEZIER_SIZE], curve_param[i+2*BEZIER_SIZE]);
+        //     }
+        // }
         
         float *current_state = cluster_state + sol_id * footstep::state_dims * CURVE_NUM_STEPS + step_id * footstep::state_dims;
         // printf("block:%d, start idx:%d\n", blockIdx.x ,sol_id * footstep::state_dims * (footstep::N + 1) + step_id * footstep::state_dims);
