@@ -46,7 +46,7 @@ __global__ void initAllTrajArcLengthMap(const bezier_curve::BezierCurve* bezier_
 }
 
 // each thread for one trajectory, each block for one timestep
-__global__ void DecodeStateBasedArcLength(const bezier_curve::BezierCurve* bezier_curve,
+__global__ void DecodeStateBasedArcLength(const bezier_curve::BezierCurve* curve,
                                           float* all_curve_param,
                                           float* cluster_state,
                                           float* allTraj_arcLengthTable,
@@ -66,13 +66,14 @@ __global__ void DecodeStateBasedArcLength(const bezier_curve::BezierCurve* bezie
     // Arc length parameter
     float s = step_idx * arcTotalLength / static_cast<float>(footstep::N);
 
-    float t_arc = getParameterForArcLengthNewton(bezier_curve, curve_param, traj_arcLengthTable, s, arcTotalLength);
+    float t_arc = getParameterForArcLengthNewton(curve, curve_param, traj_arcLengthTable, s, arcTotalLength);
 
     // if(threadIdx.x == 0){
     //     printf("block:%d t_arc:%f\n", blockIdx.x, t_arc);
     // }
     float *current_state = cluster_state + traj_idx * footstep::state_dims * CURVE_NUM_STEPS + step_idx * footstep::state_dims;
-    bezier_curve::GetTrajStateFromBezier(bezier_curve, curve_param, t, 0, BEZIER_SIZE-1, BEZIER_SIZE, 2*BEZIER_SIZE-1, 2*BEZIER_SIZE, 3*BEZIER_SIZE-1, current_state);
+    // printf("arc %f bias:%d\n", t_arc, traj_idx * footstep::state_dims * CURVE_NUM_STEPS + step_idx * footstep::state_dims);
+    bezier_curve::GetTrajStateFromBezier(curve, curve_param, t_arc, 0, BEZIER_SIZE-1, BEZIER_SIZE, 2*BEZIER_SIZE-1, 2*BEZIER_SIZE, 3*BEZIER_SIZE-1, current_state);
 }
 
 }

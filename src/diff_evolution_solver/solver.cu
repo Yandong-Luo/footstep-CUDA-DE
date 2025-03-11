@@ -450,89 +450,50 @@ auto max_dim3 = [](const dim3& a, const dim3& b) {
 
 void CudaDiffEvolveSolver::Evaluation(int size, int epoch){
 
-    CHECK_CUDA(cudaMemset(footstep::d_cluster_N_state, 0, sizeof(footstep::d_cluster_N_state)));
+    CHECK_CUDA(cudaMemset(footstep::d_cluster_N_state, 0, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float)));
+    CHECK_CUDA(cudaMemset(footstep::d_cluster_N_control, 0, CUDA_SOLVER_POP_SIZE * footstep::N * footstep::control_dims * sizeof(float)));
     // CHECK_CUDA(cudaMemset(footstep::d_D, 0, sizeof(footstep::d_D)));
     DecodeParameters2State<<<CURVE_NUM_STEPS, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, bezier_curve_manager_->curve_, footstep::d_cluster_N_state, bezier_curve::d_all_curve_param);
 
-    arclength::initAllTrajArcLengthMap<<<size, ARC_LENGTH_SAMPLES, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
-                                                                                                 bezier_curve::d_all_curve_param, 
-                                                                                                 arclength::d_allTraj_arcLenTable,
-                                                                                                 arclength::d_allTraj_totalLen);
+    // arclength::initAllTrajArcLengthMap<<<size, ARC_LENGTH_SAMPLES, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+    //                                                                                              bezier_curve::d_all_curve_param, 
+    //                                                                                              arclength::d_allTraj_arcLenTable,
+    //                                                                                              arclength::d_allTraj_totalLen);
 
-    // arclength::calculateTotalLength<<<1, size, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
-    //                                                                         bezier_curve::d_all_curve_param, 
-    //                                                                         arclength::d_allTraj_totalLen);
+    // // arclength::calculateTotalLength<<<1, size, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
+    // //                                                                         bezier_curve::d_all_curve_param, 
+    // //                                                                         arclength::d_allTraj_totalLen);
     
-    // CHECK_CUDA(cudaMemcpy(arclength::h_allTraj_totalLen, arclength::d_allTraj_totalLen, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
-    // PrintMatrixByRow(arclength::h_allTraj_totalLen, CUDA_SOLVER_POP_SIZE, 1, "all individual Traj length");
+    // // CHECK_CUDA(cudaMemcpy(arclength::h_allTraj_totalLen, arclength::d_allTraj_totalLen, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+    // // PrintMatrixByRow(arclength::h_allTraj_totalLen, CUDA_SOLVER_POP_SIZE, 1, "all individual Traj length");
     
-    arclength::DecodeStateBasedArcLength<<<CURVE_NUM_STEPS, size, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_,
-                                                                                                 bezier_curve::d_all_curve_param,
-                                                                                                 footstep::d_cluster_N_state,
-                                                                                                arclength::d_allTraj_arcLenTable,
-                                                                                                arclength::d_allTraj_totalLen);
+    // arclength::DecodeStateBasedArcLength<<<CURVE_NUM_STEPS, CUDA_SOLVER_POP_SIZE, 0, cuda_utils_->streams_[0]>>>(bezier_curve_manager_->curve_, bezier_curve::d_all_curve_param, footstep::d_cluster_N_state,
+    //                                                                                                             arclength::d_allTraj_arcLenTable,
+    //                                                                                                             arclength::d_allTraj_totalLen);
     
-    if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
-        // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, new_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
-        CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
-        CHECK_CUDA(cudaMemcpy(bezier_curve::h_all_curve_param, bezier_curve::d_all_curve_param, CUDA_SOLVER_POP_SIZE * 3 * BEZIER_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+    // if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
+    //     // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, new_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+    //     CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
+    //     CHECK_CUDA(cudaMemcpy(bezier_curve::h_all_curve_param, bezier_curve::d_all_curve_param, CUDA_SOLVER_POP_SIZE * 3 * BEZIER_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
 
-        // CHECK_CUDA(cudaMemcpy(host_evaluate_score_, evaluate_score_, CUDA_SOLVER_POP_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
+    //     PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE, CURVE_NUM_STEPS * footstep::state_dims, "cluster_N_state from arc curve");
 
-        // PrintMatrixByRow(footstep::h_cluster_param, CUDA_SOLVER_POP_SIZE , CUDA_PARAM_MAX_SIZE, "h_cluster_param");
-        // PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE , (footstep::N+1) * footstep::state_dims, "cluster_N_state");
-        PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE, CURVE_NUM_STEPS * footstep::state_dims, "before cluster_N_state");
+    //     PrintMatrixByRow(bezier_curve::h_all_curve_param, CUDA_SOLVER_POP_SIZE, 3 * BEZIER_SIZE, "all individual curve param");
+    // }
 
-        PrintMatrixByRow(bezier_curve::h_all_curve_param, CUDA_SOLVER_POP_SIZE, 3 * BEZIER_SIZE, "all individual curve param");
-        // PrintMatrixByCol(footstep::h_D, CUDA_SOLVER_POP_SIZE, footstep::N * footstep::state_dims, "before cluster_N_state");
-        // PrintBatchData(footstep::h_batch_D, CUDA_SOLVER_POP_SIZE, footstep::col_D, "print batch D");
-        // PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
-    }
     CHECK_CUDA(cudaMemset(evaluate_score_, 0.0f, CUDA_SOLVER_POP_SIZE * sizeof(float)));
     footstep::EvaluatePosition<CUDA_SOLVER_POP_SIZE><<<size, footstep::N, 0, cuda_utils_->streams_[0]>>>(footstep::d_cluster_N_state, evaluate_score_);
 
     footstep::SolveControlInputAndVelocity<<<1, size, 0, cuda_utils_->streams_[0]>>>(footstep::d_cluster_N_state, footstep::d_cluster_N_control);
 
-    // const size_t gemm_shared_mem_size = footstep::F_invD_col().shared_memory_size;
-    // dim3 dim = footstep::F_invD_col().block_dim;
-    // // const size_t gemm_shared_mem_size = std::max(footstep::F_invD_col().shared_memory_size, footstep::D_GEMM().shared_memory_size);
-    // // dim3 dim = max_dim3(footstep::F_invD_col().block_dim, footstep::D_GEMM().block_dim);
-    // // printf("dims: x %d, y %d, z %d\n", dim.x, dim.y, dim.z);
-    // if (extend_sm == false && gemm_shared_mem_size > prop.sharedMemPerBlock) {
-    //     std::cout << "Required shared memory (" << gemm_shared_mem_size 
-    //               << " bytes) exceeds device limit (" << prop.sharedMemPerBlock 
-    //               << " bytes)" << std::endl;
-    //     extend_sm = true;
-    //     // Increase max dynamic shared memory for the kernel if needed
-    //     CHECK_CUDA(cudaFuncSetAttribute(
-    //         footstep::CalculateControlInput<CUDA_SOLVER_POP_SIZE>, 
-    //         cudaFuncAttributeMaxDynamicSharedMemorySize,
-    //         gemm_shared_mem_size
-    //     ));
-    //     // CHECK_CUDA(cudaFuncSetAttribute(
-    //     //     footstep::ConstructMatrixD, 
-    //     //     cudaFuncAttributeMaxDynamicSharedMemorySize,
-    //     //     gemm_shared_mem_size
-    //     // ));
-    // }
-
-    // CHECK_CUDA(cudaMemset(footstep::d_D, 0.0f, footstep::N * footstep::state_dims * sizeof(float)));
-    // footstep::ConstructMatrixD<<<size, footstep::N, 0, cuda_utils_->streams_[0]>>>(footstep::d_E_col, footstep::d_D, footstep::d_cluster_N_state, evaluate_score_);
-    // // CHECK_CUDA(cudaMemcpy(footstep::h_D, footstep::d_D, CUDA_SOLVER_POP_SIZE * footstep::N * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
-    // // PrintMatrixByRow(footstep::h_D, CUDA_SOLVER_POP_SIZE, footstep::N * footstep::state_dims, "D");
-    
-    // footstep::CalculateControlInput<CUDA_SOLVER_POP_SIZE><<<size, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(footstep::d_DiagF_inv_column, footstep::d_D, footstep::d_cluster_N_control, evaluate_score_);
-    // // footstep::ConstructMatrixD<CUDA_SOLVER_POP_SIZE><<<size, dim, gemm_shared_mem_size, cuda_utils_->streams_[0]>>>(footstep::bigE_column, footstep::d_batch_D);
-
     if(DEBUG_PRINT_FLAG || DEBUG_FOOTSTEP){
-    //     // CHECK_CUDA(cudaMemcpy(footstep::h_cluster_param, new_cluster_data_->all_param, CUDA_SOLVER_POP_SIZE * CUDA_PARAM_MAX_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
-    //     CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
-        
+        CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_state, footstep::d_cluster_N_state, CURVE_NUM_STEPS * CUDA_SOLVER_POP_SIZE * footstep::state_dims * sizeof(float), cudaMemcpyDeviceToHost));
+        PrintMatrixByRow(footstep::h_cluster_N_state, CUDA_SOLVER_POP_SIZE, CURVE_NUM_STEPS * footstep::state_dims, "before cluster_N_state");
+
         CHECK_CUDA(cudaMemcpy(footstep::h_cluster_N_control, footstep::d_cluster_N_control, CUDA_SOLVER_POP_SIZE * footstep::N * footstep::control_dims * sizeof(float), cudaMemcpyDeviceToHost));
-        
         PrintMatrixByRow(footstep::h_cluster_N_control, CUDA_SOLVER_POP_SIZE, footstep::N * footstep::control_dims, "control input");
-    //     // PrintMatrixByRow(host_evaluate_score_, CUDA_SOLVER_POP_SIZE , 1, "evaluation score");
     }
+
     footstep::EvaluateModel2<CUDA_SOLVER_POP_SIZE><<<size, 32, 0, cuda_utils_->streams_[0]>>>(footstep::d_cluster_N_control, footstep::d_cluster_N_state, evaluate_score_);
     UpdateFitnessBasedMatrix<CUDA_SOLVER_POP_SIZE><<<1, size, 0, cuda_utils_->streams_[0]>>>(new_cluster_data_, evaluate_score_);
     

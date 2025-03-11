@@ -503,12 +503,12 @@ namespace footstep{
         }
 
         // Print the block diagonal matrix for debugging
-        PrintMatrix(DiagF_inv, "DiagF_inverse");
+        // PrintMatrix(DiagF_inv, "DiagF_inverse");
         
-        // 打印F的逆矩阵用于调试
-        PrintMatrix(F_inv, "F_inverse");
+        // // 打印F的逆矩阵用于调试
+        // PrintMatrix(F_inv, "F_inverse");
 
-        PrintMatrix(DiagE, "DiagE");
+        // PrintMatrix(DiagE, "DiagE");
         
         std::memcpy(h_F_inv_column, F_inv.data(), row_F_inv * col_F_inv * sizeof(float));
         std::memcpy(h_DiagF_inv_column, DiagF_inv.data(), row_DiagF_inv * col_DiagF_inv * sizeof(float));

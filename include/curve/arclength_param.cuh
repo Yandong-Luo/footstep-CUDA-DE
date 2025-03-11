@@ -51,8 +51,8 @@ __device__ static float derivativeNormFunction(float t, const bezier_curve::Bezi
 
 __device__ __forceinline__ float calculateLength(float start, float end, const bezier_curve::BezierCurve* bezier_curve, const float *curve_param){
     // use adaptive Simpson integre to calculate the length of xy trajectory
-    return integration::adaptive_simpson_3_8_device(derivativeNormFunction, start, end, bezier_curve, curve_param);
-    // return integration::iterative_adaptive_simpson(derivativeNormFunction, start, end, bezier_curve, curve_param);
+    // return integration::adaptive_simpson_3_8_device(derivativeNormFunction, start, end, bezier_curve, curve_param);
+    return integration::iterative_adaptive_simpson(derivativeNormFunction, start, end, bezier_curve, curve_param);
 }
 
 // Get parameter t for a given arc-length s
@@ -152,7 +152,7 @@ __global__ void initAllTrajArcLengthMap(const bezier_curve::BezierCurve* bezier_
 
 
 // each thread for one trajectory, each block for one timestep
-__global__ void DecodeStateBasedArcLength(const bezier_curve::BezierCurve* bezier_curve,
+__global__ void DecodeStateBasedArcLength(const bezier_curve::BezierCurve* curve,
                                         float* all_curve_param,
                                         float* cluster_state,
                                         float* allTraj_arcLengthTable,

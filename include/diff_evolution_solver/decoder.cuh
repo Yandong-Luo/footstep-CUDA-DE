@@ -134,14 +134,6 @@ namespace cudaprocess{
         int construct_idx = 0;
         float *current_sol_param = new_cluster_data->all_param + sol_id * CUDA_PARAM_MAX_SIZE;
 
-        // if (blockIdx.x == 0 && threadIdx.x == 0){
-        //     printf("cluster param: ");
-        //     for(int i = 0; i < new_cluster_data->dims; ++i){
-        //         printf("%f ",current_sol_param[i]);
-        //     }
-        //     printf("\n");
-        // }
-        // __syncthreads();
         int xy_param_idx = 0;
         // int y_param_idx = 0;
         int theta_param_idx = 0;
@@ -152,71 +144,10 @@ namespace cudaprocess{
             curve_param[i] = !curve->is_point_xy_fixed[i] * current_sol_param[i-xy_param_idx] + curve->is_point_xy_fixed[i] * curve->control_points[i].x;
             curve_param[i + BEZIER_SIZE] = !curve->is_point_xy_fixed[i] * current_sol_param[i-xy_param_idx + Y_START] + curve->is_point_xy_fixed[i] * curve->control_points[i].y;
             curve_param[i + 2*BEZIER_SIZE] = !curve->is_theta_point_fixed[i] * current_sol_param[i-theta_param_idx + THETA_START] + curve->control_points[i].z;
-            // if(threadIdx.x == 0 && blockIdx.x == 0){
-            //     curve->control_points[i].x = curve_param[i];
-            //     curve->control_points[i].y = curve_param[i+BEZIER_SIZE];
-            //     curve->control_points[i].z = curve_param[i+2*BEZIER_SIZE];
-            // }
-            // if(i == curve->xy_fixed_point_idx[xy_param_idx]){
-            //     curve_param[i] = curve->control_points[i].x;
-            //     curve_param[i + BEZIER_SIZE] = curve->control_points[i].y;
-            //     xy_param_idx++;
-            //     // continue;
-            // }
-            // else{
-            //     // curve_param[i] = current_sol_param[i-j];
-            //     // curve_param[i + BEZIER_SIZE] = current_sol_param[i-j + bias];
-            //     curve_param[i] = current_sol_param[i-xy_param_idx];
-            //     curve->control_points[i].x = current_sol_param[i-xy_param_idx];
-            //     curve_param[i + BEZIER_SIZE] =current_sol_param[i-xy_param_idx + Y_START];
-            //     curve->control_points[i].y = current_sol_param[i-xy_param_idx + Y_START];
-            //     // if(blockIdx.x == 0 && threadIdx.x == 0)     printf("Using param %f for x, %f for y\n", current_sol_param[i-xy_param_idx], current_sol_param[i-xy_param_idx + Y_START]);
-            // }
-
-            // if(i == curve->theta_fixed_point_idx[theta_param_idx]){
-            //     curve_param[i + 2*BEZIER_SIZE] = curve->control_points[i].z;
-            //     theta_param_idx++;
-            // }
-            // else{
-            //     curve_param[i + 2*BEZIER_SIZE] = current_sol_param[i-theta_param_idx + THETA_START];
-            //     curve->control_points[i].z = current_sol_param[i-theta_param_idx + THETA_START];
-            // }
-            // __syncthreads();
         }
-        
-        // if(blockIdx.x == 0 && threadIdx.x == 0){
-            
-        //     printf("%d %d\n", xy_param_idx, theta_param_idx);
-        //     for(int i = 0; i < BEZIER_SIZE; ++i){
-        //         printf("Point %d and its' value (%f, %f %f) pointer form:(%f, %f %f)\n",i, curve->control_points[i].x, curve->control_points[i].y, curve->control_points[i].z, curve_param[i], curve_param[i+BEZIER_SIZE], curve_param[i+2*BEZIER_SIZE]);
-        //     }
-        // }
-        
         float *current_state = cluster_state + sol_id * footstep::state_dims * CURVE_NUM_STEPS + step_id * footstep::state_dims;
         // printf("block:%d, start idx:%d\n", blockIdx.x ,sol_id * footstep::state_dims * (footstep::N + 1) + step_id * footstep::state_dims);
         bezier_curve::GetTrajStateFromBezierBasedLookup(curve, curve_param, step_id, 0, BEZIER_SIZE-1, BEZIER_SIZE, 2*BEZIER_SIZE-1, 2*BEZIER_SIZE, 3*BEZIER_SIZE-1, current_state);
-        // __syncthreads();
-
-        // record all state except the initial state
-        // if(step_id != 0){
-        //     // int tmp_idx = sol_id * footstep::state_dims * footstep::N + (step_id - 1) * footstep::state_dims;
-        //     // d_D[tmp_idx] = current_state[0];
-        //     // d_D[tmp_idx+1] = current_state[1];
-        //     // d_D[tmp_idx+2] = current_state[2];
-        //     // d_D[tmp_idx+3] = current_state[3];
-        //     // d_D[tmp_idx+4] = current_state[4];
-            
-        //     int row = (step_id - 1) * footstep::state_dims;
-        //     float *sol_data = reinterpret_cast<float*>(d_batch_D[sol_id]);
-        //     sol_data[row] = current_state[0];
-        //     sol_data[row + 1] = current_state[1];
-        //     sol_data[row + 2] = current_state[2];
-        //     sol_data[row + 3] = current_state[3];
-        //     sol_data[row + 4] = current_state[4];
-        // }
-        // printf("step %d and its' state (%f, %f, %f, %f, %f)\n",blockIdx.x, current_state[0], current_state[1], current_state[2], current_state[3], current_state[4]);
-
-        // printf("step %d and its' state (%f, %f, %f, %f, %f)\n",blockIdx.x, current_state[0], current_state[1], current_state[2], current_state[3], current_state[4]);
     }
 
     // template<int T = CUDA_SOLVER_POP_SIZE>

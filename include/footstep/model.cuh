@@ -429,6 +429,8 @@ namespace footstep{
 
         float *kplus_state = nullptr;
         float *k_state = init_state;
+        cluster_N_state[threadIdx.x * (footstep::N + 1) * footstep::state_dims + 2] = init_state[2];
+        cluster_N_state[threadIdx.x * (footstep::N + 1) * footstep::state_dims + 3] = init_state[3];
         float *k_u = nullptr;
         const float omega = sqrtf(g / legLength);
         const float tmp1 =  sinhf(omega * T)/omega;
@@ -634,9 +636,9 @@ namespace footstep{
             cs_constraint_score += fabsf(current_u[1]) > uy_ub ? control_penalty : 0.0f;
             cs_constraint_score += fabsf(current_u[2]) > utheta_ub ? control_penalty : 0.0f;
 
-            if(fabsf(current_u[0]) > ux_ub || fabsf(current_u[1]) > uy_ub || fabsf(current_u[2]) > utheta_ub){
-                printf("current param exceed the range:%f %f %f\n", current_u[0], current_u[1], current_u[2]);
-            }
+            // if(fabsf(current_u[0]) > ux_ub || fabsf(current_u[1]) > uy_ub || fabsf(current_u[2]) > utheta_ub){
+            //     printf("current param exceed the range:%f %f %f\n", current_u[0], current_u[1], current_u[2]);
+            // }
             
             // ##########################
             // velocity constraint

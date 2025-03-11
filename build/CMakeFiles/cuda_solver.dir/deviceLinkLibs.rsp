@@ -1,1 +1,1 @@
-  -L"/usr/local/cuda/targets/x86_64-linux/lib/stubs"   "/usr/local/lib/libyaml-cpp.a" -lpthread -ldl "/usr/local/cuda-12.6/targets/x86_64-linux/lib/libculibos.a" -lcudadevrt -lcudart_static -lrt 
+  -L"/usr/local/cuda/targets/x86_64-linux/lib/stubs"   "/usr/local/lib/libyaml-cpp.a" -lpthread -ldl "/usr/local/cuda-11.6/targets/x86_64-linux/lib/libculibos.a" -lcudadevrt -lcudart_static -lrt 

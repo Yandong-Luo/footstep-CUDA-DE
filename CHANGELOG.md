@@ -301,3 +301,7 @@ All notable changes to this project will be documented in this file.
 ## [0.3.27] - 2025-3-6
 ### Changed
 - Yandong Luo: Finish arc-length parametrization of bezier curve. Now each step is evenly distributed according to the arc length of the curve.
+
+## [0.3.28] - 2025-3-11
+### Changed
+- Yandong Luo: Totally finish the footstep planner based on bezier curve. just need 0.66s to get a good result. It seems that it is not necessary to reparameterize the arc length of the Bezier curve to get good results. I also keep the arc length parameterization for future complex trajectory planning.

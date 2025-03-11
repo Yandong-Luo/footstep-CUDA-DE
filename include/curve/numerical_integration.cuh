@@ -53,7 +53,8 @@ namespace integration {
                                                 float a, float b, 
                                                 const bezier_curve::BezierCurve* bezier_curve,
                                                 const float* curve_param,
-                                                float eps = 0.0001f) {
+                                                const float eps = 0.0001f,
+                                                const int max_iterations = 1000) {
         // Stack for storing intervals to process
         #define MAX_STACK 50  // Reasonable stack size
         float stack_L[MAX_STACK], stack_R[MAX_STACK], stack_eps[MAX_STACK];
@@ -65,11 +66,14 @@ namespace integration {
         stack_eps[0] = eps;
         
         float total = 0.0f;
+
+        int iter = 0;
         
         // Iterative processing
-        while (stack_size > 0) {
+        while (stack_size > 0 && iter < max_iterations) {
             // Pop
             stack_size--;
+            iter++;
             float L = stack_L[stack_size];
             float R = stack_R[stack_size];
             float current_eps = stack_eps[stack_size];

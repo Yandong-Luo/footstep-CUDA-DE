@@ -126,7 +126,7 @@ __device__ __forceinline__ void GetTrajStateFromBezier(const BezierCurve *curve,
     
     float t_powers[BEZIER_SIZE], one_minus_t_powers[BEZIER_SIZE];
     t_powers[0] = one_minus_t_powers[0] = 1;
-    const int n = BEZIER_SIZE - 1;
+    // const int n = BEZIER_SIZE - 1;
 
     // 计算t幂
     for (int i = 1; i < BEZIER_SIZE; ++i) {
@@ -139,7 +139,7 @@ __device__ __forceinline__ void GetTrajStateFromBezier(const BezierCurve *curve,
 
     // 计算位置
     float2 position{0.0f, 0.0f};
-	float2 velocity{0.0f, 0.0f};
+	// float2 velocity{0.0f, 0.0f};
 	float theta = 0.0f;
     for (int i = 0; i < BEZIER_SIZE; ++i) {
         float bernstein_t = curve->binomial_coeff_[i] * 
@@ -150,25 +150,26 @@ __device__ __forceinline__ void GetTrajStateFromBezier(const BezierCurve *curve,
 		theta += bernstein_t * params[i + lll];
         
 		// for velocity
-		if(i < n){
-			float deriv_ctrl_x = n * (params[i + 1 + l] - params[i + l]);
-			float deriv_ctrl_y = n * (params[i + 1 + ll] - params[i + ll]);
+		// if(i < n){
+		// 	float deriv_ctrl_x = n * (params[i + 1 + l] - params[i + l]);
+		// 	float deriv_ctrl_y = n * (params[i + 1 + ll] - params[i + ll]);
 
-			float bernstein_deriv_t = curve->binomial_deriv_coeff_[i] * 
-							t_powers[i] * 
-							one_minus_t_powers[n - 1 - i];
+		// 	float bernstein_deriv_t = curve->binomial_deriv_coeff_[i] * 
+		// 					t_powers[i] * 
+		// 					one_minus_t_powers[n - 1 - i];
 
-			velocity.x += bernstein_deriv_t * deriv_ctrl_x;
-			velocity.y += bernstein_deriv_t * deriv_ctrl_y;
-		}
+		// 	velocity.x += bernstein_deriv_t * deriv_ctrl_x;
+		// 	velocity.y += bernstein_deriv_t * deriv_ctrl_y;
+		// }
     }
 
 	// 存储状态
 	// int idx = t * footstep::state_dims;
+	// printf("x:%f y:%f theta:%f\n", position.x, position.y, theta);
 	state[0] = position.x;
 	state[1] = position.y;
-	// state[2] = velocity.x;
-	// state[3] = velocity.y;
+	state[2] = 0.0f;
+	state[3] = 0.0f;
 	state[4] = theta;		// theta
 }
 
